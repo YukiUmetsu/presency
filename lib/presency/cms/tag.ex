@@ -5,6 +5,7 @@ defmodule Presency.CMS.Tag do
 
   schema "tags" do
     field :title, :string
+    many_to_many :posts, Presency.CMS.Post, join_through: Presency.CMS.PostsTags
 
     timestamps()
   end

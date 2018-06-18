@@ -15,8 +15,13 @@ use Mix.Config
 # which you typically run after static files are built.
 config :presency, PresencyWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  http: [port: {:system, "PORT"}],
+  url: [host: {:system, "HOST_DOMAIN"}, port: 80],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true,
+  code_reloader: false,
+  version: Mix.Project.config[:version],
+  check_origin: ["//*#{System.get_env("HOST_DOMAIN")}"]
 
 # Do not print debug messages in production
 config :logger, level: :info

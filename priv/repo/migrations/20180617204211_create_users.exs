@@ -12,11 +12,8 @@ defmodule Presency.Repo.Migrations.CreateUsers do
       add :avatar_img, :text
       add :username, :string
       add :display_name, :string
-      add :user_access_profile_id, references(:user_access_profiles, on_delete: :nothing)
 
       timestamps()
     end
-
-    create index(:users, [:user_access_profile_id])
   end
 end

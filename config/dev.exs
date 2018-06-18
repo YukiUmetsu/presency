@@ -7,7 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :presency, PresencyWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: {:system, "PORT"}],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :presency, Presency.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("DATABASE_USERNAME"),
+  password: System.get_env("DATABASE_PASSWORD"),
   database: "presency_dev",
   hostname: "localhost",
   pool_size: 10

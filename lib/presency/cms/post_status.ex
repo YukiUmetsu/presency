@@ -5,7 +5,7 @@ defmodule Presency.CMS.PostStatus do
 
   schema "post_statuses" do
     field :description, :string
-
+    has_many :posts, Presency.CMS.Post
     timestamps()
   end
 

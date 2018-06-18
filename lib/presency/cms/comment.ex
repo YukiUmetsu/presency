@@ -6,8 +6,8 @@ defmodule Presency.CMS.Comment do
   schema "comments" do
     field :by_admin, :integer
     field :content, :string
-    field :user_id, :id
-    field :post_id, :id
+    belongs_to :user, Presency.Accounts.User
+    belongs_to :post, Presency.CMS.Post
 
     timestamps()
   end

@@ -11,7 +11,7 @@ defmodule Presency.Administration.AdminUser do
     field :introduction_content, :string
     field :last_name, :string
     field :password, :string
-    field :admin_access_profile_id, :id
+    belongs_to :admin_access_profile, Presency.Permissions.AdminAccessProfile
 
     timestamps()
   end

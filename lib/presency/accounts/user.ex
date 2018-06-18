@@ -13,7 +13,8 @@ defmodule Presency.Accounts.User do
     field :last_name, :string
     field :password, :string
     field :username, :string
-    field :user_access_profile_id, :id
+    belongs_to :user_access_profile, Presency.Permissions.UserAccessProfile
+    has_many :comments, Presency.CMS.Comment
 
     timestamps()
   end

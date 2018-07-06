@@ -1,4 +1,4 @@
-defmodule PresencyWeb.CommentController do
+defmodule PresencyWeb.Admin.CommentController do
   use PresencyWeb, :controller
 
   alias Presency.CMS
@@ -19,7 +19,7 @@ defmodule PresencyWeb.CommentController do
       {:ok, comment} ->
         conn
         |> put_flash(:info, "Comment created successfully.")
-        |> redirect(to: comment_path(conn, :show, comment))
+        |> redirect(to: admin_comment_path(conn, :show, comment))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -43,7 +43,7 @@ defmodule PresencyWeb.CommentController do
       {:ok, comment} ->
         conn
         |> put_flash(:info, "Comment updated successfully.")
-        |> redirect(to: comment_path(conn, :show, comment))
+        |> redirect(to: admin_comment_path(conn, :show, comment))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", comment: comment, changeset: changeset)
     end
@@ -55,6 +55,6 @@ defmodule PresencyWeb.CommentController do
 
     conn
     |> put_flash(:info, "Comment deleted successfully.")
-    |> redirect(to: comment_path(conn, :index))
+    |> redirect(to: admin_comment_path(conn, :index))
   end
 end

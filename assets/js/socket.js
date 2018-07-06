@@ -10,7 +10,7 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
-// If the current user exists you can assign the user's token in
+// If the current admin_user exists you can assign the admin_user's token in
 // the connection for use in the layout.
 //
 // In your "lib/web/router.ex":
@@ -23,7 +23,7 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 //
 //     defp put_user_token(conn, _) do
 //       if current_user = conn.assigns[:current_user] do
-//         token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+//         token = Phoenix.Token.sign(conn, "admin_user socket", current_user.id)
 //         assign(conn, :user_token, token)
 //       else
 //         conn
@@ -35,14 +35,14 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 //
 //     <script>window.userToken = "<%= assigns[:user_token] %>";</script>
 //
-// You will need to verify the user token in the "connect/2" function
+// You will need to verify the admin_user token in the "connect/2" function
 // in "lib/web/channels/user_socket.ex":
 //
 //     def connect(%{"token" => token}, socket) do
 //       # max_age: 1209600 is equivalent to two weeks in seconds
-//       case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+//       case Phoenix.Token.verify(socket, "admin_user socket", token, max_age: 1209600) do
 //         {:ok, user_id} ->
-//           {:ok, assign(socket, :user, user_id)}
+//           {:ok, assign(socket, :admin_user, user_id)}
 //         {:error, reason} ->
 //           :error
 //       end

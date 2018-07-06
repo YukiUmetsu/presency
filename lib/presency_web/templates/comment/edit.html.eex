@@ -1,5 +1,5 @@
 <h2>Edit Comment</h2>
 
-<%= render "form.html", Map.put(assigns, :action, comment_path(@conn, :update, @comment)) %>
+<%= render "form.html", Map.put(assigns, :action, admin_comment_path(@conn, :update, @comment)) %>
 
-<span><%= link "Back", to: comment_path(@conn, :index) %></span>
+<span><%= link "Back", to: admin_comment_path(@conn, :index) %></span>

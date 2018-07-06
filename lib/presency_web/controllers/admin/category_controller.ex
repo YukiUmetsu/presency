@@ -1,4 +1,4 @@
-defmodule PresencyWeb.CategoryController do
+defmodule PresencyWeb.Admin.CategoryController do
   use PresencyWeb, :controller
 
   alias Presency.CMS
@@ -19,7 +19,7 @@ defmodule PresencyWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: category_path(conn, :show, category))
+        |> redirect(to: admin_category_path(conn, :show, category))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -43,7 +43,7 @@ defmodule PresencyWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: category_path(conn, :show, category))
+        |> redirect(to: admin_category_path(conn, :show, category))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
     end
@@ -55,6 +55,6 @@ defmodule PresencyWeb.CategoryController do
 
     conn
     |> put_flash(:info, "Category deleted successfully.")
-    |> redirect(to: category_path(conn, :index))
+    |> redirect(to: admin_category_path(conn, :index))
   end
 end

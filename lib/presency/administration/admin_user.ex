@@ -20,6 +20,6 @@ defmodule Presency.Administration.AdminUser do
   def changeset(admin_user, attrs) do
     admin_user
     |> cast(attrs, [:first_name, :last_name, :email, :password, :avatar_img, :introduction_content, :display_name])
-    |> validate_required([:first_name, :last_name, :email, :password, :avatar_img, :introduction_content, :display_name])
+    |> validate_required([:first_name, :last_name, :email, :password])
   end
 end

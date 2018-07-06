@@ -65,8 +65,8 @@ defmodule Presency.Mixfile do
       "test": ["ecto.create --quiet", "ecto.migrate", "test"],
       "phantomjs": ["cmd phantomjs --wd"],
       "seed": ["run priv/repo/seeds.exs"],
-      "server.s": ["cmd iex -S mix phx.server"],
-      "server.db": ["cmd postgres -D /usr/local/var/postgres"]
+      "start": ["cmd iex -S mix phx.server"],
+      "db.start": ["cmd postgres -D /usr/local/var/postgres"]
     ]
   end
 end

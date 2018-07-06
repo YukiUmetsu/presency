@@ -3,15 +3,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>Name</th>
       <th>Email</th>
-      <th>Password</th>
-      <th>Fb token</th>
-      <th>Ggl token</th>
-      <th>Avatar img</th>
-      <th>Username</th>
-      <th>Display name</th>
+      <th>Phone</th>
 
       <th></th>
     </tr>
@@ -19,15 +13,9 @@
   <tbody>
 <%= for user <- @users do %>
     <tr>
-      <td><%= user.first_name %></td>
-      <td><%= user.last_name %></td>
+      <td><%= user.name %></td>
       <td><%= user.email %></td>
-      <td><%= user.password %></td>
-      <td><%= user.fb_token %></td>
-      <td><%= user.ggl_token %></td>
-      <td><%= user.avatar_img %></td>
-      <td><%= user.username %></td>
-      <td><%= user.display_name %></td>
+      <td><%= user.phone %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: admin_user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>

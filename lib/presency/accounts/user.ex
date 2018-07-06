@@ -23,6 +23,6 @@ defmodule Presency.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :password, :fb_token, :ggl_token, :avatar_img, :username, :display_name])
-    |> validate_required([:first_name, :last_name, :email, :password, :fb_token, :ggl_token, :avatar_img, :username, :display_name])
+    |> validate_required([:email, :password, :username])
   end
 end

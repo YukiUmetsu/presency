@@ -22,7 +22,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
-config :presency, Mailer,
+config :presency, Presency.Mailer,
        adapter: Bamboo.SMTPAdapter,
        server: System.get_env("SMTP_SERVER"),
        hostname: "localhost",

@@ -1,4 +1,4 @@
-defmodule PresencyWeb.PostController do
+defmodule PresencyWeb.Admin.PostController do
   use PresencyWeb, :controller
 
   alias Presency.CMS
@@ -19,7 +19,7 @@ defmodule PresencyWeb.PostController do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
-        |> redirect(to: post_path(conn, :show, post))
+        |> redirect(to: admin_post_path(conn, :show, post))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -43,7 +43,7 @@ defmodule PresencyWeb.PostController do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
-        |> redirect(to: post_path(conn, :show, post))
+        |> redirect(to: admin_post_path(conn, :show, post))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", post: post, changeset: changeset)
     end
@@ -55,6 +55,6 @@ defmodule PresencyWeb.PostController do
 
     conn
     |> put_flash(:info, "Post deleted successfully.")
-    |> redirect(to: post_path(conn, :index))
+    |> redirect(to: admin_post_path(conn, :index))
   end
 end

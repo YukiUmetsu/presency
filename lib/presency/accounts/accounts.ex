@@ -22,7 +22,7 @@ defmodule Presency.Accounts do
   end
 
   @doc """
-  Gets a single user.
+  Gets a single admin_user.
 
   Raises `Ecto.NoResultsError` if the User does not exist.
 
@@ -38,7 +38,7 @@ defmodule Presency.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
-  Creates a user.
+  Creates a admin_user.
 
   ## Examples
 
@@ -56,14 +56,14 @@ defmodule Presency.Accounts do
   end
 
   @doc """
-  Updates a user.
+  Updates a admin_user.
 
   ## Examples
 
-      iex> update_user(user, %{field: new_value})
+      iex> update_user(admin_user, %{field: new_value})
       {:ok, %User{}}
 
-      iex> update_user(user, %{field: bad_value})
+      iex> update_user(admin_user, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
@@ -78,10 +78,10 @@ defmodule Presency.Accounts do
 
   ## Examples
 
-      iex> delete_user(user)
+      iex> delete_user(admin_user)
       {:ok, %User{}}
 
-      iex> delete_user(user)
+      iex> delete_user(admin_user)
       {:error, %Ecto.Changeset{}}
 
   """
@@ -90,11 +90,11 @@ defmodule Presency.Accounts do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user changes.
+  Returns an `%Ecto.Changeset{}` for tracking admin_user changes.
 
   ## Examples
 
-      iex> change_user(user)
+      iex> change_user(admin_user)
       %Ecto.Changeset{source: %User{}}
 
   """

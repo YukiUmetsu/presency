@@ -1,6 +1,6 @@
 defmodule Presency.Email do
   import Bamboo.Email
-  use Bamboo.Phoenix, view: MangoWeb.EmailView
+  use Bamboo.Phoenix, view: PresencyWeb.EmailView
 
   def signin_email(email, subject, link) do
     base_email()

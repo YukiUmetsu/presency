@@ -24,12 +24,12 @@ defmodule Presency.AccountsTest do
       assert Accounts.list_users() == [user]
     end
 
-    test "get_user!/1 returns the user with given id" do
+    test "get_user!/1 returns the admin_user with given id" do
       user = user_fixture()
       assert Accounts.get_user!(user.id) == user
     end
 
-    test "create_user/1 with valid data creates a user" do
+    test "create_user/1 with valid data creates a admin_user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
       assert user.avatar_img == "some avatar_img"
       assert user.display_name == "some display_name"
@@ -46,7 +46,7 @@ defmodule Presency.AccountsTest do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
     end
 
-    test "update_user/2 with valid data updates the user" do
+    test "update_user/2 with valid data updates the admin_user" do
       user = user_fixture()
       assert {:ok, user} = Accounts.update_user(user, @update_attrs)
       assert %User{} = user
@@ -67,13 +67,13 @@ defmodule Presency.AccountsTest do
       assert user == Accounts.get_user!(user.id)
     end
 
-    test "delete_user/1 deletes the user" do
+    test "delete_user/1 deletes the admin_user" do
       user = user_fixture()
       assert {:ok, %User{}} = Accounts.delete_user(user)
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
     end
 
-    test "change_user/1 returns a user changeset" do
+    test "change_user/1 returns a admin_user changeset" do
       user = user_fixture()
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end

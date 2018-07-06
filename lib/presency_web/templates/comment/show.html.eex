@@ -14,5 +14,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: comment_path(@conn, :edit, @comment) %></span>
-<span><%= link "Back", to: comment_path(@conn, :index) %></span>
+<span><%= link "Edit", to: admin_comment_path(@conn, :edit, @comment) %></span>
+<span><%= link "Back", to: admin_comment_path(@conn, :index) %></span>

@@ -5,8 +5,8 @@ defmodule Presency.CMS do
 
   import Ecto.Query, warn: false
   alias Presency.Repo
-
   alias Presency.CMS.Post
+  import Helpers.String, only: [trim_string_list: 1]
 
   @doc """
   Returns the list of posts.
@@ -36,6 +36,12 @@ defmodule Presency.CMS do
 
   """
   def get_post!(id), do: Repo.get!(Post, id)
+
+
+  def get_post_with_assoc!(id) do
+    query = from p in Post, where: p.id == ^id, preload: [:tags, :meta_keywords]
+    Repo.one(query)
+  end
 
   @doc """
   Creates a post.
@@ -102,6 +108,23 @@ defmodule Presency.CMS do
     Post.changeset(post, %{})
   end
 
+  def build_post_assoc(post, keyword, list) do
+    require IEx
+    with false <- Blankable.blank?(post),
+         false <- Blankable.blank?(keyword),
+         false <- Blankable.blank?(list)
+      do
+        post
+        |> Repo.preload(keyword)
+        |> Ecto.Changeset.change
+        |> Ecto.Changeset.put_assoc(keyword, list)
+        |> Repo.update!
+
+    else
+      _ -> post
+    end
+  end
+
   alias Presency.CMS.Comment
 
   @doc """
@@ -109,7 +132,7 @@ defmodule Presency.CMS do
 
   ## Examples
 
-      iex> list_categories()
+      iex> list_comments()
       [%Comment{}, ...]
 
   """
@@ -207,7 +230,7 @@ defmodule Presency.CMS do
   ## Examples
 
       iex> list_categories()
-      [%Comment{}, ...]
+      [%Category{}, ...]
 
   """
   def list_categories do
@@ -390,5 +413,170 @@ defmodule Presency.CMS do
   """
   def change_tag(%Tag{} = tag) do
     Tag.changeset(tag, %{})
+  end
+
+  def get_tag_by_title(title) do
+    Tag |> Repo.get_by(title: title)
+  end
+
+  def create_tags_by_string_list(tags \\ []) do
+    results = tags
+      |> trim_string_list
+      |> Enum.map(fn(tag) -> create_tag_by_string(tag) end)
+      |> Enum.filter(& !is_nil(&1))
+
+    case Blankable.blank?(results) do
+      false -> results
+      true -> nil
+    end
+  end
+
+  def create_tag_by_string(tag \\ "") do
+    existing_tag = get_tag_by_title(tag)
+    with {false, true} <- {Blankable.blank?(tag), Blankable.blank?(existing_tag)}
+      do
+      {:ok, new_tag} = create_tag(%{"title"=>tag})
+      new_tag |> Repo.preload(:posts)
+    else
+      _ -> existing_tag
+    end
+  end
+
+
+  alias Presency.CMS.MetaKeyword
+
+  @doc """
+  Returns the list of meta_keywords.
+
+  ## Examples
+
+      iex> list_meta_keywords()
+      [%Comment{}, ...]
+
+  """
+  def list_meta_keywords do
+    Repo.all(MetaKeyword)
+  end
+
+  @doc """
+  Gets a single meta_keyword.
+
+  Raises `Ecto.NoResultsError` if the MetaKeyword does not exist.
+
+  ## Examples
+
+      iex> get_meta_keyword!(123)
+      %MetaKeyword{}
+
+      iex> get_meta_keyword!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_meta_keyword!(id), do: Repo.get!(MetaKeyword, id)
+
+  @doc """
+  Creates a meta_keyword.
+
+  ## Examples
+
+      iex> create_meta_keyword(%{field: value})
+      {:ok, %MetaKeyword{}}
+
+      iex> create_meta_keyword(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_meta_keyword(attrs \\ %{}) do
+    %MetaKeyword{}
+    |> MetaKeyword.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a meta_keyword.
+
+  ## Examples
+
+      iex> update_meta_keyword(meta_keyword, %{field: new_value})
+      {:ok, %MetaKeyword{}}
+
+      iex> update_meta_keyword(meta_keyword, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_meta_keyword(%MetaKeyword{} = meta_keyword, attrs) do
+    meta_keyword
+    |> MetaKeyword.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a MetaKeyword.
+
+  ## Examples
+
+      iex> delete_meta_keyword(meta_keyword)
+      {:ok, %MetaKeyword{}}
+
+      iex> delete_meta_keyword(meta_keyword)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_meta_keyword(%MetaKeyword{} = meta_keyword) do
+    Repo.delete(meta_keyword)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking meta_keyword changes.
+
+  ## Examples
+
+      iex> change_meta_keyword(meta_keyword)
+      %Ecto.Changeset{source: %MetaKeyword{}}
+
+  """
+  def change_meta_keyword(%MetaKeyword{} = meta_keyword) do
+    MetaKeyword.changeset(meta_keyword, %{})
+  end
+
+  def build_post_keywords_assoc(%Post{} = post, meta_keywords) do
+    post_changeset = Ecto.Changeset.change(post)
+    post_with_tags = Ecto.Changeset.put_assoc(post_changeset, :meta_keywords, meta_keywords)
+    Repo.update!(post_with_tags)
+  end
+
+  def create_meta_keywords_by_string_list(keywords \\ []) do
+    results = keywords
+              |> trim_string_list
+              |> Enum.map(fn(keyword) -> create_meta_keyword_by_string(keyword) end)
+              |> Enum.filter(& !is_nil(&1))
+
+    case Blankable.blank?(results) do
+      false -> results
+      true -> nil
+    end
+  end
+
+  def create_meta_keyword_by_string(keyword \\ "") do
+    existing_keyword = get_meta_keyword_by_title(keyword)
+    with {false, true} <- {Blankable.blank?(keyword), Blankable.blank?(existing_keyword)}
+      do
+      {:ok, new_keyword} = create_meta_keyword(%{"title"=>keyword})
+      new_keyword |> Repo.preload(:posts)
+    else
+      _ -> existing_keyword
+    end
+  end
+
+  def get_meta_keyword_by_title(title) do
+    MetaKeyword |> Repo.get_by(title: title)
+  end
+
+  def meta_keyword_exists?(title) do
+    meta_keyword = get_meta_keyword_by_title(title)
+    cond do
+      Blankable.blank?(meta_keyword) -> false
+      true -> true
+    end
   end
 end

@@ -9,7 +9,8 @@
 
   <li>
     <strong>Content:</strong>
-    <%= @post.content %>
+      <div class="post-content" id="post-content">
+      </div>
   </li>
 
   <li>
@@ -17,7 +18,28 @@
     <%= @post.publicity %>
   </li>
 
+  <li>
+    <strong>tags:</strong>
+    <ul>
+      <%= if @post.tags != nil do %>
+      <%= for tag <- @post.tags do %>
+      <li><%= tag.title %></li>
+      <% end %>
+      <% end %>
+    </ul>
+  </li>
+  <li>
+    <strong>meta keywords:</strong>
+    <ul>
+      <%= if @post.meta_keywords != nil do %>
+        <%= for keyword <- @post.meta_keywords do %>
+        <li><%= keyword.title %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </li>
 </ul>
 
-<span><%= link "Edit", to: admin_post_path(@conn, :edit, @post) %></span>
-<span><%= link "Back", to: admin_post_path(@conn, :index) %></span>
+<span><%= link "Edit", to: admin_post_path(@conn, :edit, @post), class: "button" %></span>
+<span><%= link "Back", to: admin_post_path(@conn, :index), class: "button"%></span>
+<script><%= post_content_to_html %> $("#post-content").html(html);</script>

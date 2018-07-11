@@ -5,7 +5,6 @@ exports.config = {
       joinTo: {
           "js/app.js":/^(js|node_modules|vendor)/
       },
-
       order: {
         before: [
           "vendor/js/jquery-3.3.1.js",
@@ -14,7 +13,10 @@ exports.config = {
       }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      joinTo: "css/app.css",
+      order: {
+          after: [ "css/app.scss"]
+      }
     },
     templates: {
       joinTo: "js/app.js"
@@ -41,6 +43,12 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
+    },
+    sass: {
+        mode: 'native',
+        options: {
+            includePaths: ['node_modules/bulma']
+        }
     }
   },
 
@@ -51,10 +59,10 @@ exports.config = {
   },
 
   npm: {
-    enabled: true,
     globals: {
-        $: 'jquery',
-        jQuery: 'jquery'
+      $: 'jquery',
+      jQuery: 'jquery',
+      QuillDeltaToHtmlConverter: 'quill-delta-to-html'
     }
   }
 };

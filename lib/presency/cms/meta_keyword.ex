@@ -15,5 +15,6 @@ defmodule Presency.CMS.MetaKeyword do
     meta_keyword
     |> cast(attrs, [:title])
     |> validate_required([:title])
+    |> unique_constraint(:title)
   end
 end

@@ -12,10 +12,21 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :content, class: "control-label" %>
-    <%= textarea f, :content, class: "form-control" %>
-    <%= error_tag f, :content %>
+    <%= label f, :meta_description, class: "control-label" %>
+    <%= textarea f, :meta_description, class: "form-control" %>
+    <%= error_tag f, :meta_description %>
   </div>
+
+
+    <div class="form-group">
+        <label class="control-label" for="post_meta_keywords">Meta Keywords</label>
+        <input class="form-control" id="post_meta_keywords" name="post[meta_keywords]" type="text">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" for="post_tags">Tags</label>
+        <input class="form-control" id="post_tags" name="post[tags]" type="text">
+    </div>
 
   <div class="form-group">
     <%= label f, :publicity, class: "control-label" %>
@@ -23,7 +34,13 @@
     <%= error_tag f, :publicity %>
   </div>
 
-  <div class="form-group">
+  <!-- Create the editor container -->
+    <p><strong>Blog Content</strong></p>
+    <div id="editor" class="mb-3"></div>
+
+  <%= hidden_input f, :content, class: "form-control" %>
+
+  <div class="form-group mt-3">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

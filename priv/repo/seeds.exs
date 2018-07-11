@@ -12,6 +12,8 @@
 
 alias Presency.Repo
 alias Presency.Administration
+alias Presency.CMS
+alias Presency.CMS.Category
 
 admin_user = %{
   "display_name" => "Yuki Umetsu",
@@ -25,3 +27,24 @@ admin_user = %{
 }
 
 Administration.create_admin_user(admin_user)
+
+category = %{"title"=> "Elixir",
+  "description"=> "blog posts about Elixir, a functional programming language"
+}
+{:ok, elixirCategory} = CMS.create_category(category)
+
+category = %{
+  "title"=> "Phoenix framework",
+  "description"=> "blog posts about elixir phoenix framework",
+  "parent_category_id"=> elixirCategory.id
+}
+{:ok, phoenixCategory} = CMS.create_category(category)
+
+Ecto.build_assoc(elixirCategory, :children_categories, phoenixCategory)
+|> Category.changeset(%{})
+
+category = %{
+  "title"=> "PHP",
+  "description"=> "blog posts about PHP programming language"
+}
+CMS.create_category(category)

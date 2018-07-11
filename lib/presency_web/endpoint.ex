@@ -37,6 +37,8 @@ defmodule PresencyWeb.Endpoint do
     key: "_presency_key",
     signing_salt: "jmRZTrJq"
 
+  plug PhoenixGon.Pipeline
+
   plug PresencyWeb.Router
 
   @doc """

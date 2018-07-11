@@ -9,6 +9,8 @@
 
   <title>Hello Presency!</title>
   <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  <%= render_gon_script(@conn) %>
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 </head>
 <body>
 <%= render "admin_app_nav.html", conn: @conn %>
@@ -20,6 +22,5 @@
     <%= render @view_module, @view_template, assigns %>
   </main>
 </div>
-<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 </body>
 </html>

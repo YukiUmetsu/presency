@@ -1,37 +1,43 @@
 defmodule PresencyWeb.Admin.PostController do
   use PresencyWeb, :controller
   import PhoenixGon.Controller
-  require IEx
+
 
   alias Presency.CMS
   alias Presency.CMS.Post
   import Helpers.String, only: [separate_words: 2]
+  require IEx
 
   def index(conn, _params) do
+    categories = CMS.list_categories()
     posts = CMS.list_posts()
     conn = add_posts_to_gon(conn, posts)
-    render(conn, "index.html", posts: posts)
+    render(conn, "index.html", posts: posts, categories: categories)
   end
 
   def new(conn, _params) do
+    categories = CMS.list_category_options()
     changeset = CMS.change_post(%Post{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, categories: categories)
   end
 
   def create(conn, %{"post" => post_params}) do
-    require IEx
     new_meta_keywords = create_meta_keywords(post_params["meta_keywords"])
-    new_tags= create_tags(post_params["tags"])
+    new_tags = create_tags(post_params["tags"])
+    category = CMS.get_category(post_params["category_id"])
 
-    case CMS.create_post(post_params) do
+    post_create_result =
+      post_params
+      |> CMS.build_post_assoc(category)
+      |> CMS.create_post_from_changeset
+
+    case post_create_result do
       {:ok, post} ->
+        post = CMS.build_many_many_post_assoc(post, :tags, new_tags)
+        post = CMS.build_many_many_post_assoc(post, :meta_keywords, new_meta_keywords)
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: admin_post_path(conn, :show, post))
-
-        # keyword and list does not match
-        CMS.build_post_assoc(post, :tags, new_tags)
-        CMS.build_post_assoc(post, :meta_keywords, new_meta_keywords)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -39,23 +45,31 @@ defmodule PresencyWeb.Admin.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    require IEx
+    categories = CMS.list_categories()
     post = CMS.get_post_with_assoc!(id)
     conn = put_gon(conn, post_content: post.content)
-    render(conn, "show.html", post: post)
+    render(conn, "show.html", post: post, categories: categories)
   end
 
   def edit(conn, %{"id" => id}) do
+    categories = CMS.list_category_options()
     post = CMS.get_post!(id)
     changeset = CMS.change_post(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+    render(conn, "edit.html", post: post, changeset: changeset, categories: categories)
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
     post = CMS.get_post!(id)
+    new_meta_keywords = create_meta_keywords(post_params["meta_keywords"])
+    new_tags = create_tags(post_params["tags"])
+    category = CMS.get_category(post_params["category_id"])
 
     case CMS.update_post(post, post_params) do
       {:ok, post} ->
+        CMS.build_post_assoc(category, post)
+        CMS.build_many_many_post_assoc(post, :tags, new_tags)
+        CMS.build_many_many_post_assoc(post, :meta_keywords, new_meta_keywords)
+
         conn
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: admin_post_path(conn, :show, post))
@@ -84,7 +98,11 @@ defmodule PresencyWeb.Admin.PostController do
   end
 
   def add_posts_to_gon(conn, posts) do
-    conn = add_post_to_gon(conn, posts, 0)
+    case Blankable.blank?(posts) do
+      false -> conn = add_post_to_gon(conn, posts, 0)
+      true -> conn
+    end
+
   end
 
   def add_post_to_gon(conn, posts, index) do

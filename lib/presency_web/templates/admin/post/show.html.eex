@@ -18,6 +18,11 @@
     <%= @post.publicity %>
   </li>
 
+    <li>
+        <strong>Category:</strong>
+        <%= show_category_title_in_view(@post.category_id, @categories) %>
+    </li>
+
   <li>
     <strong>tags:</strong>
     <ul>
@@ -28,6 +33,12 @@
       <% end %>
     </ul>
   </li>
+
+    <li>
+        <strong>Meta Description:</strong>
+        <%= @post.meta_description %>
+    </li>
+
   <li>
     <strong>meta keywords:</strong>
     <ul>

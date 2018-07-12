@@ -10,8 +10,9 @@ defmodule PresencyWeb.Admin.CategoryController do
   end
 
   def new(conn, _params) do
+    categories = CMS.list_category_options()
     changeset = CMS.change_category(%Category{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, categories: categories)
   end
 
   def create(conn, %{"category" => category_params}) do
@@ -26,14 +27,16 @@ defmodule PresencyWeb.Admin.CategoryController do
   end
 
   def show(conn, %{"id" => id}) do
+    categories = CMS.list_categories()
     category = CMS.get_category!(id)
-    render(conn, "show.html", category: category)
+    render(conn, "show.html", category: category, categories: categories)
   end
 
   def edit(conn, %{"id" => id}) do
+    categories = CMS.list_category_options()
     category = CMS.get_category!(id)
     changeset = CMS.change_category(category)
-    render(conn, "edit.html", category: category, changeset: changeset)
+    render(conn, "edit.html", category: category, changeset: changeset, categories: categories)
   end
 
   def update(conn, %{"id" => id, "category" => category_params}) do

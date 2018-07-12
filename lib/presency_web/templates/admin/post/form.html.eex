@@ -29,6 +29,12 @@
     </div>
 
   <div class="form-group">
+    <%= label f, :category_id, "Category", class: "control-label" %>
+    <%= select f, :category_id, @categories, prompt: "choose a category", class: "form-control" %>
+    <%= error_tag f, :category_id %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :publicity, class: "control-label" %>
     <%= text_input f, :publicity, class: "form-control" %>
     <%= error_tag f, :publicity %>

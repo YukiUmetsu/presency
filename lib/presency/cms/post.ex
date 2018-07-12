@@ -22,7 +22,10 @@ defmodule Presency.CMS.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :content, :publicity])
-    |> validate_required([:title, :content, :publicity])
+    |> Presency.Repo.preload(:category)
+    |> cast(attrs, [:title, :content, :publicity, :meta_description])
+    |> validate_required([:title, :content, :publicity, :meta_description])
+    |> cast_assoc(:category)
   end
+
 end

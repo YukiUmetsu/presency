@@ -39,8 +39,11 @@ defmodule Presency.CMS do
 
 
   def get_post_with_assoc!(id) do
-    query = from p in Post, where: p.id == ^id, preload: [:tags, :meta_keywords]
-    Repo.one(query)
+    query = from p in Post, where: p.id == ^id
+    post = Repo.one(query)
+    |> Repo.preload(:tags)
+    |> Repo.preload(:meta_keywords)
+    |> Repo.preload(:category)
   end
 
   @doc """
@@ -59,6 +62,10 @@ defmodule Presency.CMS do
     %Post{}
     |> Post.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def create_post_from_changeset(changeset) do
+    changeset |> Repo.insert()
   end
 
   @doc """
@@ -108,21 +115,42 @@ defmodule Presency.CMS do
     Post.changeset(post, %{})
   end
 
-  def build_post_assoc(post, keyword, list) do
+  def build_many_many_post_assoc(post, keyword, list) do
     require IEx
     with false <- Blankable.blank?(post),
          false <- Blankable.blank?(keyword),
          false <- Blankable.blank?(list)
-      do
-        post
-        |> Repo.preload(keyword)
-        |> Ecto.Changeset.change
-        |> Ecto.Changeset.put_assoc(keyword, list)
-        |> Repo.update!
-
+    do
+      post
+      |> Repo.preload(keyword)
+      |> Ecto.Changeset.change
+      |> Ecto.Changeset.put_assoc(keyword, list)
+      |> Repo.update!
     else
       _ -> post
     end
+  end
+
+  def build_post_assoc(post_param \\ %{}, item) do
+    require IEx
+    with false <- Blankable.blank?(post_param),
+          false <- Blankable.blank?(item)
+    do
+      post_param = create_post_param(post_param)
+      Ecto.build_assoc(item, :posts, post_param)
+      |> Post.changeset(post_param)
+    else
+      _ -> Post.changeset(post_param)
+    end
+  end
+
+  def create_post_param(params \\ %{}) do
+    %{
+      "title" => params["title"],
+      "content" => params["content"],
+      "meta_description" => params["meta_description"],
+      "publicity" => params["publicity"],
+    }
   end
 
   alias Presency.CMS.Comment
@@ -234,7 +262,16 @@ defmodule Presency.CMS do
 
   """
   def list_categories do
-    Repo.all(Category)
+    query = from c in Category, order_by: c.id
+    Repo.all(query)
+  end
+
+
+  def list_category_options do
+    case list_categories do
+      nil -> nil
+      categories -> categories |> Enum.map(fn(category) -> ["value": category.id, "key": category.title] end)
+    end
   end
 
   @doc """
@@ -251,7 +288,19 @@ defmodule Presency.CMS do
       ** (Ecto.NoResultsError)
 
   """
-  def get_category!(id), do: Repo.get!(Category, id)
+  def get_category!(id) do
+    case Blankable.blank?(id) do
+        false -> Repo.get!(Category, id)
+        true -> nil
+    end
+  end
+
+  def get_category(id) do
+    case Blankable.blank?(id) do
+      false -> Repo.get(Category, id)
+      true -> nil
+    end
+  end
 
   @doc """
   Creates a category.

@@ -3,8 +3,8 @@ defmodule Presency.Repo.Migrations.CreatePostsMetaKeywords do
 
   def change do
     create table(:posts_meta_keywords) do
-      add :post_id, references(:posts, on_delete: :nothing)
-      add :meta_keyword_id, references(:meta_keywords, on_delete: :nothing)
+      add :post_id, references(:posts, on_delete: :delete_all)
+      add :meta_keyword_id, references(:meta_keywords, on_delete: :delete_all)
 
       timestamps()
     end

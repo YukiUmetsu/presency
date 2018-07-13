@@ -40,7 +40,7 @@ defmodule Presency.CMS do
 
   def get_post_with_assoc!(id) do
     query = from p in Post, where: p.id == ^id
-    post = Repo.one(query)
+    Repo.one(query)
     |> Repo.preload(:tags)
     |> Repo.preload(:meta_keywords)
     |> Repo.preload(:category)
@@ -140,7 +140,7 @@ defmodule Presency.CMS do
       Ecto.build_assoc(item, :posts, post_param)
       |> Post.changeset(post_param)
     else
-      _ -> Post.changeset(post_param)
+      _ -> Ecto.Changeset.change(%Post{}, post_param)
     end
   end
 
@@ -261,14 +261,14 @@ defmodule Presency.CMS do
       [%Category{}, ...]
 
   """
-  def list_categories do
+  def list_categories() do
     query = from c in Category, order_by: c.id
     Repo.all(query)
   end
 
 
   def list_category_options do
-    case list_categories do
+    case list_categories() do
       nil -> nil
       categories -> categories |> Enum.map(fn(category) -> ["value": category.id, "key": category.title] end)
     end

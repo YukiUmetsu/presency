@@ -2,17 +2,17 @@ defmodule PresencyWeb.Admin.AdminUserController do
   use PresencyWeb, :controller
 
   alias Presency.Administration
-  alias Presency.Accounts.User
+  alias Presency.Administration.AdminUser
 
   def index(conn, _params) do
-    users = Administration.list_admin_users()
+    admin_users = Administration.list_admin_users()
 
     conn
-    |> render("index.html", users: users)
+    |> render("index.html", admin_users: admin_users)
   end
 
   def new(conn, _params) do
-    changeset = Administration.change_admin_user(%User{})
+    changeset = Administration.change_admin_user(%AdminUser{})
     render(conn, "new.html", changeset: changeset)
   end
 

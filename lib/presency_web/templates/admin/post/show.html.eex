@@ -53,4 +53,4 @@
 
 <span><%= link "Edit", to: admin_post_path(@conn, :edit, @post), class: "button" %></span>
 <span><%= link "Back", to: admin_post_path(@conn, :index), class: "button"%></span>
-<script><%= post_content_to_html %> $("#post-content").html(html);</script>
+<script><%= post_content_to_html() %> $("#post-content").html(html);</script>

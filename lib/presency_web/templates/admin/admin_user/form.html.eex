@@ -1,29 +1,51 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [multipart: true], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="field">
     <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
+    <div class="control">
+      <%= text_input f, :name, class: "input" %>
+      <%= error_tag f, :name %>
+    </div>
   </div>
 
-  <div class="form-group">
+  <div class="field">
     <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
+    <div class="control">
+      <%= text_input f, :email, class: "input" %>
+      <%= error_tag f, :email %>
+    </div>
   </div>
 
-  <div class="form-group">
+  <div class="field">
     <%= label f, :phone, class: "control-label" %>
-    <%= text_input f, :phone, class: "form-control" %>
-    <%= error_tag f, :phone %>
+    <div class="control">
+      <%= text_input f, :phone, class: "input" %>
+      <%= error_tag f, :phone %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+  <div class="field">
+    <%= label f, :avatar_img, class: "control-label" %>
+    <div class="control">
+      <%= file_input f, :avatar_img, class: "input" %>
+      <%= error_tag f, :avatar_img %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= label f, :introduction_content, class: "label" %>
+    <div class="control">
+      <%= textarea f, :introduction_content, class: "textarea" %>
+      <%= error_tag f, :introduction_content %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= submit "Submit", class: "button" %>
   </div>
 <% end %>

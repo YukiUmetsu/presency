@@ -99,7 +99,7 @@ defmodule PresencyWeb.Admin.PostController do
 
   def add_posts_to_gon(conn, posts) do
     case Blankable.blank?(posts) do
-      false -> conn = add_post_to_gon(conn, posts, 0)
+      false -> add_post_to_gon(conn, posts, 0)
       true -> conn
     end
 
@@ -112,10 +112,10 @@ defmodule PresencyWeb.Admin.PostController do
     post_map = %{key => post.content}
     conn = put_gon(conn, post_map)
 
-    if next_index_exist?(posts, index) do
-      conn = add_post_to_gon(conn, posts, index+1)
+    case next_index_exist?(posts, index) do
+      true -> add_post_to_gon(conn, posts, index+1)
+      false -> conn
     end
-    conn
   end
 
   def next_index_exist?(list, index) do

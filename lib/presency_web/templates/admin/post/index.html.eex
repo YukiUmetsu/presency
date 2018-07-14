@@ -8,6 +8,7 @@
       <th>Category</th>
       <th>Publicity</th>
       <th>Updated At</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -22,16 +23,16 @@
       <td><%= to_date_time_string(post.updated_at) %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: admin_post_path(@conn, :show, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: admin_post_path(@conn, :edit, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: admin_post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Show", to: admin_post_path(@conn, :show, post), class: "button is-light" %></span>
+        <span><%= link "Edit", to: admin_post_path(@conn, :edit, post), class: "button is-light" %></span>
+        <span><%= link "Delete", to: admin_post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger" %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Post", to: admin_post_path(@conn, :new) %></span>
+<span><%= link "New Post", to: admin_post_path(@conn, :new), class: "button is-primary" %></span>
 <!--<script><%= posts_content_to_array() %>-->
     <!--for (let i=0; i< posts.length; i++) {-->
         <!--var html = posts[i];-->

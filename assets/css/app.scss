@@ -2,7 +2,11 @@
 @import "bulma";
 
 .admin-main {
-  padding: 1rem 8rem 3rem 3rem;
+  padding: 1rem 3rem 3rem 3rem;
+
+  .table {
+    width: 100%;
+  }
 }
 .admin-side-menu {
   padding: 1rem 0 0 .5rem;

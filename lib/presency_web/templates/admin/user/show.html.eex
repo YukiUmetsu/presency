@@ -1,20 +1,28 @@
-<div class="row">
-  <div class="col-md-3">
-    <h1>Customer</h1>
-    <h2><%= @customer.name %></h2>
-    <ul>
-      <li>
-        <strong>Area of Residence:</strong>
-        <%= @customer.residence_area %>
-      </li>
-      <li>
-        <strong>Phone number:</strong>
-        <%= @customer.phone %>
-      </li>
-      <li>
-        <strong>Email:</strong>
-        <%= @customer.email %>
-      </li>
-    </ul>
-  </div>
-</div>
+<h2 class="title is-2">Show User</h2>
+
+<ul>
+
+  <li>
+    <strong>Username:</strong>
+    <%= @user.username %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @user.first_name %> <%= @user.last_name %>
+  </li>
+
+  <li>
+    <strong>Display Name:</strong>
+    <%= @user.display_name %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: admin_user_path(@conn, :edit, @user) %></span>
+<span><%= link "Back", to: admin_user_path(@conn, :index) %></span>

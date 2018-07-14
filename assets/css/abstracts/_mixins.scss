@@ -1,0 +1,37 @@
+/* Mixins */
+@mixin both-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@mixin both-center-parent {
+  position: relative;
+}
+
+
+/*
+Media query manager
+  0 - 600px phone
+  600 - 900px tablet portrait
+  900 - 1200px  tablet landscape
+  1200  - 1800px  normal target
+  1800 over big desktop
+
+  1em = 16px
+ */
+
+@mixin respond($break-point) {
+  @if $break-point == phone {
+    @media (max-width: 37.5em) { @content }
+  }
+  @if $break-point == tab-port {
+    @media (max-width: 56.25em) { @content }
+  }
+  @if $break-point == tab-land {
+    @media (max-width: 75em) { @content }
+  }
+  @if $break-point == big-desktop {
+    @media (min-width: 122.5em) { @content }
+  }
+}

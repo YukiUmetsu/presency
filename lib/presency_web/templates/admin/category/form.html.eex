@@ -1,30 +1,30 @@
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
-    <div class="alert alert-danger">
+    <div class="notification is-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :title, class: "control-label" %>
+  <div class="field">
+    <%= label f, :title, class: "label" %>
     <%= text_input f, :title, class: "form-control" %>
     <%= error_tag f, :title %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
+  <div class="field">
+    <%= label f, :description, class: "label" %>
     <%= textarea f, :description, class: "form-control" %>
     <%= error_tag f, :description %>
   </div>
 
 
-  <div class="form-group">
-    <%= label f, :parent_category_id, "Parent Category", class: "control-label" %>
+  <div class="field">
+    <%= label f, :parent_category_id, "Parent Category", class: "label" %>
     <%= select f, :parent_category_id, @categories, prompt: "choose a parent category", class: "form-control" %>
     <%= error_tag f, :parent_category_id %>
   </div>
 
-  <div class="form-group mt-3">
+  <div class="field mt-3">
     <%= submit "Submit", class: "button" %>
   </div>
 <% end %>

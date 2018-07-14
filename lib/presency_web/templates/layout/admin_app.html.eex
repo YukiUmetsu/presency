@@ -12,19 +12,19 @@
 </head>
 <body>
   <%= render "admin_app_nav.html", conn: @conn %>
-  <div class="columns">
-    <div class="column is-one-sixth">
-      <%= render "admin_app_side_nav.html", conn: @conn %>
-    </div>
-    <div class="column">
-      <div class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <main class="admin-main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-  </div>
-    </div>
-  </div>
+      <div class="columns">
+        <div class="column is-2">
+          <%= render "admin_app_side_nav.html", conn: @conn %>
+        </div>
+        <div class="column">
+            <div class="container">
+                <p class="notification is-info" role="alert"><%= get_flash(@conn, :info) %></p>
+                <p class="notification is-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+              <main class="admin-main">
+                <%= render @view_module, @view_template, assigns %>
+              </main>
+            </div>
+        </div>
+      </div>
 </body>
 </html>

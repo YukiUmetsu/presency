@@ -1,6 +1,14 @@
 /* This file is for your main application css. */
 @import "bulma";
+@import "abstracts/all";
+@import "utils/all";
+@import "base/all";
+@import "components/all";
+@import "pages/all";
+@import "themes/all";
 
+
+/* Admin */
 .admin-main {
   padding: 1rem 3rem 3rem 3rem;
 
@@ -10,4 +18,12 @@
 }
 .admin-side-menu {
   padding: 1rem 0 0 .5rem;
+}
+
+.admin-login-container {
+  @include both-center-parent;
+}
+
+.admin-login {
+  @include both-center;
 }

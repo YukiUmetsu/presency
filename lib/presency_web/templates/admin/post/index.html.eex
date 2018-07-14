@@ -1,4 +1,4 @@
-<h2>Listing Posts</h2>
+<h2 class="title is-3 u-margin-bottom-small">Posts</h2>
 
 <table class="table">
   <thead>

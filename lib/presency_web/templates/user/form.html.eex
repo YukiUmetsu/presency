@@ -1,65 +1,65 @@
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
-    <div class="alert alert-danger">
+    <div class="notification is-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :first_name, class: "control-label" %>
+  <div class="field">
+    <%= label f, :first_name, class: "label" %>
     <%= text_input f, :first_name, class: "form-control" %>
     <%= error_tag f, :first_name %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :last_name, class: "control-label" %>
+  <div class="field">
+    <%= label f, :last_name, class: "label" %>
     <%= text_input f, :last_name, class: "form-control" %>
     <%= error_tag f, :last_name %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
+  <div class="field">
+    <%= label f, :email, class: "label" %>
     <%= text_input f, :email, class: "form-control" %>
     <%= error_tag f, :email %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :password, class: "control-label" %>
+  <div class="field">
+    <%= label f, :password, class: "label" %>
     <%= text_input f, :password, class: "form-control" %>
     <%= error_tag f, :password %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :fb_token, class: "control-label" %>
+  <div class="field">
+    <%= label f, :fb_token, class: "label" %>
     <%= text_input f, :fb_token, class: "form-control" %>
     <%= error_tag f, :fb_token %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :ggl_token, class: "control-label" %>
+  <div class="field">
+    <%= label f, :ggl_token, class: "label" %>
     <%= text_input f, :ggl_token, class: "form-control" %>
     <%= error_tag f, :ggl_token %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :avatar_img, class: "control-label" %>
+  <div class="field">
+    <%= label f, :avatar_img, class: "label" %>
     <%= textarea f, :avatar_img, class: "form-control" %>
     <%= error_tag f, :avatar_img %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :username, class: "control-label" %>
+  <div class="field">
+    <%= label f, :username, class: "label" %>
     <%= text_input f, :username, class: "form-control" %>
     <%= error_tag f, :username %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :display_name, class: "control-label" %>
+  <div class="field">
+    <%= label f, :display_name, class: "label" %>
     <%= text_input f, :display_name, class: "form-control" %>
     <%= error_tag f, :display_name %>
   </div>
 
-  <div class="form-group">
+  <div class="field">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

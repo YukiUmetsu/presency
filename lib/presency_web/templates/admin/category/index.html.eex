@@ -1,4 +1,4 @@
-<h2>Listing Categories</h2>
+<h2 class="title is-3 u-margin-bottom-small">Categories</h2>
 
 <table class="table">
   <thead>

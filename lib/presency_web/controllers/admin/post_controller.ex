@@ -53,7 +53,7 @@ defmodule PresencyWeb.Admin.PostController do
 
   def edit(conn, %{"id" => id}) do
     categories = CMS.list_category_options()
-    post = CMS.get_post!(id)
+    post = CMS.get_post_with_assoc!(id)
     changeset = CMS.change_post(post)
     render(conn, "edit.html", post: post, changeset: changeset, categories: categories)
   end

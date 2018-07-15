@@ -33,7 +33,7 @@ exports.config = {
   // Phoenix paths configuration
   paths: {
     // Dependencies and current project directories to watch
-    watched: ["static", "css", "js", "vendor"],
+    watched: ["static", "css", "js", "vendor", "fonts"],
     // Where to compile files to
     public: "../priv/static"
   },
@@ -47,7 +47,7 @@ exports.config = {
     sass: {
         mode: 'native',
         options: {
-            includePaths: ['node_modules/bulma']
+            includePaths: ["node_modules/bulma"]
         }
     }
   },

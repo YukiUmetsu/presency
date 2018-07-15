@@ -1,0 +1,17 @@
+.form-field-left-side {
+  width: 100%;
+  @include from($tablet) {
+    margin-right: 2rem;
+  }
+}
+
+.form-field-right-side {
+  width: 100%;
+}
+
+.form-field-half {
+  width: 50%;
+  @include from($tablet) {
+    padding-right: 1.0rem;
+  }
+}

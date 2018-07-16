@@ -36,6 +36,14 @@ config :presency, Presency.Mailer,
        no_mx_lookups: false, # can be `true`
        auth: :if_available # can be `always`. If your smtp relay requires authentication set it to `always`.
 
+config :cipher,
+       keyphrase: System.get_env("KEY_PHRASE"),
+       ivphrase: System.get_env("IV_PHRASE"),
+       magic_token: "magictoken"
+
+config :arc,
+       storage: Arc.Storage.Local,
+       storage_dir: "priv/static"
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

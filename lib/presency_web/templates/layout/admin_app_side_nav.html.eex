@@ -4,7 +4,7 @@
         <li><%= link "Admin Users", to: admin_admin_user_path(@conn, :index) %></li>
         <li><%= link "Users", to: admin_user_path(@conn, :index) %></li>
     </ul>
-    <p class="menu-label">Contents Management</p>
+    <p class="menu-label">Contents</p>
     <ul class="menu-list">
         <li><%= link "Posts", to: admin_post_path(@conn, :index) %></li>
         <li><%= link "Comments", to: admin_comment_path(@conn, :index) %></li>

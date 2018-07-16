@@ -4,7 +4,7 @@
 
   <li>
     <strong>Name:</strong>
-    <%= @user.name %>
+    <%= "#{@user.first_name} #{@user.last_name}" %>
   </li>
 
   <li>
@@ -13,11 +13,11 @@
   </li>
 
   <li>
-    <strong>Phone:</strong>
-    <%= @user.phone %>
+    <strong>Display Name:</strong>
+    <%= @user.display_name %>
   </li>
 
 </ul>
 
-<span><%= link "Edit", to: admin_user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: admin_user_path(@conn, :index) %></span>
+<span><%= link "Edit", to: admin_admin_user_path(@conn, :edit, @user), class: "button" %></span>
+<span><%= link "Back", to: admin_admin_user_path(@conn, :index), class: "button" %></span>

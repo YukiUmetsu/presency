@@ -15,15 +15,11 @@ defmodule Helpers.Posts do
     end
   end
 
-  @spec show_title_in_one_line(Enumerable) :: string
+  @spec show_title_in_one_line(Enumerable) :: String.t()
   def show_title_in_one_line(resources \\ []) do
-    case resources do
-      resources ->
-        resources
-        |> Enum.map(fn(resource) -> resource.title end)
-        |> Enum.join(", ")
-      _ -> ""
-    end
+      resources
+      |> Enum.map(fn(resource) -> resource.title end)
+      |> Enum.join(", ")
   end
 
 end

@@ -1,0 +1,17 @@
+.admin-container {
+  height: 100%;
+  .column:first-child {
+    padding-right: 2rem;
+  }
+
+  .container {
+    border-radius: 3px;
+    max-width: 80%;
+    margin: 3% 5% 5% 5%;
+    border: thin rgba($color-black, .5);
+    border-top: .3rem solid rgba($color-forestgreen, .8);
+    -webkit-box-shadow: 6px 5px 27px 1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 6px 5px 27px 1px rgba(0,0,0,0.3);
+    box-shadow: 6px 5px 27px 1px rgba(0,0,0,0.3);
+  }
+}

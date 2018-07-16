@@ -8,8 +8,11 @@ defmodule PresencyWeb.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :presency, gzip: false,
+    at: "/", from: :presency, gzip: true,
     only: ~w(css fonts images js favicon.ico robots.txt)
+
+  plug Plug.Static,
+    at: "/priv/static/uploads", from: Path.expand('./priv/static/uploads'), gzip: true
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

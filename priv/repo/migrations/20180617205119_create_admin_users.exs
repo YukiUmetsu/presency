@@ -13,5 +13,7 @@ defmodule Presency.Repo.Migrations.CreateAdminUsers do
 
       timestamps()
     end
+
+    create unique_index(:users, [:email])
   end
 end

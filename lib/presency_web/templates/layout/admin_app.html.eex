@@ -12,8 +12,8 @@
 </head>
 <body>
   <%= render "admin_app_nav.html", conn: @conn %>
-      <div class="columns">
-        <div class="column is-2">
+      <div class="admin-container columns u-margin-bottom-0">
+        <div class="column is-narrow u-padding-bottom-0">
           <%= render "admin_app_side_nav.html", conn: @conn %>
         </div>
         <div class="column">

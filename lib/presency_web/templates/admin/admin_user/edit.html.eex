@@ -2,4 +2,4 @@
 
 <%= render "form.html", Map.put(assigns, :action, admin_user_path(@conn, :update, @user)) %>
 
-<span><%= link "Back", to: admin_user_path(@conn, :index) %></span>
+<%= link "Back", to: admin_admin_user_path(@conn, :index), class: "button u-margin-top-small" %>

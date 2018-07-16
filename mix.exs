@@ -45,11 +45,15 @@ defmodule Presency.Mixfile do
       {:nimble_csv, "~> 0.1.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12.0"},
-      {:httpoison, "~> 1.0"},
+      {:httpoison, "~> 1.2.0", override: true},
       {:blankable, "~> 0.0.1"},
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.4.0"},
-      {:phoenix_gon, "~> 0.4.0"}
+      {:phoenix_gon, "~> 0.4.0"},
+      {:arc, "~> 0.10.0"},
+      {:arc_ecto, "~> 0.10.0"},
+      {:cipher, ">= 1.4.0"},
+      { :elixir_uuid, "~> 1.2" }
     ]
   end
 

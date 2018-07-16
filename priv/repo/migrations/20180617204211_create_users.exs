@@ -15,5 +15,7 @@ defmodule Presency.Repo.Migrations.CreateUsers do
 
       timestamps()
     end
+
+    create unique_index(:users, [:email, :username])
   end
 end

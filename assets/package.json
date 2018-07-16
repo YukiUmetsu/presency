@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "bulma": "^0.7.1",
+    "bulma-extensions": "^2.2.1",
+    "croppie": "^2.6.2",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "npm": "^6.2.0",
     "phoenix": "file:../deps/phoenix",

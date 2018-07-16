@@ -1,11 +1,13 @@
 /* This file is for your main application css. */
 @import "bulma";
+@import 'node_modules/font-awesome/scss/font-awesome';
 @import "abstracts/all";
 @import "utils/all";
 @import "base/all";
 @import "components/all";
 @import "pages/all";
 @import "themes/all";
+@import "vendor/all";
 
 
 /* Admin */

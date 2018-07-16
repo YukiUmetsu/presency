@@ -13,6 +13,7 @@ defmodule Presency.Accounts.User do
     field :last_name, :string
     field :password, :string
     field :username, :string
+    field :uuid, :string
     belongs_to :user_access_profile, Presency.Permissions.UserAccessProfile
     has_many :comments, Presency.CMS.Comment
 
@@ -22,7 +23,8 @@ defmodule Presency.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:first_name, :last_name, :email, :password, :fb_token, :ggl_token, :avatar_img, :username, :display_name])
-    |> validate_required([:email, :password, :username])
+    |> cast(attrs, [:first_name, :last_name, :email, :password, :fb_token, :ggl_token, :avatar_img, :username, :display_name, :uuid])
+    |> validate_required([:email, :password, :username, :uuid])
+    |> unique_constraint([:email, :username, :uuid])
   end
 end

@@ -1,0 +1,40 @@
+.navbar {
+  background-color: $color-light-green;
+
+  @include from($desktop) {
+    min-height: 3rem;
+  }
+}
+
+.navbar-user-name{
+  color: $color-white;
+
+  :hover {
+    color: $color-white;
+  }
+}
+
+.navbar-brand {
+  a.navbar-item {
+    color: $color-white;
+
+    :hover {
+      color: $color-white;
+    }
+  }
+
+  .navbar-item {
+    font-weight: 800;
+  }
+}
+
+.navbar-user-name {
+  margin-left: .3rem;
+  text-decoration: solid;
+}
+
+.navbar-avatar {
+  margin-right: .3rem;
+  border-radius: 50px;
+  max-height: 2rem;;
+}

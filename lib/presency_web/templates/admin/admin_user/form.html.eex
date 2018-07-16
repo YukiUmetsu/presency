@@ -5,36 +5,52 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= label f, :name, class: "label" %>
-    <div class="control">
-      <%= text_input f, :name, class: "input" %>
-      <%= error_tag f, :name %>
+    <div class="field is-horizontal">
+        <div class="field form-field-left-side">
+            <%= label f, :last_name, class: "label" %>
+            <div class="control">
+                <%= text_input f, :last_name, class: "input", required: true %>
+                <%= error_tag f, :last_name %>
+            </div>
+        </div>
+        <div class="field form-field-right-side">
+            <%= label f, :first_name, class: "label" %>
+            <div class="control">
+                <%= text_input f, :first_name, class: "input", required: true %>
+                <%= error_tag f, :first_name %>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="field">
-    <%= label f, :email, class: "label" %>
-    <div class="control">
-      <%= text_input f, :email, class: "input" %>
-      <%= error_tag f, :email %>
+    <div class="field form-field-half">
+        <%= label f, :email, class: "label" %>
+        <div class="control">
+          <%= text_input f, :email, class: "input", required: true %>
+          <%= error_tag f, :email %>
+        </div>
     </div>
-  </div>
 
-  <div class="field">
-    <%= label f, :phone, class: "label" %>
-    <div class="control">
-      <%= text_input f, :phone, class: "input" %>
-      <%= error_tag f, :phone %>
+    <div class="field form-field-half">
+        <%= label f, :display_name, class: "label" %>
+        <div class="control">
+            <%= text_input f, :display_name, class: "input" %>
+            <%= error_tag f, :display_name %>
+        </div>
     </div>
-  </div>
 
-  <div class="field">
-    <%= label f, :avatar_img, class: "label" %>
-    <div class="control">
-      <%= file_input f, :avatar_img, class: "input" %>
+
+    <div class="field">
+        <label class="label">Avatar Image</label>
+    </div>
+  <div class="file u-margin-bottom-small">
+    <label class="file-label">
+      <%= file_input f, :avatar_img, class: "file-input" %>
+      <span class="file-cta">
+        <span class="file-icon"><i class="fas fa-upload"></i></span>
+        <span class="file-label">Choose a file…</span>
+      </span>
+    </label>
       <%= error_tag f, :avatar_img %>
-    </div>
   </div>
 
   <div class="field">

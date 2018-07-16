@@ -15,7 +15,8 @@ exports.config = {
     stylesheets: {
       joinTo: "css/app.css",
       order: {
-          after: [ "css/app.scss"]
+          after: [ "css/app.scss"],
+          before: ["vendor/css"]
       }
     },
     templates: {
@@ -47,7 +48,11 @@ exports.config = {
     sass: {
         mode: 'native',
         options: {
-            includePaths: ["node_modules/bulma"]
+            includePaths: [
+                "node_modules/bulma",
+                "node_modules/bulma-extensions/src/sass",
+                "node_modules/font-awesome"
+            ]
         }
     }
   },

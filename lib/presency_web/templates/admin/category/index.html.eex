@@ -15,13 +15,26 @@
     <tr>
       <td><%= category.id %></td>
       <td><%= category.title %></td>
-      <td><%= category.description %></td>
+      <td class="is-small-text"><%= category.description %></td>
       <td><%= show_parent_category_title(category.parent_category_id, @categories) %></td>
 
-      <td class="text-right">
-        <span><%= link "Show", to: admin_category_path(@conn, :show, category), class: "button is-light" %></span>
-        <span><%= link "Edit", to: admin_category_path(@conn, :edit, category), class: "button is-light" %></span>
-        <span><%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger" %></span>
+      <td class="is-horizontal">
+        <span><%= link raw("<i class='fa fa-eye'></i>"),
+          to: admin_category_path(@conn, :show, category),
+          class: "button is-light tooltip",
+          "data-tooltip": "Show"
+          %></span>
+        <span><%= link raw("<i class='fa fa-edit'></i>"),
+          to: admin_category_path(@conn, :edit, category),
+          class: "button is-light tooltip",
+          "data-tooltip": "Edit"
+          %></span>
+        <span><%= link raw("<i class='fa fa-trash'></i>"),
+          to: admin_category_path(@conn, :delete, category),
+          method: :delete, data: [confirm: "Are you sure?"],
+          class: "button is-danger tooltip",
+          "data-tooltip": "Delete"
+          %></span>
       </td>
     </tr>
 <% end %>

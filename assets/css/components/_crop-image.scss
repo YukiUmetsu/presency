@@ -1,0 +1,18 @@
+.image-crop-container {
+  #avatar-image {
+    max-height: 150px;
+    max-width: 150px;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+  }
+  #image-container__image {
+    width: 100%;
+    visibility: hidden;
+  }
+  margin-bottom: 3rem;
+}
+
+#crop_button {
+  margin-left: 1rem;
+  min-width: 10rem;
+}

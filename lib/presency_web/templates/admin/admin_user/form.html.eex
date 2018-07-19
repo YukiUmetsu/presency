@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.1/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.1/cropper.min.js"></script>
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
   <%= if @changeset.action do %>
     <div class="notification is-danger">
@@ -38,21 +40,6 @@
         </div>
     </div>
 
-
-    <div class="field">
-        <label class="label">Avatar Image</label>
-    </div>
-  <div class="file u-margin-bottom-small">
-    <label class="file-label">
-      <%= file_input f, :avatar_img, class: "file-input" %>
-      <span class="file-cta">
-        <span class="file-icon"><i class="fas fa-upload"></i></span>
-        <span class="file-label">Choose a file…</span>
-      </span>
-    </label>
-      <%= error_tag f, :avatar_img %>
-  </div>
-
   <div class="field">
     <%= label f, :introduction_content, class: "label" %>
     <div class="control">
@@ -61,7 +48,64 @@
     </div>
   </div>
 
+    <div class="field">
+        <label class="label">Avatar Image</label>
+    </div>
+    <div class="file u-margin-bottom-small">
+        <label class="file-label">
+            <input class="file-input" id="avatar_img_file_input" name="original-image" type="file">
+            <span class="file-cta">
+                    <span class="file-icon"><i class="fa fa-upload"></i></span>
+                    <span class="file-label">Choose a file…</span>
+                  </span>
+        </label>
+        <div id="crop_button" class="button is-primary">
+            <span class="file-icon"><i class="fa fa-crop"></i></span>
+            Crop Image
+        </div>
+    </div>
+
+    <div class="image-crop-container">
+        <img id="avatar-image" src="<%= static_path(@conn, "/images/default-avatar.png") %>" alt="your avatar">
+        <img id="image-container__image" src="#" alt="your avatar" />
+    </div>
+
+    <div id="avatar_img__container" class="display-none">
+        <%= textarea f, :avatar_img, class: "textarea" %>
+        <%= error_tag f, :avatar_img %>
+    </div>
+
   <div class="field">
     <%= submit "Submit", class: "button" %>
   </div>
 <% end %>
+
+<script>
+    $('#avatar_img_file_input').on( 'change', function(){
+        $('#image-container__image').css('visibility', 'visible');
+        if (this.files && this.files[0]) {
+            if ( this.files[0].type.match(/^image\//) ) {
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    $('#image-container__image').attr('src', evt.target.result)
+                };
+                reader.readAsDataURL(this.files[0]);
+                setTimeout(initCropper, 500);
+            }
+        }
+    });
+
+    function initCropper(){
+        var image = document.getElementById('image-container__image');
+        var cropper = new Cropper(image, {
+            aspectRatio: 1 / 1
+        });
+
+        // On crop button clicked
+        document.getElementById('crop_button').addEventListener('click', function(){
+            var imgurl =  cropper.getCroppedCanvas().toDataURL();
+            $("#avatar-image").attr('src',imgurl);
+            $("#admin_user_avatar_img").text(imgurl);
+        })
+    }
+</script>

@@ -1,4 +1,4 @@
-<h2>New Admin User</h2>
+<h2 class="u-margin-bottom-small">New Admin User</h2>
 
 <%= render "form.html", Map.put(assigns, :action, admin_admin_user_path(@conn, :create)) %>
 

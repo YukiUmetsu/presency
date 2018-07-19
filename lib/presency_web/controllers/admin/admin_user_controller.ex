@@ -20,6 +20,7 @@ defmodule PresencyWeb.Admin.AdminUserController do
   end
 
   def create(conn, %{"admin_user" => user_params}) do
+    IEx.pry
     avatar_info = get_avatar_info_from_params(user_params)
     user_params =
       user_params

@@ -8,11 +8,14 @@
   <title>Presency Media</title>
   <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   <%= render_gon_script(@conn) %>
-  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  <%= if assigns[:token] do %>
+  <script>window.userToken = "<%= @token %>";</script>
+  <% end %>
 </head>
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 <body>
   <%= render "admin_app_nav.html", conn: @conn %>
-      <div class="admin-container columns u-margin-bottom-0">
+      <div class="admin-container columns u-margin-bottom-0 u-border-box">
         <div class="column is-narrow u-padding-bottom-0">
           <%= render "admin_app_side_nav.html", conn: @conn %>
         </div>

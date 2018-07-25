@@ -46,10 +46,8 @@
 </table>
 
 <span><%= link "New Post", to: admin_post_path(@conn, :new), class: "button is-primary" %></span>
-<!--<script><%= posts_content_to_array() %>-->
-    <!--for (let i=0; i< posts.length; i++) {-->
-        <!--var html = posts[i];-->
-        <!--var key = keys[i];-->
-        <!--$("#"+key).html(html);-->
-    <!--}-->
-<!--</script>-->
+<style>
+    .admin-container {
+        height: 100%;
+    }
+</style>

@@ -21,6 +21,11 @@ defmodule Presency.Administration do
     Repo.all(AdminUser)
   end
 
+  def list_admin_users_order_by_id do
+    query = from u in AdminUser, order_by: [asc: u.id]
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single admin_user.
 

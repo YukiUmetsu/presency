@@ -13,17 +13,19 @@ defmodule Presency.ImageUploader do
   # end
 
   # Whitelist file extensions:
-   def validate({file, rest}) do
-     valid_ext = ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
+   def validate({file, _rest}) do
+     ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
    end
 
   # Define a thumbnail transformation:
    def transform(:thumb, __) do
-     {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format jpg", :jpg}
+     {:convert, "-strip -thumbnail 250X250 -gravity center -extent 250X250 -format jpg", :jpg}
+     #{:convert, "-strip -thumbnail 250x250"}
    end
 
    def transform(:original, __) do
-    {:convert, "-strip -gravity center -format jpg", :jpg}
+    {:convert, "-strip -gravity center -format jpg"}
+    #{:convert, "-strip -gravity center"}
    end
 
   # Override the persisted filenames:
@@ -42,7 +44,7 @@ defmodule Presency.ImageUploader do
           end
           "priv/static/uploads/#{user_type}/#{scope.uuid}/avatar"
         else
-        _ -> "priv/static/uploads/unkown/unkown"
+        _ -> "priv/static/uploads/unknown/"
       end
    end
 

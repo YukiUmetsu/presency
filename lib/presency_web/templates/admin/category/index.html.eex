@@ -42,3 +42,8 @@
 </table>
 
 <span><%= link "New Category", to: admin_category_path(@conn, :new), class: "button is-primary" %></span>
+<style>
+  .admin-container {
+    height: 100%;
+  }
+</style>

@@ -2,6 +2,7 @@ defmodule PresencyWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :presency
 
   socket "/socket", PresencyWeb.UserSocket
+  socket "/admin_socket", PresencyWeb.AdminUserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -9,10 +10,10 @@ defmodule PresencyWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :presency, gzip: true,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js uploads favicon.ico robots.txt)
 
   plug Plug.Static,
-    at: "/priv/static/uploads", from: Path.expand('./priv/static/uploads'), gzip: true
+    at: "/uploads", from: Path.expand("./uploads"), gzip: false
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -27,7 +28,8 @@ defmodule PresencyWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Poison,
+    length: 100_000_000
 
   plug Plug.MethodOverride
   plug Plug.Head

@@ -48,6 +48,7 @@
     </div>
   </div>
 
+  <%= if user_exist(@conn) do %>
     <div class="field">
         <label class="label">Avatar Image</label>
     </div>
@@ -66,21 +67,24 @@
     </div>
 
     <div class="image-crop-container">
-        <img id="avatar-image" src="<%= static_path(@conn, "/images/default-avatar.png") %>" alt="your avatar">
+        <%= show_user_avatar_image(@conn) %>
         <img id="image-container__image" src="#" alt="your avatar" />
     </div>
 
-    <div id="avatar_img__container" class="display-none">
-        <%= textarea f, :avatar_img, class: "textarea" %>
-        <%= error_tag f, :avatar_img %>
-    </div>
+
+  <% end %>
 
   <div class="field">
     <%= submit "Submit", class: "button" %>
   </div>
 <% end %>
 
+<%= if user_exist(@conn) do %>
 <script>
+    $("#avatar-image").ready(function () {
+        this.firstAvatarImageSrc = $("#avatar-image").attr("src")
+    });
+
     $('#avatar_img_file_input').on( 'change', function(){
         $('#image-container__image').css('visibility', 'visible');
         if (this.files && this.files[0]) {
@@ -108,4 +112,45 @@
             $("#admin_user_avatar_img").text(imgurl);
         })
     }
+
+    $("form").submit(function (evt) {
+        evt.preventDefault();
+        window.history.back();
+        if(this.imageChanged()){
+
+        }
+    });
+
+    function imageChanged() {
+        return this.firstAvatarImageSrc === this.getCurrentAvatarSrc();
+    }
+
+    function getCurrentAvatarSrc() {
+        return $("#avatar-image").attr("src")
+    }
+
+    function b64toBlob(b64Data, contentType, sliceSize) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        var blob = new Blob(byteArrays, {type: contentType});
+        return blob;
+    }
 </script>
+<% end %>

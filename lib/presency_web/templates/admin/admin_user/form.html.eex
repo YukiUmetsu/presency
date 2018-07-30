@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.1/cropper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.1/cropper.min.js"></script>
-<%= form_for @changeset, @action, [multipart: true], fn f -> %>
+<%= form_for @changeset, @action, [multipart: true, id: "admin-user-form"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="notification is-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -54,15 +54,20 @@
     </div>
     <div class="file u-margin-bottom-small">
         <label class="file-label">
-            <input class="file-input" id="avatar_img_file_input" name="original-image" type="file">
+            <!--<input class="file-input" id="avatar_img_file_input" name="original-image" type="file">-->
+            <input class="file-input" id="avatar_img_file_input" name="admin_user[avatar_img]" type="file">
             <span class="file-cta">
                     <span class="file-icon"><i class="fa fa-upload"></i></span>
                     <span class="file-label">Choose a file…</span>
                   </span>
         </label>
-        <div id="crop_button" class="button is-primary">
+        <div id="crop_button" class="button is-info">
             <span class="file-icon"><i class="fa fa-crop"></i></span>
             Crop Image
+        </div>
+        <div id="save-avatar" class="button is-primary">
+            <span class="file-icon"><i class="fa fa-save"></i></span>
+            Save Avatar
         </div>
     </div>
 
@@ -75,14 +80,16 @@
   <% end %>
 
   <div class="field">
-    <%= submit "Submit", class: "button" %>
+    <div class="button" id="admin-user-submit">Submit</div>
   </div>
 <% end %>
 
 <%= if user_exist(@conn) do %>
 <script>
+    var firstAvatarImageSrc = '';
     $("#avatar-image").ready(function () {
-        this.firstAvatarImageSrc = $("#avatar-image").attr("src")
+        firstAvatarImageSrc = $("#avatar-image").attr("src");
+        console.log(firstAvatarImageSrc);
     });
 
     $('#avatar_img_file_input').on( 'change', function(){
@@ -102,7 +109,7 @@
     function initCropper(){
         var image = document.getElementById('image-container__image');
         var cropper = new Cropper(image, {
-            aspectRatio: 1 / 1
+            aspectRatio: 1 / 1,
         });
 
         // On crop button clicked
@@ -113,44 +120,22 @@
         })
     }
 
-    $("form").submit(function (evt) {
-        evt.preventDefault();
-        window.history.back();
-        if(this.imageChanged()){
+    $("#save-avatar").click(saveAvatar);
 
+    function saveAvatar() {
+        var image = $("#avatar-image").attr("src");
+        if(firstAvatarImageSrc != image){
+            var contentType = image.split(",", 2)[0]
+                .replace("data:", "")
+                .replace(";base64", "");
+            var base64 = image.split(",", 2)[1];
+            imageUploaderChannel
+                .push("image_uploader:new", { "image": base64, "content_type": contentType})
+                .receive("ok", function(reply) {
+                    console.log(reply.message);
+                })
+                .receive("error", (reply) => console.log(reply.message));
         }
-    });
-
-    function imageChanged() {
-        return this.firstAvatarImageSrc === this.getCurrentAvatarSrc();
-    }
-
-    function getCurrentAvatarSrc() {
-        return $("#avatar-image").attr("src")
-    }
-
-    function b64toBlob(b64Data, contentType, sliceSize) {
-        contentType = contentType || '';
-        sliceSize = sliceSize || 512;
-
-        var byteCharacters = atob(b64Data);
-        var byteArrays = [];
-
-        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-            var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-            var byteNumbers = new Array(slice.length);
-            for (var i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
-            }
-
-            var byteArray = new Uint8Array(byteNumbers);
-
-            byteArrays.push(byteArray);
-        }
-
-        var blob = new Blob(byteArrays, {type: contentType});
-        return blob;
     }
 </script>
 <% end %>

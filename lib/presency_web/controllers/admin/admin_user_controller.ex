@@ -22,10 +22,11 @@ defmodule PresencyWeb.Admin.AdminUserController do
 
   def create(conn, %{"admin_user" => user_params}) do
     avatar_info = get_avatar_info_from_params(user_params)
+    uuid = UUID.uuid4(:hex)
     user_params =
       user_params
       |> Map.drop(["avatar_img"])
-      |> Map.put("uuid", "#{UUID.uuid4(:hex)}")
+      |> Map.put("uuid", "#{uuid}")
 
     path_info = %PathInfo{
       ok_path: :show,
@@ -34,7 +35,7 @@ defmodule PresencyWeb.Admin.AdminUserController do
     }
     case Administration.create_admin_user(user_params) do
       {:ok, user} ->
-        avatar_info = Helpers.Images.save_temp_avatar(avatar_info, user.id)
+        avatar_info = Helpers.Images.save_avatar(avatar_info, "admin", uuid)
         update_user_with_avatar(conn, user, avatar_info, user_params, path_info)
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -48,24 +49,28 @@ defmodule PresencyWeb.Admin.AdminUserController do
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Administration.get_admin_user!(id)
-    token = Phoenix.Token.sign(conn, "socket_login", user.id)
-    changeset = Administration.change_admin_user(user)
-    conn = assign(conn, :user, user)
-    render(conn, "edit.html", user: user, changeset: changeset, token: token)
+    admin_user = Administration.get_admin_user!(id)
+    token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
+    changeset = Administration.change_admin_user(admin_user)
+    conn = assign(conn, :admin_user, admin_user)
+    render(conn, "edit.html", admin_user: admin_user, changeset: changeset, token: token)
   end
 
   def update(conn, %{"id" => id, "admin_user" => user_params}) do
     avatar_info = get_avatar_info_from_params(user_params)
-    user = Administration.get_admin_user!(id)
-    avatar_info = Helpers.Images.save_temp_avatar(avatar_info, user.id)
+    admin_user = Administration.get_admin_user!(id)
+    avatar_info = case avatar_info do
+      "" -> nil
+      nil -> nil
+      _ -> Helpers.Images.save_avatar(avatar_info, "admin", admin_user.uuid)
+    end
 
     path_info = %PathInfo{
       ok_path: :show,
       ok_message: "User updated successfully.",
       error_path: "edit.html"
     }
-    update_user_with_avatar(conn, user, avatar_info, user_params, path_info)
+    update_user_with_avatar(conn, admin_user, avatar_info, user_params, path_info)
   end
 
   def delete(conn, %{"id" => id}) do
@@ -88,11 +93,6 @@ defmodule PresencyWeb.Admin.AdminUserController do
     end
   end
 
-  defp add_user_to_img_filename(avatar_info, user) do
-    filename = "admin__#{user.uuid}__#{avatar_info.filename}"
-    Map.put(avatar_info, :filename, filename)
-  end
-
   defp update_user_with_avatar(conn, user, avatar_info, user_params, path_info) do
     case avatar_info do
       nil ->
@@ -100,8 +100,7 @@ defmodule PresencyWeb.Admin.AdminUserController do
         |> put_flash(:info, path_info.ok_message)
         |> redirect(to: admin_admin_user_path(conn, path_info.ok_path, user))
       _ ->
-        avatar_info = add_user_to_img_filename(avatar_info, user)
-        user_params = Map.put(user_params, "avatar_img", avatar_info)
+        user_params = Map.put(user_params, "avatar_img", avatar_info.path)
         update_admin_user(conn, user, user_params, path_info)
     end
   end

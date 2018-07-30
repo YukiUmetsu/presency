@@ -50,10 +50,8 @@ defmodule Presency.Mixfile do
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.4.0"},
       {:phoenix_gon, "~> 0.4.0"},
-      {:arc, "~> 0.10.0"},
-      {:arc_ecto, "~> 0.10.0"},
       {:cipher, ">= 1.4.0"},
-      { :elixir_uuid, "~> 1.2" }
+      {:elixir_uuid, "~> 1.2" },
     ]
   end
 

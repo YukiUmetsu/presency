@@ -7,7 +7,7 @@ defmodule PresencyWeb.LayoutView do
     with false <- Blankable.blank?(current_admin),
         false <- Blankable.blank?(current_admin.avatar_img)
       do
-        static_path(conn, "/uploads/admin/#{current_admin.uuid}/avatar/thumb.jpg}")
+        static_path(conn, String.trim_leading(current_admin.avatar_img, "priv/static"))
       else
         true -> static_path(conn, "/images/default-avatar.png")
         :error -> static_path(conn, "/images/default-avatar.png")

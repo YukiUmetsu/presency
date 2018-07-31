@@ -1,7 +1,6 @@
 defmodule PresencyWeb.Admin.AdminUserView do
   use PresencyWeb, :view
   alias Helpers.Images
-  alias Presency.ImageUploader
 
   def show_avatar_thumb(admin_user) do
     raw(Images.show_admin_avatar(admin_user, :original, ["image", "is-48x48"]))

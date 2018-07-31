@@ -24,7 +24,9 @@ defmodule Presency.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :password, :fb_token, :ggl_token, :avatar_img, :username, :display_name, :uuid])
-    |> validate_required([:email, :password, :username, :uuid])
-    |> unique_constraint([:email, :username, :uuid])
+    |> unique_constraint(:email)
+    |> unique_constraint(:username)
+    |> unique_constraint(:uuid)
+    |> validate_required([:email, :username])
   end
 end

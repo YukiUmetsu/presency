@@ -7,24 +7,28 @@
 
   <div class="field">
     <%= label f, :title, class: "label" %>
-    <%= text_input f, :title, class: "form-control" %>
+    <%= text_input f, :title, class: "input" %>
     <%= error_tag f, :title %>
   </div>
 
   <div class="field">
     <%= label f, :description, class: "label" %>
-    <%= textarea f, :description, class: "form-control" %>
+    <%= textarea f, :description, class: "textarea" %>
     <%= error_tag f, :description %>
   </div>
 
 
   <div class="field">
     <%= label f, :parent_category_id, "Parent Category", class: "label" %>
-    <%= select f, :parent_category_id, @categories, prompt: "choose a parent category", class: "form-control" %>
+    <div class="control">
+      <div class="select">
+        <%= select f, :parent_category_id, @categories, prompt: "choose a parent category" %>
+      </div>
+    </div>
     <%= error_tag f, :parent_category_id %>
   </div>
 
-  <div class="field mt-3">
+  <div class="field u-margin-tb-small">
     <%= submit "Submit", class: "button" %>
   </div>
 <% end %>

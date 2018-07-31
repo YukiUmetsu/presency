@@ -3,6 +3,7 @@ defmodule PresencyWeb.Admin.UserController do
 
   alias Presency.Accounts
   alias Presency.Accounts.User
+  require IEx
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -22,6 +23,7 @@ defmodule PresencyWeb.Admin.UserController do
         conn
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: admin_user_path(conn, :show, user))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -34,7 +36,9 @@ defmodule PresencyWeb.Admin.UserController do
 
   def edit(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
+    token = Phoenix.Token.sign(conn, "socket_login", user.id)
     changeset = Accounts.change_user(user)
+    conn = assign(conn, :user, user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 

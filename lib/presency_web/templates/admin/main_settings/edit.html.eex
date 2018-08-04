@@ -1,0 +1,4 @@
+<h2 class="title is-2">Edit Site Settings</h2>
+
+<%= render "form.html", Map.put(assigns, :action, admin_main_settings_path(@conn, :update, @main_settings)) %>
+

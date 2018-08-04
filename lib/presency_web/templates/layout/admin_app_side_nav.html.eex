@@ -10,4 +10,8 @@
         <li><%= link "Comments", to: admin_comment_path(@conn, :index) %></li>
         <li><%= link "Categories", to: admin_category_path(@conn, :index) %></li>
     </ul>
+    <p class="menu-label">Settings</p>
+    <ul class="menu-list">
+        <li><%= link "Site Settings", to: admin_main_settings_path(@conn, :edit) %></li>
+    </ul>
 </div>

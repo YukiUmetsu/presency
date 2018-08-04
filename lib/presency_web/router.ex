@@ -48,6 +48,9 @@ defmodule PresencyWeb.Router do
     resources "/comments", CommentController
     resources "/categories", CategoryController
 
+    get "/main_settings", MainSettingsController, :edit
+    patch "/main_settings/:id", MainSettingsController, :update
+    put "/main_settings/:id", MainSettingsController, :update
     get "/logout", SessionController, :delete
   end
 

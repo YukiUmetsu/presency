@@ -6,6 +6,7 @@ defmodule Presency.CMS do
   import Ecto.Query, warn: false
   alias Presency.Repo
   alias Presency.CMS.Post
+  alias Presency.CMS.MainSettings
   import Helpers.String, only: [trim_string_list: 1]
 
   @doc """
@@ -627,5 +628,32 @@ defmodule Presency.CMS do
       Blankable.blank?(meta_keyword) -> false
       true -> true
     end
+  end
+
+  def list_main_settings() do
+    Repo.one(from x in MainSettings, order_by: [asc: x.id], limit: 1)
+  end
+
+  def get_main_settings(id) do
+    case Blankable.blank?(id) do
+      false -> Repo.get!(MainSettings, id)
+      true -> nil
+    end
+  end
+
+  def create_main_settings(attrs \\ %{}) do
+    %MainSettings{}
+    |> MainSettings.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_main_settings(%MainSettings{} = settings, attrs) do
+    settings
+    |> MainSettings.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def change_main_settings(%MainSettings{} = settings) do
+    MainSettings.changeset(settings, %{})
   end
 end

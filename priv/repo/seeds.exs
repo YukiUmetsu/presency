@@ -14,6 +14,7 @@ alias Presency.Repo
 alias Presency.Administration
 alias Presency.CMS
 alias Presency.CMS.Category
+alias Presency.CMS.MainSettings
 
 admin_user = %{
   "display_name" => "Yuki Umetsu",
@@ -48,3 +49,9 @@ category = %{
   "description"=> "blog posts about PHP programming language"
 }
 CMS.create_category(category)
+
+main_settings = %{
+  "site_title" => "Blog Title",
+  "copyright" => "Presency",
+}
+CMS.create_main_settings(main_settings)

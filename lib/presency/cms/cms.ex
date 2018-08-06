@@ -656,4 +656,13 @@ defmodule Presency.CMS do
   def change_main_settings(%MainSettings{} = settings) do
     MainSettings.changeset(settings, %{})
   end
+
+  alias Presency.CMS.Image
+
+  def create_image(attrs \\ %{}) do
+    %Image{}
+    |> Image.changeset(attrs)
+    |> Repo.insert()
+  end
+
 end

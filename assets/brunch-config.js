@@ -54,6 +54,11 @@ exports.config = {
                 "node_modules/font-awesome"
             ]
         }
+    },
+    copycat: { // to js and css folders
+        "fine-uploader": [
+            "node_modules/fine-uploader/jquery.fine-uploader"
+        ]
     }
   },
 

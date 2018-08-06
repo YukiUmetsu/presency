@@ -3,7 +3,7 @@ defmodule PresencyWeb.Admin.AdminUserView do
   alias Helpers.Images
 
   def show_avatar_thumb(admin_user) do
-    raw(Images.show_admin_avatar(admin_user, :original, ["image", "is-48x48"]))
+    raw(Images.show_admin_avatar(admin_user, ["image", "is-48x48"]))
   end
 
   def user_exist(conn) do
@@ -26,7 +26,7 @@ defmodule PresencyWeb.Admin.AdminUserView do
         img_src = static_path(conn, "/images/default-avatar.png")
         raw("<img id='avatar-image' src='#{img_src}' alt='your avatar'>")
        _ ->
-         Images.show_admin_avatar(conn.assigns.admin_user, :original, ["image", "img-round"])
+         Images.show_admin_avatar(conn.assigns.admin_user, ["image", "img-round"])
          |> raw()
     end
   end

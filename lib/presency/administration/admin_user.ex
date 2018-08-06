@@ -14,6 +14,7 @@ defmodule Presency.Administration.AdminUser do
     field :password, :string
     field :uuid, :string
     belongs_to :admin_access_profile, Presency.Permissions.AdminAccessProfile
+    has_many :images, Presency.CMS.Image
 
     timestamps()
   end

@@ -12,7 +12,7 @@ defmodule Helpers.Images do
    String.trim_leading(user.avatar_img, "/priv/static")
   end
 
-  def show_admin_avatar(user, type, html_classes \\ ["image", "img-round", ""]) do
+  def show_admin_avatar(user, html_classes \\ ["image", "img-round", ""]) do
     with false <- Blankable.blank?(user),
           false <- Blankable.blank?(user.avatar_img)
       do
@@ -64,7 +64,7 @@ defmodule Helpers.Images do
         temp_dir = "priv/static" <> get_avatar_temp_dir(user_type, uuid)
         Files.create_dir(temp_dir)
         path = temp_dir <> "original.#{attr.format}"
-        case Files.write_image_to_file(path, data, attr.format) do
+        case Files.write_avatar_to_file(path, data, attr.format) do
           :error -> nil
           image_info ->
             strip_origilal_image("/#{temp_dir}", image_info.filename)
@@ -81,7 +81,7 @@ defmodule Helpers.Images do
         directory = "priv/static" <> get_avatar_dir(user_type, uuid)
         Files.create_dir(directory)
         path = directory <> "original.#{attr.format}"
-        case Files.write_image_to_file(path, data, attr.format) do
+        case Files.write_avatar_to_file(path, data, attr.format) do
           :error -> nil
           image_info ->
             strip_origilal_image("/#{directory}", image_info.filename)
@@ -118,7 +118,7 @@ defmodule Helpers.Images do
      case Enum.count(str_list) do
         0 -> "jpg"
         1 -> Enum.at(str_list, 0)
-        _ -> str_list |> Enum.take(-1)
+        _ -> str_list |> Enum.at(-1)
       end
   end
 
@@ -157,8 +157,25 @@ defmodule Helpers.Images do
   end
 
   def strip_origilal_image(directory, filename) do
-    directory = System.cwd <> String.trim_trailing("#{directory}", "/")
+    filename = filename |> strip_training_num()
+    first_char = String.slice(directory, 0, 1)
+    dir = case first_char do
+      "/" -> String.trim_trailing("#{directory}", "/")
+      _ -> "/" <> String.trim_trailing("#{directory}", "/")
+    end
+    directory = System.cwd <> dir
     System.cmd("convert", ["-strip", "#{filename}", "#{filename}"], cd: directory)
   end
 
+  def strip_training_num(filename) do
+    # trim after ?
+    String.replace(filename, ~r/(.)\?.*/, "\\1")
+  end
+
+  def split_dir_filename(path \\ "") do
+    str_list = String.split(path, "/")
+    filename = Enum.at(str_list, -1)
+    dir = String.trim_trailing(path, filename) |> String.trim_trailing("/")
+    %{dir: dir, filename: filename}
+  end
 end

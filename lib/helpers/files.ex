@@ -15,7 +15,7 @@ defmodule Helpers.Files do
     end
   end
 
-  def write_image_to_file(path, data, ext) do
+  def write_avatar_to_file(path, data, ext) do
     case File.open(path, [:write]) do
       {:ok, file} ->
         IO.binwrite(file, data)
@@ -31,5 +31,28 @@ defmodule Helpers.Files do
     end
   end
 
+  def copy_file(srcPath, distDir, distPath, index \\ 0, max_try \\ 5) do
+    create_dir(distDir)
+
+    case {index <= max_try, File.exists?(distPath)} do
+      {true, false} ->
+        File.cp_r(srcPath, distPath)
+        rand = :rand.uniform(9999999999)
+        {:ok, "#{distPath}?#{rand}"}
+
+      {true, true} ->
+        new_path = add_index_to_path(distPath, index+1)
+        copy_file(srcPath, new_path, index+1, max_try)
+
+      {false, _} -> {:error, "reached to max tries"}
+    end
+  end
+
+  def add_index_to_path(path, index \\ 1) do
+    str_array = String.split(path, ".")
+    ext = Enum.at(str_array, -1)
+    path_front = String.trim_trailing(path, ".#{ext}")
+    "#{path_front}-#{index}.#{ext}"
+  end
 
 end

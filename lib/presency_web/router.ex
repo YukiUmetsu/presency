@@ -51,12 +51,15 @@ defmodule PresencyWeb.Router do
     get "/main_settings", MainSettingsController, :edit
     patch "/main_settings/:id", MainSettingsController, :update
     put "/main_settings/:id", MainSettingsController, :update
+    get "/image_gallery", ImageGalleryController, :index
+
     get "/logout", SessionController, :delete
   end
 
 
   # Other scopes may use custom stacks.
-  # scope "/api", PresencyWeb do
-  #   pipe_through :api
-  # end
+   scope "/api", PresencyWeb.Api do
+     pipe_through :api
+     resources "/image_manager", ImageManagerController, only: [:create, :index]
+   end
 end

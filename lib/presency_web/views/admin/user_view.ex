@@ -22,7 +22,7 @@ defmodule PresencyWeb.Admin.UserView do
         img_src = static_path(conn, "/images/default-avatar.png")
         raw("<img id='avatar-image' src='#{img_src}' alt='your avatar'>")
       _ ->
-        Images.show_admin_avatar(conn.assigns.user, :original, ["image", "img-round"])
+        Images.show_admin_avatar(conn.assigns.user, ["image", "img-round"])
         |> raw()
     end
   end

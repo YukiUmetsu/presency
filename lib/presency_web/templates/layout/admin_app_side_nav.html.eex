@@ -9,6 +9,7 @@
         <li><%= link "Posts", to: admin_post_path(@conn, :index) %></li>
         <li><%= link "Comments", to: admin_comment_path(@conn, :index) %></li>
         <li><%= link "Categories", to: admin_category_path(@conn, :index) %></li>
+        <li><%= link "Image Gallery", to: admin_image_gallery_path(@conn, :index) %></li>
     </ul>
     <p class="menu-label">Settings</p>
     <ul class="menu-list">

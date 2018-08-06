@@ -16,6 +16,7 @@ defmodule Presency.Accounts.User do
     field :uuid, :string
     belongs_to :user_access_profile, Presency.Permissions.UserAccessProfile
     has_many :comments, Presency.CMS.Comment
+    has_many :images, Presency.CMS.Image
 
     timestamps()
   end

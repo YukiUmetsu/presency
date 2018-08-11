@@ -14,7 +14,6 @@ defmodule Presency.CMS.Post do
     belongs_to :post_status, Presency.CMS.PostStatus
     belongs_to :category, Presency.CMS.Category
     many_to_many :tags, Presency.CMS.Tag, join_through: Presency.CMS.PostsTags
-    many_to_many :meta_keywords, Presency.CMS.MetaKeyword, join_through: Presency.CMS.PostsMetaKeywords
     many_to_many :user_access_profiles, UserAccessProfile, join_through: UserAccessProfilesPermissions
     timestamps()
   end

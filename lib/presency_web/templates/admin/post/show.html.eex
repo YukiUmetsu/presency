@@ -38,17 +38,6 @@
         <strong>Meta Description:</strong>
         <%= @post.meta_description %>
     </li>
-
-  <li>
-    <strong>meta keywords:</strong>
-    <ul>
-      <%= if @post.meta_keywords != nil do %>
-        <%= for keyword <- @post.meta_keywords do %>
-        <li><%= keyword.title %></li>
-        <% end %>
-      <% end %>
-    </ul>
-  </li>
 </ul>
 
 <span><%= link "Edit", to: admin_post_path(@conn, :edit, @post), class: "button" %></span>

@@ -21,10 +21,6 @@ defmodule PresencyWeb.Admin.PostView do
     to_date_time_str(date)
   end
 
-  def show_meta_keywords(meta_keywords \\ []) do
-    show_title_in_one_line(meta_keywords)
-  end
-
   def show_tags(tags \\ []) do
     show_title_in_one_line(tags)
   end

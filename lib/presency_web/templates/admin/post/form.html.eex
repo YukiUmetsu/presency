@@ -19,14 +19,6 @@
     <%= error_tag f, :meta_description %>
   </div>
 
-
-    <div class="field u-margin-top-small">
-        <label class="label" for="post_meta_keywords">Meta Keywords</label>
-        <div class="control">
-            <input class="input" id="post_meta_keywords" name="post[meta_keywords]" type="text">
-        </div>
-    </div>
-
     <div class="field u-margin-top-small">
         <label class="label" for="post_tags">Tags</label>
         <div class="control">

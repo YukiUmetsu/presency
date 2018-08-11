@@ -15,7 +15,7 @@ defmodule PresencyWeb.Api.ImageManagerController do
     distPath = "#{distDir}/#{filename}"
     response = case Files.copy_file(qqfile.path, distDir, distPath) do
         {:ok, result_path} ->
-          attrs = create_image_map_from_qfile(qqfile, result_path, filename, size, qquuid, "gallery")
+          attrs = create_image_map_from_qfile(qqfile, result_path, size, qquuid, "gallery")
           CMS.create_image(attrs)
           path_info = Images.split_dir_filename(result_path)
           Images.strip_origilal_image(path_info.dir, path_info.filename)
@@ -25,7 +25,7 @@ defmodule PresencyWeb.Api.ImageManagerController do
     render(conn, "new.json", response: response)
   end
 
-  def create_image_map_from_qfile(qqfile, path, filename, size, qquuid, tag \\"") do
+  def create_image_map_from_qfile(qqfile, path, size, qquuid, tag \\"") do
     extension = qqfile.filename |> Images.get_extension_from_filename()
     size = size |> String.to_integer()
     %{

@@ -43,7 +43,6 @@ defmodule Presency.CMS do
     query = from p in Post, where: p.id == ^id
     Repo.one(query)
     |> Repo.preload(:tags)
-    |> Repo.preload(:meta_keywords)
     |> Repo.preload(:category)
   end
 
@@ -271,7 +270,7 @@ defmodule Presency.CMS do
   def list_category_options do
     case list_categories() do
       nil -> nil
-      categories -> categories |> Enum.map(fn(category) -> ["value": category.id, "key": category.title] end)
+      categories -> categories |> Enum.map(fn(category) -> [value: category.id, key: category.title] end)
     end
   end
 
@@ -492,144 +491,6 @@ defmodule Presency.CMS do
     end
   end
 
-
-  alias Presency.CMS.MetaKeyword
-
-  @doc """
-  Returns the list of meta_keywords.
-
-  ## Examples
-
-      iex> list_meta_keywords()
-      [%Comment{}, ...]
-
-  """
-  def list_meta_keywords do
-    Repo.all(MetaKeyword)
-  end
-
-  @doc """
-  Gets a single meta_keyword.
-
-  Raises `Ecto.NoResultsError` if the MetaKeyword does not exist.
-
-  ## Examples
-
-      iex> get_meta_keyword!(123)
-      %MetaKeyword{}
-
-      iex> get_meta_keyword!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_meta_keyword!(id), do: Repo.get!(MetaKeyword, id)
-
-  @doc """
-  Creates a meta_keyword.
-
-  ## Examples
-
-      iex> create_meta_keyword(%{field: value})
-      {:ok, %MetaKeyword{}}
-
-      iex> create_meta_keyword(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_meta_keyword(attrs \\ %{}) do
-    %MetaKeyword{}
-    |> MetaKeyword.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a meta_keyword.
-
-  ## Examples
-
-      iex> update_meta_keyword(meta_keyword, %{field: new_value})
-      {:ok, %MetaKeyword{}}
-
-      iex> update_meta_keyword(meta_keyword, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_meta_keyword(%MetaKeyword{} = meta_keyword, attrs) do
-    meta_keyword
-    |> MetaKeyword.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a MetaKeyword.
-
-  ## Examples
-
-      iex> delete_meta_keyword(meta_keyword)
-      {:ok, %MetaKeyword{}}
-
-      iex> delete_meta_keyword(meta_keyword)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_meta_keyword(%MetaKeyword{} = meta_keyword) do
-    Repo.delete(meta_keyword)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking meta_keyword changes.
-
-  ## Examples
-
-      iex> change_meta_keyword(meta_keyword)
-      %Ecto.Changeset{source: %MetaKeyword{}}
-
-  """
-  def change_meta_keyword(%MetaKeyword{} = meta_keyword) do
-    MetaKeyword.changeset(meta_keyword, %{})
-  end
-
-  def build_post_keywords_assoc(%Post{} = post, meta_keywords) do
-    post_changeset = Ecto.Changeset.change(post)
-    post_with_tags = Ecto.Changeset.put_assoc(post_changeset, :meta_keywords, meta_keywords)
-    Repo.update!(post_with_tags)
-  end
-
-  def create_meta_keywords_by_string_list(keywords \\ []) do
-    results = keywords
-              |> trim_string_list
-              |> Enum.map(fn(keyword) -> create_meta_keyword_by_string(keyword) end)
-              |> Enum.filter(& !is_nil(&1))
-
-    case Blankable.blank?(results) do
-      false -> results
-      true -> nil
-    end
-  end
-
-  def create_meta_keyword_by_string(keyword \\ "") do
-    existing_keyword = get_meta_keyword_by_title(keyword)
-    with {false, true} <- {Blankable.blank?(keyword), Blankable.blank?(existing_keyword)}
-      do
-      {:ok, new_keyword} = create_meta_keyword(%{"title"=>keyword})
-      new_keyword |> Repo.preload(:posts)
-    else
-      _ -> existing_keyword
-    end
-  end
-
-  def get_meta_keyword_by_title(title) do
-    MetaKeyword |> Repo.get_by(title: title)
-  end
-
-  def meta_keyword_exists?(title) do
-    meta_keyword = get_meta_keyword_by_title(title)
-    cond do
-      Blankable.blank?(meta_keyword) -> false
-      true -> true
-    end
-  end
-
   def list_main_settings() do
     Repo.one(from x in MainSettings, order_by: [asc: x.id], limit: 1)
   end
@@ -658,6 +519,11 @@ defmodule Presency.CMS do
   end
 
   alias Presency.CMS.Image
+
+  def list_image() do
+    query = from i in Image, order_by: [desc: i.updated_at]
+    Repo.all(query)
+  end
 
   def create_image(attrs \\ %{}) do
     %Image{}

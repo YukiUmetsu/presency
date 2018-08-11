@@ -6,12 +6,19 @@
 
 <div class="list-images u-margin-top-medium">
   <h4>Gallery</h4>
+  <div class="u-margin-top-small">
+    <%= for image <- @images do %>
+    <a href="<%= get_path(image) %>">
+      <img src="<%= get_path(image) %>" width="200" height="200">
+    </a>
+    <% end %>
+  </div>
 </div>
 
 
 
-<script src="<%= static_path(@conn, "/fine-uploader/jquery.fine-uploader.js") %>"></script>
-<link rel="stylesheet" href="<%= static_path(@conn, "/fine-uploader/fine-uploader-new.css") %>">
+<script src="<%= static_path(@conn, "/vendor/fine-uploader/jquery.fine-uploader.js") %>"></script>
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/fine-uploader/fine-uploader-new.css") %>">
 <!-- Fine Uploader Thumbnails template w/ customization-->
 <script type="text/template" id="qq-template-manual-trigger">
     <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop images here">
@@ -95,8 +102,8 @@
         },
         thumbnails: {
             placeholders: {
-                waitingPath: '/fine-uploader/placeholders/waiting-generic.png',
-                notAvailablePath: '/fine-uploader/placeholders/not_available-generic.png'
+                waitingPath: '/vendor/fine-uploader/placeholders/waiting-generic.png',
+                notAvailablePath: '/vendor/fine-uploader/placeholders/not_available-generic.png'
             }
         },
         autoUpload: false,

@@ -4,7 +4,8 @@ defmodule PresencyWeb.Admin.ImageGalleryController do
   alias Presency.CMS
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    images = CMS.list_image()
+    render(conn, "index.html", images: images)
   end
 
 end

@@ -56,7 +56,7 @@ exports.config = {
         }
     },
     copycat: { // to js and css folders
-        "fine-uploader": [
+        "vendor/fine-uploader": [
             "node_modules/fine-uploader/jquery.fine-uploader"
         ]
     }

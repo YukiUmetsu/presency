@@ -22,7 +22,6 @@ defmodule PresencyWeb.Admin.PostController do
   end
 
   def create(conn, %{"post" => post_params}) do
-    new_meta_keywords = create_meta_keywords(post_params["meta_keywords"])
     new_tags = create_tags(post_params["tags"])
     category = CMS.get_category(post_params["category_id"])
 
@@ -34,7 +33,6 @@ defmodule PresencyWeb.Admin.PostController do
     case post_create_result do
       {:ok, post} ->
         post = CMS.build_many_many_post_assoc(post, :tags, new_tags)
-        post = CMS.build_many_many_post_assoc(post, :meta_keywords, new_meta_keywords)
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: admin_post_path(conn, :show, post))
@@ -60,7 +58,6 @@ defmodule PresencyWeb.Admin.PostController do
 
   def update(conn, %{"id" => id, "post" => post_params}) do
     post = CMS.get_post!(id)
-    new_meta_keywords = create_meta_keywords(post_params["meta_keywords"])
     new_tags = create_tags(post_params["tags"])
     category = CMS.get_category(post_params["category_id"])
 
@@ -68,7 +65,6 @@ defmodule PresencyWeb.Admin.PostController do
       {:ok, post} ->
         CMS.build_post_assoc(category, post)
         CMS.build_many_many_post_assoc(post, :tags, new_tags)
-        CMS.build_many_many_post_assoc(post, :meta_keywords, new_meta_keywords)
 
         conn
         |> put_flash(:info, "Post updated successfully.")
@@ -85,11 +81,6 @@ defmodule PresencyWeb.Admin.PostController do
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: admin_post_path(conn, :index))
-  end
-
-  def create_meta_keywords(meta_keyrwords \\ "") do
-    word_list = separate_words(meta_keyrwords, ",")
-    CMS.create_meta_keywords_by_string_list(word_list)
   end
 
   def create_tags(tags \\ "") do

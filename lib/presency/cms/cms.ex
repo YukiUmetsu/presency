@@ -266,6 +266,10 @@ defmodule Presency.CMS do
     Repo.all(query)
   end
 
+  def list_paginated_categories(page_number, page_size) do
+    query = from c in Category, order_by: [asc: c.id], preload: [:parent_category]
+    Repo.paginate(query, page: page_number, page_size: page_size)
+  end
 
   def list_category_options do
     case list_categories() do

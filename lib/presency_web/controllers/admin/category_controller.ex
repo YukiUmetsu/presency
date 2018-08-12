@@ -4,9 +4,15 @@ defmodule PresencyWeb.Admin.CategoryController do
   alias Presency.CMS
   alias Presency.CMS.Category
 
-  def index(conn, _params) do
-    categories = CMS.list_categories()
-    render(conn, "index.html", categories: categories)
+  def index(conn, params) do
+    page = CMS.list_paginated_categories(params["page"], 7)
+    render conn, "index.html",
+           page: page,
+           categories: page.entries,
+           page_number: page.page_number,
+           page_size: page.page_size,
+           total_pages: page.total_pages,
+           total_entries: page.total_entries
   end
 
   def new(conn, _params) do
@@ -17,19 +23,13 @@ defmodule PresencyWeb.Admin.CategoryController do
 
   def create(conn, %{"category" => category_params}) do
     case CMS.create_category(category_params) do
-      {:ok, category} ->
+      {:ok, _category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: admin_category_path(conn, :show, category))
+        |> redirect(to: admin_category_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
-  end
-
-  def show(conn, %{"id" => id}) do
-    categories = CMS.list_categories()
-    category = CMS.get_category!(id)
-    render(conn, "show.html", category: category, categories: categories)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -43,10 +43,10 @@ defmodule PresencyWeb.Admin.CategoryController do
     category = CMS.get_category!(id)
 
     case CMS.update_category(category, category_params) do
-      {:ok, category} ->
+      {:ok, _category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: admin_category_path(conn, :show, category))
+        |> redirect(to: admin_category_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
     end

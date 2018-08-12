@@ -46,7 +46,7 @@ defmodule PresencyWeb.Router do
     resources "/admin_users", AdminUserController
     resources "/posts", PostController
     resources "/comments", CommentController
-    resources "/categories", CategoryController
+    resources "/categories", CategoryController, except: [:show]
 
     get "/main_settings", MainSettingsController, :edit
     patch "/main_settings/:id", MainSettingsController, :update

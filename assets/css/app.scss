@@ -8,24 +8,3 @@
 @import "pages/all";
 @import "themes/all";
 @import "vendor/all";
-
-
-/* Admin */
-.admin-main {
-  padding: 1rem 3rem 3rem 3rem;
-
-  .table {
-    width: 100%;
-  }
-}
-.admin-side-menu {
-  padding: 1rem 0 0 .5rem;
-}
-
-.admin-login-container {
-  @include both-center-parent;
-}
-
-.admin-login {
-  @include both-center;
-}

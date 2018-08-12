@@ -52,6 +52,8 @@ defmodule Presency.Mixfile do
       {:phoenix_gon, "~> 0.4.0"},
       {:cipher, ">= 1.4.0"},
       {:elixir_uuid, "~> 1.2" },
+      {:scrivener_ecto, "~> 1.0"},
+      {:scrivener_html, "~> 1.7"}
     ]
   end
 

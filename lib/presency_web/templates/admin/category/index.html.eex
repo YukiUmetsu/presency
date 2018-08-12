@@ -1,4 +1,11 @@
-<h2 class="title is-3 u-margin-bottom-small">Categories</h2>
+<div class="columns">
+  <div class="column">
+    <h2 class="title is-3 u-margin-bottom-small">Categories</h2>
+  </div>
+  <div class="column has-text-right">
+    <span><%= link "New Category", to: admin_category_path(@conn, :new), class: "button is-primary" %></span>
+  </div>
+</div>
 
 <table class="table">
   <thead>
@@ -16,14 +23,14 @@
       <td><%= category.id %></td>
       <td><%= category.title %></td>
       <td class="is-small-text"><%= category.description %></td>
-      <td><%= show_parent_category_title(category.parent_category_id, @categories) %></td>
+      <td class="is-small-text">
+        <%= if category.parent_category !== nil do
+          category.parent_category.title
+          end
+        %>
+      </td>
 
       <td class="is-horizontal">
-        <span><%= link raw("<i class='fa fa-eye'></i>"),
-          to: admin_category_path(@conn, :show, category),
-          class: "button is-light tooltip",
-          "data-tooltip": "Show"
-          %></span>
         <span><%= link raw("<i class='fa fa-edit'></i>"),
           to: admin_category_path(@conn, :edit, category),
           class: "button is-light tooltip",
@@ -40,8 +47,7 @@
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Category", to: admin_category_path(@conn, :new), class: "button is-primary" %></span>
+<%= pagination_links @page, next: "Next", previous: "Prev" %>
 <style>
   .admin-container {
     height: 100%;

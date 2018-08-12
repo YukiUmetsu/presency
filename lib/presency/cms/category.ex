@@ -7,8 +7,8 @@ defmodule Presency.CMS.Category do
   schema "categories" do
     field :description, :string
     field :title, :string
-    belongs_to :parent_category, Category
-    has_many :children_categories, Category, foreign_key: :parent_category_id
+    belongs_to :parent_category, Category, foreign_key: :parent_category_id
+    has_many :children_categories, Category
     has_many :posts, Post
 
     timestamps()

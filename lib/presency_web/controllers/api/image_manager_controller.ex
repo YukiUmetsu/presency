@@ -5,9 +5,28 @@ defmodule PresencyWeb.Api.ImageManagerController do
   alias Presency.CMS
   require IEx
 
-  def index(conn, params) do
-    IO.inspect(params)
-    render(conn, "index.json")
+  def index(conn, %{"page" => page, "page_size" => page_size, "token" => token}) do
+    case Phoenix.Token.verify(PresencyWeb.Endpoint, "image_api_login", token, max_age: 86400) do
+      {:ok, _admin_id} -> render_image(conn, page, page_size)
+      {_, _} -> render_error(conn)
+    end
+  end
+
+  def render_image(conn, given_page, page_size) do
+    page = CMS.list_paginated_images(given_page, page_size)
+    images_data = %{
+      images: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    }
+    render conn, "index.json", images_data: images_data
+  end
+
+  def render_error(conn) do
+    IEx.pry
+    render conn, "index.json", error: %{error: "invalid user"}
   end
 
   def create(conn, %{"qqfile" => qqfile, "qqfilename" => filename, "qqtotalfilesize" => size, "qquuid" => qquuid}) do

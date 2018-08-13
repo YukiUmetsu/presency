@@ -93,7 +93,6 @@ defmodule PresencyWeb.Admin.PostController do
       false -> add_post_to_gon(conn, posts, 0)
       true -> conn
     end
-
   end
 
   def add_post_to_gon(conn, posts, index) do

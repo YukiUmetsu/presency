@@ -40,6 +40,13 @@
   </div>
 
   <div class="field">
+    <a href="#logo-modal" rel="modal:open">
+      <div class="button is-primary">Choose logo</div>
+    </a>
+    <div class="show-logo"></div>
+  </div>
+
+  <div class="field">
     <%= label f, :about_me_name, class: "label" %>
     <p class="control has-icons-left has-icons-right">
       <%= text_input f, :about_me_name, class: "input", placeholder: "Display name in about me" %>
@@ -254,3 +261,15 @@
         }
     }
 </script>
+
+<script src="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.js") %>"></script>
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.css") %>">
+
+<!-- logo modal -->
+<div id="logo-modal">
+<%= if assigns[:images] do %>
+  <%= render PresencyWeb.Components.ImagePickerView, "show.html", assigns %>
+<% else %>
+  <div class="h4">No images to select. Please upload a logo image in image gallery</div>
+<% end %>
+</div>

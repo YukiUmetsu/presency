@@ -58,6 +58,13 @@ exports.config = {
     copycat: { // to js and css folders
         "vendor/fine-uploader": [
             "node_modules/fine-uploader/jquery.fine-uploader"
+        ],
+        "vendor/image-picker": [
+            "node_modules/image-picker/image-picker"
+        ],
+        "vendor/jquery-modal": [
+            "node_modules/jquery-modal/jquery.modal.min.css",
+            "node_modules/jquery-modal/jquery.modal.min.js"
         ]
     }
   },

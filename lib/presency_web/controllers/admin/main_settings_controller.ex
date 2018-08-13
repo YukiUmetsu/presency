@@ -1,13 +1,24 @@
 defmodule PresencyWeb.Admin.MainSettingsController do
   use PresencyWeb, :controller
   alias Presency.CMS
+  import PhoenixGon.Controller
 
   def edit(conn, _params) do
     main_settings = CMS.list_main_settings()
     changeset = CMS.change_main_settings(main_settings)
+    page = CMS.list_paginated_images(1, 8)
+    admin = conn.assigns.current_admin
+    token = Phoenix.Token.sign(conn, "image_api_login", admin.id)
+    conn = put_gon(conn, token: token)
 
     conn
-    |> render("edit.html", main_settings: main_settings, changeset: changeset)
+    |> add_page_to_conn(page)
+    |> render("edit.html",
+              images: page.entries,
+              main_settings: main_settings,
+              changeset: changeset,
+              page: page,
+              token: token)
   end
 
   def update(conn, %{"id" => id, "main_settings" => main_settings_params}) do
@@ -25,4 +36,15 @@ defmodule PresencyWeb.Admin.MainSettingsController do
   end
 
 
+  def add_page_to_conn(conn, page) do
+    case Blankable.blank?(page) do
+      false ->
+        conn
+#        |> Plug.assign(image_page_number: page.page_number)
+#        |> Plug.assign(image_page_size: page.page_size)
+#        |> Plug.assign(image_total_pages: page.total_pages)
+#        |> Plug.assign(image_total_entries: page.total_entries)
+      true -> conn
+    end
+  end
 end

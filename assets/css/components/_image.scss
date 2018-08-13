@@ -1,3 +1,18 @@
 .img-round {
   border-radius: 100% !important;
 }
+
+.image_picker_selector img{
+  max-height: 120px;
+}
+
+.image_picker_selector .thumbnail {
+  padding: 3px !important;
+  border-radius: 5px !important;
+}
+
+#logo-modal {
+  display: none;
+  overflow: visible;
+  max-width: 85%;
+}

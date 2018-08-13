@@ -7,11 +7,11 @@
 <div class="list-images u-margin-top-medium">
   <h4>Gallery</h4>
   <div class="u-margin-top-small">
-    <%= for image <- @images do %>
-    <a href="<%= get_path(image) %>">
-      <img src="<%= get_path(image) %>" width="200" height="200">
-    </a>
-    <% end %>
+    <ul class="image-list">
+      <%= for image <- @images do %>
+        <img src="<%= get_path(image) %>" width="200" height="200">
+      <% end %>
+    </ul>
   </div>
 </div>
 

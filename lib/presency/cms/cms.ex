@@ -529,6 +529,11 @@ defmodule Presency.CMS do
     Repo.all(query)
   end
 
+  def list_paginated_images(page_number \\ 1, page_size \\ 7) do
+    query = from i in Image, order_by: [desc: i.updated_at]
+    Repo.paginate(query, page: page_number, page_size: page_size)
+  end
+
   def create_image(attrs \\ %{}) do
     %Image{}
     |> Image.changeset(attrs)

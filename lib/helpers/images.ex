@@ -178,4 +178,8 @@ defmodule Helpers.Images do
     dir = String.trim_trailing(path, filename) |> String.trim_trailing("/")
     %{dir: dir, filename: filename}
   end
+
+  def get_path(image) do
+    String.trim_leading(image.path, "priv/static")
+  end
 end

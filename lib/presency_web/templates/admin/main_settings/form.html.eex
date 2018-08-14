@@ -39,11 +39,30 @@
     <%= error_tag f, :copyright %>
   </div>
 
-  <div class="field">
-    <a href="#logo-modal" rel="modal:open">
-      <div class="button is-primary">Choose logo</div>
-    </a>
-    <div class="show-logo"></div>
+  <div class="field u-margin-top-small">
+    <div class="is-pulled-left u-margin-right-small">
+      <a href="#logo-modal" rel="modal:open" id="logo-modal-open">
+        <div class="button is-primary">Choose logo</div>
+      </a>
+      <div class="show-logo">
+        <%= if assigns[:main_settings] do %>
+        <%= raw("<img src='#{@main_settings.logo}' >") %>
+        <% end %>
+      </div>
+      <%= hidden_input f, :logo %>
+    </div>
+    <div>
+      <a href="#logo-modal" rel="modal:open" id="about-me-modal-open">
+        <div class="button is-primary">Choose About Me Photo</div>
+      </a>
+      <div class="show-about-me-photo">
+        <%= if assigns[:main_settings] do %>
+        <%= raw("<img src='#{@main_settings.about_me_photo}' >") %>
+        <% end %>
+      </div>
+      <%= hidden_input f, :about_me_photo %>
+    </div>
+    <div class="is-clearfix"></div>
   </div>
 
   <div class="field">
@@ -179,88 +198,10 @@
   </div>
 
   <div class="field">
-    <label class="label">Avatar Image</label>
-  </div>
-  <div class="file u-margin-bottom-small">
-    <label class="file-label">
-      <input class="file-input" id="avatar_img_file_input" name="admin_user[avatar_img]" type="file">
-      <span class="file-cta">
-        <span class="file-icon"><i class="fa fa-upload"></i></span>
-        <span class="file-label">Choose a file…</span>
-      </span>
-    </label>
-    <div id="crop_button" class="button is-info">
-      <span class="file-icon"><i class="fa fa-crop"></i></span>
-      Crop Image
-    </div>
-    <div id="save-avatar" class="button is-primary">
-      <span class="file-icon"><i class="fa fa-save"></i></span>
-      Save Avatar
-    </div>
-  </div>
-
-  <div class="image-crop-container">
-    <img id="image-container__image" src="#" alt="your avatar" />
-  </div>
-
-  <div class="field">
     <%= submit "Submit", class: "button" %>
   </div>
 <% end %>
 
-<script>
-    var firstAvatarImageSrc = '';
-    $("#avatar-image").ready(function () {
-        firstAvatarImageSrc = $("#avatar-image").attr("src");
-        console.log(firstAvatarImageSrc);
-    });
-
-    $('#avatar_img_file_input').on( 'change', function(){
-        $('#image-container__image').css('visibility', 'visible');
-        if (this.files && this.files[0]) {
-            if ( this.files[0].type.match(/^image\//) ) {
-                var reader = new FileReader();
-                reader.onload = function(evt) {
-                    $('#image-container__image').attr('src', evt.target.result)
-                };
-                reader.readAsDataURL(this.files[0]);
-                setTimeout(initCropper, 500);
-            }
-        }
-    });
-
-    function initCropper(){
-        var image = document.getElementById('image-container__image');
-        var cropper = new Cropper(image, {
-            aspectRatio: 1 / 1,
-        });
-
-        // On crop button clicked
-        document.getElementById('crop_button').addEventListener('click', function(){
-            var imgurl =  cropper.getCroppedCanvas().toDataURL();
-            $("#avatar-image").attr('src',imgurl);
-            $("#admin_user_avatar_img").text(imgurl);
-        })
-    }
-
-    $("#save-avatar").click(saveAvatar);
-
-    function saveAvatar() {
-        var image = $("#avatar-image").attr("src");
-        if(firstAvatarImageSrc != image){
-            var contentType = image.split(",", 2)[0]
-                .replace("data:", "")
-                .replace(";base64", "");
-            var base64 = image.split(",", 2)[1];
-            imageUploaderChannel
-                .push("image_uploader:new", { "image": base64, "content_type": contentType})
-                .receive("ok", function(reply) {
-                    console.log(reply.message);
-                })
-                .receive("error", (reply) => console.log(reply.message));
-        }
-    }
-</script>
 
 <script src="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.js") %>"></script>
 <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.css") %>">

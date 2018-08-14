@@ -27,7 +27,7 @@ defmodule Presency.CMS.MainSettings do
   @doc false
   def changeset(main_settings, attrs) do
     main_settings
-    |> cast(attrs, [:site_title, :site_sub_phrase, :copyright, :logo, :favicon, :facebook, :twitter, :google_plus, :pinterest, :youtube, :instagram, :linkedin])
+    |> cast(attrs, [:site_title, :site_sub_phrase, :copyright, :logo, :favicon, :facebook, :twitter, :google_plus, :pinterest, :youtube, :instagram, :linkedin, :about_me_name, :about_me_photo, :about_me_description, :about_me_link])
     |> validate_required([:site_title, :copyright])
   end
 end

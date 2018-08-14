@@ -24,11 +24,11 @@ defmodule PresencyWeb.Admin.MainSettingsController do
   def update(conn, %{"id" => id, "main_settings" => main_settings_params}) do
     old_settings = CMS.get_main_settings(id)
 
-    case CMS.update_category(old_settings, main_settings_params) do
+    case CMS.update_main_settings(old_settings, main_settings_params) do
       {:ok, new_main_settings} ->
         conn
-        |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: admin_main_settings_path(conn, :edit, new_main_settings))
+        |> put_flash(:info, "Site settings updated successfully.")
+        |> redirect(to: admin_main_settings_path(conn, :edit, main_settings: new_main_settings))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", main_settings: old_settings, changeset: changeset)

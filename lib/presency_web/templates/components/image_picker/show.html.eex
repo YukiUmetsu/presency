@@ -32,6 +32,7 @@ $("#image-selector").imagepicker();
 </script>
 <script>
     $(document).ready(function() {
+        var entityType = '';
         function drawPagination(){
             if (window.imagePageNumber !== 1) {
                 $("#image-page-left").html("<span id='get-previous-image' class='button is-primary'>&laquo;</span>");
@@ -48,6 +49,8 @@ $("#image-selector").imagepicker();
 
         $("#get-next-image").click(getNextImages);
         $("#get-previous-image").click(getPreviousImages);
+        $("#logo-modal-open").click(logoModalClicked);
+        $("#about-me-modal-open").click(aboutMePhotoModalClicked);
 
         function getNextImages() {
             var nextURL = "/api/image_manager?page=" + (window.imagePageNumber + 1) +
@@ -93,5 +96,30 @@ $("#image-selector").imagepicker();
             $("#get-next-image").click(getNextImages);
             $("#get-previous-image").click(getPreviousImages);
         }
+
+        function logoModalClicked() {
+            entityType = 'logo';
+        }
+
+        function aboutMePhotoModalClicked() {
+            entityType = 'about-me-photo';
+        }
+
+        $('#logo-modal').on($.modal.AFTER_CLOSE, function (event, modal) {
+            var modalStartObj = modal.$elm[0];
+            console.log(modalStartObj);
+            var div = $(".image-in-selector.selected")[0];
+            var imagePath = div.firstElementChild.src;
+            var imageHTML = "<img src='"+ imagePath+"' height='100px' width='200px'>";
+            if(entityType === 'logo'){
+                $(".show-logo").html(imageHTML);
+                $("#main_settings_logo").val(imagePath);
+            } else if (entityType === 'about-me-photo'){
+                $(".show-about-me-photo").html(imageHTML);
+                $("#main_settings_about_me_photo").val(imagePath);
+            }
+            entityType = '';
+        });
+
     });
 </script>

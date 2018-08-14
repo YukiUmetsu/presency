@@ -96,6 +96,7 @@ defmodule PresencyWeb.Admin.AdminUserController do
   defp update_user_with_avatar(conn, user, avatar_info, user_params, path_info) do
     case avatar_info do
       nil ->
+        update_admin_user(conn, user, user_params, path_info)
         conn
         |> put_flash(:info, path_info.ok_message)
         |> redirect(to: admin_admin_user_path(conn, path_info.ok_path, user))

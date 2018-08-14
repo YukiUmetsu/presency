@@ -6,12 +6,15 @@
 
 <div class="list-images u-margin-top-medium">
   <h4>Gallery</h4>
+  <div class="pagination-links">
+    <%= pagination_links @page %>
+  </div>
   <div class="u-margin-top-small">
-    <ul class="image-list">
+    <div class="image-list">
       <%= for image <- @images do %>
-        <img src="<%= get_path(image) %>" width="200" height="200">
+        <img src="<%= get_path(image) %>" style="max-height: 200px">
       <% end %>
-    </ul>
+    </div>
   </div>
 </div>
 

@@ -16,3 +16,10 @@
   overflow: visible;
   max-width: 85%;
 }
+
+.show-logo, .show-about-me-photo {
+  max-height: 100px;
+  overflow: hidden;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

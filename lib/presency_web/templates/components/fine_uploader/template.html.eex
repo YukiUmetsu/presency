@@ -11,9 +11,9 @@
     </div>
     <div class="buttons">
       <div class="qq-upload-button-selector qq-upload-button" style="padding: 0; background: transparent; border: 0; box-shadow: 0 0 0; margin-bottom: 0;">
-        <div class="button is-primary">Select files</div>
+        <div class="button is-primary"><p><i class="fa fa-mouse-pointer"></i></p> Select files</div>
       </div>
-      <button type="button" id="trigger-upload" class="button is-primary">Upload</button>
+      <button type="button" id="trigger-upload" class="button is-primary"><i class="fa fa-upload" style="margin-right: .3rem"></i>Upload</button>
     </div>
     <span class="qq-drop-processing-selector qq-drop-processing">
     <span>Processing dropped files...</span>
@@ -97,6 +97,9 @@
   #fine-uploader-manual-trigger .qq-uploader .qq-total-progress-bar-container {
     width: 60%;
   }
+    .qq-upload-button {
+        width: auto;
+    }
 </style>
 <script>
     var token = '<%= @token %>';

@@ -33,7 +33,6 @@ defmodule Helpers.Files do
 
   def copy_file(srcPath, distDir, distPath, index \\ 0, max_try \\ 5) do
     create_dir(distDir)
-
     case {index <= max_try, File.exists?(distPath)} do
       {true, false} ->
         File.cp_r(srcPath, distPath)
@@ -42,7 +41,7 @@ defmodule Helpers.Files do
 
       {true, true} ->
         new_path = add_index_to_path(distPath, index+1)
-        copy_file(srcPath, new_path, index+1, max_try)
+        copy_file(srcPath, distDir, new_path, index+1, max_try)
 
       {false, _} -> {:error, "reached to max tries"}
     end

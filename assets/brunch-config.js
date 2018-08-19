@@ -3,7 +3,9 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-          "js/app.js":/^(js|node_modules|vendor)/
+          "js/app.js":/^(js|node_modules|vendor)/,
+          "js/pagination.js": "single-page/pagination.js",
+          "js/pagination-implement.js": "single-page/pagination-implement.js"
       },
       order: {
         before: [
@@ -34,7 +36,7 @@ exports.config = {
   // Phoenix paths configuration
   paths: {
     // Dependencies and current project directories to watch
-    watched: ["static", "css", "js", "vendor", "fonts"],
+    watched: ["static", "css", "js", "vendor", "fonts", "single-page"],
     // Where to compile files to
     public: "../priv/static"
   },
@@ -42,8 +44,9 @@ exports.config = {
   // Configure your plugins
   plugins: {
     babel: {
-      // Do not use ES6 compiler in vendor code
-      ignore: [/vendor/]
+        plugins: ['transform-async-to-generator', 'babel-polyfill'],
+        // Do not use ES6 compiler in vendor code
+        ignore: [/vendor/]
     },
     sass: {
         mode: 'native',
@@ -71,7 +74,9 @@ exports.config = {
 
   modules: {
     autoRequire: {
-      "js/app.js": ["js/app"]
+      "js/app.js": ["js/app"],
+      "js/pagination.js": ["single-page/pagination"],
+      "js/pagination-implement.js": ["single-page/pagination-implement"]
     }
   },
 

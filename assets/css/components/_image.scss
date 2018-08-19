@@ -23,3 +23,15 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+.image-item {
+  height: 9rem;
+  padding: 0 !important;
+  display: flex;
+
+  & img{
+    flex-grow: 1;
+    object-fit: cover;
+    padding: .5rem;
+  }
+}

@@ -22,6 +22,6 @@
     window.pageSize = <%= @page.page_size %>;
     window.totalPages = <%= @page.total_pages %>;
 </script>
-<script src="<%= static_path(@conn, "/js/pagination.js") %>" type="module"></script>
-<script src="<%= static_path(@conn, "/js/pagination-implement.js") %>" type="module"></script>
+<script src="<%= static_path(@conn, "/js/pagination/pagination.js") %>" type="module"></script>
+<script src="<%= static_path(@conn, "/js/pagination/pagination-images.js") %>" type="module"></script>
 <%= render PresencyWeb.Components.FineUploader, "template.html", assigns %>

@@ -10,6 +10,7 @@
     <title>Hello Presency!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/fonts/fontawesome-webfont.eot") %>">
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
   <body>
@@ -32,6 +33,5 @@
 
     </div> <!-- /container -->
     <%= render_gon_script(@conn) %>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

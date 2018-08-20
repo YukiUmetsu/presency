@@ -4,8 +4,12 @@ exports.config = {
     javascripts: {
       joinTo: {
           "js/app.js":/^(js|node_modules|vendor)/,
-          "js/pagination.js": "single-page/pagination.js",
-          "js/pagination-implement.js": "single-page/pagination-implement.js"
+          "js/pagination/pagination.js": "single-page/pagination/pagination.js",
+          "js/pagination/pagination-images.js": "single-page/pagination/pagination-images.js",
+          "js/socket/admin-socket.js": "single-page/socket/admin-socket.js",
+          "js/socket/user-socket.js": "single-page/socket/user-socket.js",
+          "vendor/jquery.scrollUp/jquery.scrollUp.min.js": "single-page/jquery.scrollUp.min.js",
+          "vendor/slicknav/jquery.slicknav.min.js": "single-page/slicknav/jquery.slicknav.min.js"
       },
       order: {
         before: [
@@ -15,7 +19,13 @@ exports.config = {
       }
     },
     stylesheets: {
-      joinTo: "css/app.css",
+      joinTo: {
+          "css/app.css": "css/app.scss",
+          "css/blog-theme-index.css": "single-page/blog-theme/blog-theme-index.css",
+          "vendor/slicknav/slicknav.min.css": "single-page/slicknav/slicknav.min.css",
+          "vendor/bulma/bulma.extensions.css": "css/vendor/bulma-extensions.min.css",
+          "vendor/font/font-awesome.min.css": "vendor/css/font-awesome.min.css"
+      },
       order: {
           after: [ "css/app.scss"],
           before: ["vendor/css"]
@@ -68,6 +78,22 @@ exports.config = {
         "vendor/jquery-modal": [
             "node_modules/jquery-modal/jquery.modal.min.css",
             "node_modules/jquery-modal/jquery.modal.min.js"
+        ],
+        "vendor/jquery-migrate": [
+            "node_modules/jquery-migrate/dist/jquery-migrate.min.js"
+        ],
+        "vendor/animate-css": [
+            "node_modules/animate.css/animate.min.css"
+        ],
+        "vendor/owl": [
+            "node_modules/owl.carousel/dist/assets",
+            "node_modules/owl.carousel/dist/owl.carousel.min.js"
+        ],
+        "vendor/jquery.easing": [
+            "node_modules/jquery.easing/jquery.easing.min.js"
+        ],
+        "vendor/jquery.scrollUp": [
+            "single-page/jquery.scrollUp.min.js"
         ]
     }
   },
@@ -75,8 +101,10 @@ exports.config = {
   modules: {
     autoRequire: {
       "js/app.js": ["js/app"],
-      "js/pagination.js": ["single-page/pagination"],
-      "js/pagination-implement.js": ["single-page/pagination-implement"]
+      "js/pagination/pagination.js": ["single-page/pagination/pagination"],
+      "js/pagination/pagination-images.js": ["single-page/pagination/pagination-images"],
+      "js/socket/admin-socket.js": ["single-page/socket/admin-socket"],
+      "js/socket/user-socket.js": ["single-page/socket/user-socket"]
     }
   },
 

@@ -8,10 +8,5 @@ let socket = new Socket("/admin_socket", {params: {token: window.userToken}});
 
 socket.connect();
 
-let imageUploaderChannel = socket.channel("image_uploader", {});
-imageUploaderChannel.join()
-    .receive("ok", resp => { console.log("Joined successfully", resp) })
-    .receive("error", resp => { console.log("Unable to join", resp) })
-
 window.imageUploaderChannel = imageUploaderChannel;
 export default socket

@@ -80,11 +80,18 @@
 <% end %>
 
 <%= if user_exist(@conn) do %>
+<script src="<%= static_path(@conn, "/js/socket/admin-socket.js") %>"></script>
 <script>
+    $(document).ready(function () {
+        let imageUploaderChannel = window.socket.channel("image_uploader", {});
+        imageUploaderChannel.join()
+            .receive("ok", resp => { console.log("Joined successfully", resp) })
+            .receive("error", resp => { console.log("Unable to join", resp) });
+    });
+
     var firstAvatarImageSrc = '';
     $("#avatar-image").ready(function () {
         firstAvatarImageSrc = $("#avatar-image").attr("src");
-        console.log(firstAvatarImageSrc);
     });
 
     $('#avatar_img_file_input').on( 'change', function(){

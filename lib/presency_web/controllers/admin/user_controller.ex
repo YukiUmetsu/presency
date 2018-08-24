@@ -39,7 +39,7 @@ defmodule PresencyWeb.Admin.UserController do
     token = Phoenix.Token.sign(conn, "socket_login", user.id)
     changeset = Accounts.change_user(user)
     conn = assign(conn, :user, user)
-    render(conn, "edit.html", user: user, changeset: changeset)
+    render(conn, "edit.html", user: user, changeset: changeset, token: token)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

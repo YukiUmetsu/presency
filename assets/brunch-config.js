@@ -9,22 +9,21 @@ exports.config = {
           "js/socket/admin-socket.js": "single-page/socket/admin-socket.js",
           "js/socket/user-socket.js": "single-page/socket/user-socket.js",
           "vendor/jquery.scrollUp/jquery.scrollUp.min.js": "single-page/jquery.scrollUp.min.js",
-          "vendor/slicknav/jquery.slicknav.min.js": "single-page/slicknav/jquery.slicknav.min.js"
+          "vendor/slicknav/jquery.slicknav.min.js": "node_modules/slicknav/dist/jquery.slicknav.min.js",
+          "vendor/slick-carousel/slick.min.js":"node_modules/slick-carousel/slick/slick.min.js",
+          "vendor/owl-carousel/owl.carousel.min.js":"node_modules/owl.carousel2/dist/owl.carousel.min.js",
       },
-      order: {
-        before: [
-          "vendor/js/jquery-3.3.1.js",
-          "vendor/js/bootstrap.min.js"
-        ]
-      }
     },
     stylesheets: {
       joinTo: {
           "css/app.css": "css/app.scss",
           "css/blog-theme-index.css": "single-page/blog-theme/blog-theme-index.css",
-          "vendor/slicknav/slicknav.min.css": "single-page/slicknav/slicknav.min.css",
           "vendor/bulma/bulma.extensions.css": "css/vendor/bulma-extensions.min.css",
-          "vendor/font/font-awesome.min.css": "vendor/css/font-awesome.min.css"
+          "vendor/font/font-awesome.min.css": "vendor/css/font-awesome.min.css",
+          "vendor/slick-carousel/slick.css":"node_modules/slick-carousel/slick/slick.css",
+          "vendor/owl-carousel/assets/owl.carousel.min.css":"node_modules/owl-carousel2/dist/assets/owl.carousel.min.css",
+          "vendor/owl-carousel/assets/owl.theme.default.min.css":"node_modules/owl-carousel2/dist/assets/owl.theme.default.min.css",
+          "vendor/slicknav/slicknav.min.css":"node_modules/slick-carousel/dist/slicknav.min.css",
       },
       order: {
           after: [ "css/app.scss"],
@@ -79,22 +78,18 @@ exports.config = {
             "node_modules/jquery-modal/jquery.modal.min.css",
             "node_modules/jquery-modal/jquery.modal.min.js"
         ],
-        "vendor/jquery-migrate": [
-            "node_modules/jquery-migrate/dist/jquery-migrate.min.js"
-        ],
         "vendor/animate-css": [
             "node_modules/animate.css/animate.min.css"
-        ],
-        "vendor/owl": [
-            "node_modules/owl.carousel/dist/assets",
-            "node_modules/owl.carousel/dist/owl.carousel.min.js"
         ],
         "vendor/jquery.easing": [
             "node_modules/jquery.easing/jquery.easing.min.js"
         ],
-        "vendor/jquery.scrollUp": [
-            "single-page/jquery.scrollUp.min.js"
-        ]
+        "vendor/slicknav": [
+            "node_modules/slicknav/dist"
+        ],
+        "vendor/owl-carousel": [
+            "node_modules/slicknav/dist",
+        ],
     }
   },
 
@@ -104,7 +99,11 @@ exports.config = {
       "js/pagination/pagination.js": ["single-page/pagination/pagination"],
       "js/pagination/pagination-images.js": ["single-page/pagination/pagination-images"],
       "js/socket/admin-socket.js": ["single-page/socket/admin-socket"],
-      "js/socket/user-socket.js": ["single-page/socket/user-socket"]
+      "js/socket/user-socket.js": ["single-page/socket/user-socket"],
+      "vendor/jquery.scrollUp/jquery.scrollUp.min.js": ["single-page/jquery.scrollUp.min.jp"],
+      "vendor/slick-carousel/slick.min.js": ["node_modules/slick-carousel/slick/slick.min.js"],
+      "vendor/slick-carousel/owl-carousel.min.js": ["node_modules/owl-carousel2/dist/owl-carousel.min.js"],
+      "vendor/slicknav/jquery.slicknav.min.js": ["node_modules/slicknav/dist/jquery.slicknav.min.js"]
     }
   },
 

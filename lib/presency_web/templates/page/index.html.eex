@@ -1,9 +1,8 @@
  <!--// All css file//-->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
  <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/animate-css/animate.min.css") %>">
- <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/owl/owl.carousel.min.css") %>">
- <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/owl/owl.theme.default.min.css") %>">
  <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/slicknav/slicknav.min.css") %>">
+ <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/owl-carousel/assets/owl.carousel.min.css") %>">
  <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog-theme-index.css") %>">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -129,7 +128,7 @@
 
         <div class="item-content">
           <a href="">Fashion</a>
-          <h3>Fashion grils wearing dark glashes</h3>
+          <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
                     <i class="fas fa-random"></i>
                     </span>August 05 2018</p>
@@ -142,13 +141,12 @@
 
         <div class="item-content">
           <a href="">Fashion</a>
-          <h3>Fashion grils wearing dark glashes</h3>
+          <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
             <i class="fas fa-random"></i>
           </span>August 05 2018</p>
         </div>
       </div>
-
     </div>
     <div class="item">
       <div class="item-img-area">
@@ -156,7 +154,7 @@
 
         <div class="item-content">
           <a href="">Fashion</a>
-          <h3>Fashion grils wearing dark glashes</h3>
+          <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
             <i class="fas fa-random"></i>
           </span>August 05 2018</p>
@@ -168,7 +166,7 @@
         <img src="<%= static_path(@conn, "/images/pic-4.jpeg") %>" alt="" />
         <div class="item-content">
           <a href="">Fashion</a>
-          <h3>Fashion grils wearing dark glashes</h3>
+          <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
             <i class="fas fa-random"></i>
           </span>August 05 2018</p>
@@ -182,21 +180,20 @@
 
         <div class="item-content">
           <a href="">Fashion</a>
-          <h3>Fashion grils wearing dark glashes</h3>
+          <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
             <i class="fas fa-random"></i>
           </span>August 05 2018</p>
         </div>
       </div>
     </div>
-
     <div class="item">
       <div class="item-img-area">
         <img src="<%= static_path(@conn, "/images/pic-6.jpeg") %>" alt="" />
 
         <div class="item-content">
           <a href="">Fashion</a>
-          <h3>Fashion grils wearing dark glashes</h3>
+          <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
             <i class="fas fa-random"></i>
           </span>August 05 2018</p>
@@ -644,87 +641,13 @@
 
 <a href="#" id="scrollUp"></a>
 <!--// jquery script //-->
- <script src="<%= static_path(@conn, "/vendor/jquery-migrate/jquery-migrate.min.js") %>"></script>
- <script src="<%= static_path(@conn, "/vendor/jquery.scrollUp/jquery.scrollUp.min.js") %>"></script>
- <script src="<%= static_path(@conn, "/vendor/jquery.easing/jquery.easing.min.js") %>"></script>
- <script src="<%= static_path(@conn, "/vendor/owl/owl.carousel.min.js") %>"></script>
  <script src="<%= static_path(@conn, "/vendor/slicknav/jquery.slicknav.min.js") %>"></script>
- <script src="<%= static_path(@conn, "/vendor/jquery-migrate/jquery-migrate.min.js") %>"></script>
+ <script src="<%= static_path(@conn, "/vendor/jquery.easing/jquery.easing.min.js") %>"></script>
+ <script src="<%= static_path(@conn, "/vendor/owl-carousel/owl.carousel.min.js") %>"></script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        var submitIcon = $('.searchbox-icon');
-        var inputBox = $('.searchbox-input');
-        var searchBox = $('.searchbox');
-        var isOpen = false;
-        submitIcon.click(function(){
-            if(isOpen == false){
-                searchBox.addClass('searchbox-open');
-                inputBox.focus();
-                isOpen = true;
-            } else {
-                searchBox.removeClass('searchbox-open');
-                inputBox.focusout();
-                isOpen = false;
-            }
-        });
-        submitIcon.mouseup(function(){
-            return false;
-        });
-        searchBox.mouseup(function(){
-            return false;
-        });
-        $(document).mouseup(function(){
-            if(isOpen == true){
-                $('.searchbox-icon').css('display','block');
-                submitIcon.click();
-            }
-        });
-    });
-    function buttonUp(){
-        var inputVal = $('.searchbox-input').val();
-        inputVal = $.trim(inputVal).length;
-        if( inputVal !== 0){
-            $('.searchbox-icon').css('display','none');
-        } else {
-            $('.searchbox-input').val('');
-            $('.searchbox-icon').css('display','block');
-        }
-    }
-</script>
 <!-- Common Scripts -->
 <script>
-    $(document).ready(function() {
-        $("#scrollUp").css("background-image",
-            "url('<%= static_path(@conn, "/images/top.png") %>') no-repeat scroll 0 0;");
-        $(".preloader-spinner").css("background-image",
-            "url('<%= static_path(@conn, "/images/preloader.jiff") %>')  no-repeat scroll center center;");
-        $('body').addClass('preload-site');
-    });
-
-    $(document).load(function () {
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 0,
-            nav: true,
-            auto: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 2
-                },
-                1000: {
-                    items: 3
-                }
-            }
-        });
-        $(function(){
-            $.scrollUp();
-        });
-
-        //slicknav==============
+    $(document).on('ready', function () {
         $("#nav").slicknav({
             prependTo:".menu-prepend",
             duration: 700,
@@ -733,13 +656,85 @@
             easingClose: 'easeInBack',
             closeOnClick:true
         });
+
+        $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:0,
+            nav:true,
+            navText: [
+                "<button type='button' role='presentation' class='owl-prev'><span aria-label='Previous'>‹</span></button>",
+                "<button type='button' role='presentation' class='owl-next'><span aria-label='Next'>›</span></button>"],
+            auto:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:2
+                },
+                1000:{
+                    items:3
+                }
+            }
+        });
     });
 
-    $(window).load(function(){
+    $(window).on('load',function(){
         $('#preloader').fadeOut();
         $('.preloader-spinner').fadeOut(400);
         $('body').removeClass('preload-site');
     });
 </script>
-</body>
-</html>
+ <script>
+     $(document).ready(function(){
+         var submitIcon = $('.searchbox-icon');
+         var inputBox = $('.searchbox-input');
+         var searchBox = $('.searchbox');
+         var isOpen = false;
+         submitIcon.click(function(){
+             if(isOpen == false){
+                 searchBox.addClass('searchbox-open');
+                 inputBox.focus();
+                 isOpen = true;
+             } else {
+                 searchBox.removeClass('searchbox-open');
+                 inputBox.focusout();
+                 isOpen = false;
+             }
+         });
+         submitIcon.mouseup(function(){
+             return false;
+         });
+         searchBox.mouseup(function(){
+             return false;
+         });
+         $(document).mouseup(function(){
+             if(isOpen == true){
+                 $('.searchbox-icon').css('display','block');
+                 submitIcon.click();
+             }
+         });
+     });
+     function buttonUp(){
+         var inputVal = $('.searchbox-input').val();
+         inputVal = $.trim(inputVal).length;
+         if( inputVal !== 0){
+             $('.searchbox-icon').css('display','none');
+         } else {
+             $('.searchbox-input').val('');
+             $('.searchbox-icon').css('display','block');
+         }
+     }
+ </script>
+ <script>
+//   $(document).on("ready", function () {
+//       $("#nav").slicknav({
+//           prependTo:".menu-prepend",
+//           duration: 700,
+//           label: '',
+//           easingOpen: "swing",
+//           easingClose: 'easeInBack',
+//           closeOnClick:true
+//       });
+//   })
+ </script>

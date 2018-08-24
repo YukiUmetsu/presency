@@ -316,17 +316,17 @@ pre {
   display: inline-block;
   margin-bottom: 3px;
 }
-.item-content h3{
+.item-content h5{
   margin: 8px 0;
   color: #fff;
 }
 .item-content span{
   color: #FFF ;
-  font-size: 12px;
+  font-size: .7rem;
 }
 .item-content p{
   color: #FFF ;
-  font-size: 14px;
+  font-size: 1rem;
   margin-bottom: 0;
 }
 .owl-carousel .owl-nav button.owl-next{

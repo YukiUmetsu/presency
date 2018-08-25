@@ -1,0 +1,82 @@
+<div class="slider-content-area">
+  <div class="owl-carousel owl-theme">
+    <div class="item">
+      <div class="item-img-area">
+        <img src="<%= static_path(@conn, "/images/pic-1.jpeg") %>" alt="" />
+
+        <div class="item-content">
+          <a href="">Fashion</a>
+          <p>Fashion grils wearing dark glashes</p>
+          <p><span class="icon">
+                    <i class="fa fa-random"></i>
+                    </span>August 05 2018</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-img-area">
+        <img src="<%= static_path(@conn, "/images/pic-2.jpeg") %>" alt="" />
+
+        <div class="item-content">
+          <a href="">Fashion</a>
+          <p>Fashion grils wearing dark glashes</p>
+          <p><span class="icon">
+            <i class="fa fa-random"></i>
+          </span>August 05 2018</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-img-area">
+        <img src="<%= static_path(@conn, "/images/pic-3.jpeg") %>" alt="" />
+
+        <div class="item-content">
+          <a href="">Fashion</a>
+          <p>Fashion grils wearing dark glashes</p>
+          <p><span class="icon">
+            <i class="fa fa-random"></i>
+          </span>August 05 2018</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-img-area">
+        <img src="<%= static_path(@conn, "/images/pic-4.jpeg") %>" alt="" />
+        <div class="item-content">
+          <a href="">Fashion</a>
+          <p>Fashion grils wearing dark glashes</p>
+          <p><span class="icon">
+            <i class="fa fa-random"></i>
+          </span>August 05 2018</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="item">
+      <div class="item-img-area">
+        <img src="<%= static_path(@conn, "/images/pic-5.jpeg") %>" alt="" />
+
+        <div class="item-content">
+          <a href="">Fashion</a>
+          <p>Fashion grils wearing dark glashes</p>
+          <p><span class="icon">
+            <i class="fa fa-random"></i>
+          </span>August 05 2018</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-img-area">
+        <img src="<%= static_path(@conn, "/images/pic-6.jpeg") %>" alt="" />
+
+        <div class="item-content">
+          <a href="">Fashion</a>
+          <p>Fashion grils wearing dark glashes</p>
+          <p><span class="icon">
+            <i class="fa fa-random"></i>
+          </span>August 05 2018</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

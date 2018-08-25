@@ -1,0 +1,37 @@
+<div class="footer-menu blog-social">
+  <div class="block">
+    <ul>
+      <li><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
+      <li><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
+      <li><a href="#"><i class="fa fa-pinterest"></i>pinterest</a></li>
+      <li><a href="#"><i class="fa fa-instagram"></i>instagram</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="blog-post-next-prv">
+  <div class="post-left post-arrow">
+    <a href="#"><i class="fa fa-angle-left"></i>Older</a>
+    <p class="has-text-black">Lorem ipsum dolor sit amet,consectetur</p>
+  </div>
+  <div class="post-right post-arrow">
+    <a href="#">Newest<i class="fa fa-angle-right"></i></a>
+    <p>Lorem ipsum dolor sit amet,consectetur</p>
+  </div>
+</div>
+
+<div class="blog-notification">
+  <article class="media">
+    <figure class="media-left">
+      <img src="<%= static_path(@conn, "/images/way-2.png") %>" alt="" />
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <h3><span class="has-text-black">Lorem ipsum </span><span style="color: #E6C45D; text-transform: uppercase">dolor sit amet.</span></h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur blanditiis cum eaque earum eligendi error illum ipsam iusto, magnam maiores quidem quos voluptates voluptatum? Lorem ipsum dolor sit
+          amet, consectetur adipisicing elit. Adipisci aspernatur blanditiis cum eaque earum eligendi error illum ipsam iusto, magnam maiores quidem quos voluptates voluptatum?</p>
+      </div>
+    </div>
+  </article>
+</div>

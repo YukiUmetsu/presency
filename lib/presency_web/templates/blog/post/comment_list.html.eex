@@ -1,0 +1,45 @@
+<div class="comment-section">
+  <span class="has-text-grey is-italic">3comments</span>
+
+  <article class="media">
+    <figure class="media-left">
+      <img src="<%= static_path(@conn, "/images/ss.png") %>" alt="" />
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <h3 class="is-paddingless">Sora Templets <span> August 23 2018</span></h3>
+        <p class="is-marginless">This is texting comment</p>
+        <a href="#" class="has-text-grey is-1">Replay</a>
+        <a href="#" class="has-text-grey is-1">Delete</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="media  middle-left">
+    <figure class="media-left">
+      <img src="<%= static_path(@conn, "/images/ss.png") %>" alt="" />
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <h3 class="is-paddingless">Sora Templets <span> August 23 2018</span></h3>
+        <p class="is-marginless">This is texting comment</p>
+        <a href="#" class="has-text-grey is-1">Replay</a>
+        <a href="#" class="has-text-grey is-1">Delete</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="media">
+    <figure class="media-left">
+      <img src="<%= static_path(@conn, "/images/ss.png") %>" alt="" />
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <h3 class="is-paddingless">Sora Templets <span> August 23 2018</span></h3>
+        <p class="is-marginless">This is texting comment</p>
+        <a href="#" class="has-text-grey is-1">Replay</a>
+        <a href="#" class="has-text-grey is-1">Delete</a>
+      </div>
+    </div>
+  </article>
+</div>

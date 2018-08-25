@@ -1,0 +1,86 @@
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/animate-css/animate.min.css") %>">
+<%= render PresencyWeb.Blog.PageView, "blog_header.html", assigns %>
+<!-- our-product-area
+    ============================================ -->
+<section class="section our-product-area">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-9">
+                <div class="single-blog">
+                    <a href="#" class="fashion">Fashion</a>
+                    <h3>How to be fashionable save on purchases</h3>
+                    <div class="theme-tags">
+                        <ul>
+                            <li>
+                                <div class="theme-left">
+                                    <img src="<%= static_path(@conn, "/images/2.jpg") %>" alt="" />
+                                    <span><i>by</i> Way2 Themes</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="theme-right">
+                                    <p><i class="fa fa-random"></i>
+                                        <i>by</i> Way2 Themes August 23, 2016 </p>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <figure class="image ">
+                        <img src="<%= static_path(@conn, "/images/2.jpg") %>">
+                    </figure>
+
+                    <div class="blog-text">
+                        <p class="b-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem? Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem?</p>
+
+                        <div class="notification border-blue">
+                            <i class="fa fa-quote-left"></i>labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio earum expedita explicabo
+                            iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem? <i class="fa fa-quote-right"></i>
+                        </div>
+
+                        <p class="b-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem? Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem?</p>
+
+                        <div class="blog-mark">
+                            <ul>
+                                <li> <i class="fa fa-angle-right"></i><a href="#">Lorem ipsum dolor sit amet</a></li>
+                                <li> <i class="fa fa-angle-right"></i><a href="#">Lorem ipsum dolor sit amet</a></li>
+                                <li> <i class="fa fa-angle-right"></i><a href="#">Lorem ipsum dolor sit amet</a></li>
+
+                            </ul>
+                        </div>
+
+                        <p class="b-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem? Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem?</p>
+
+                        <p class="b-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem? Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem?</p>
+
+                        <p class="b-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem? Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. Distinctio earum expedita explicabo iusto labore numquam reprehenderit rerum temporibus unde voluptas. At beatae excepturi numquam voluptatem?</p>
+
+                        <span class="tag has-text-grey">Fashion</span>
+                    </div>
+
+                    <%= render "post_footer.html", assigns %>
+                    <%= render "recommendation.html", assigns %>
+                    <%= render "comment_list.html", assigns %>
+                </div>
+            </div>
+
+            <%= render PresencyWeb.Blog.PageView, "blog_side_area.html", assigns %>
+        </div>
+    </div>
+</section>
+
+<%= render PresencyWeb.Blog.PageView, "blog_footer.html", assigns %>
+
+<a href="#" id="scrollUp">
+
+<script type="text/javascript">
+//    $(function(){
+//        $.scrollUp();
+//    });
+</script>

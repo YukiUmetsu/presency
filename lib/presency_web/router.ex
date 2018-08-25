@@ -26,7 +26,12 @@ defmodule PresencyWeb.Router do
   scope "/", PresencyWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", Blog.PageController, :index
+  end
+
+  scope "/p", PresencyWeb.Blog do
+    pipe_through :browser
+    get "/:post_url_id", PostController, :show
   end
 
   #--- Not Authenticated Admin---#

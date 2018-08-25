@@ -1,0 +1,20 @@
+<div class="bog-nature-images">
+  <p class="has-text-black is-uppercase">you may also like this</p>
+  <div class="columns">
+    <div class="column">
+      <img src="<%= static_path(@conn, "/images/pic-1.jpeg") %>" alt="" />
+      <h3 class="has-text-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, quis!</h3>
+      <span class="has-text-grey is-1">August 23 2018</span>
+    </div>
+    <div class="column">
+      <img src="<%= static_path(@conn, "/images/pic-2.jpeg") %>" alt="" />
+      <h3 class="has-text-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, quis!</h3>
+      <span class="has-text-grey is-1">August 23 2018</span>
+    </div>
+    <div class="column">
+      <img src="<%= static_path(@conn, "/images/pic-3.jpeg") %>" alt="" />
+      <h3 class="has-text-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, quis!</h3>
+      <span class="has-text-grey is-1">August 23 2018</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/slicknav/slicknav.min.css") %>">
+<link rel="stylesheet" href="<%= static_path(@conn, "/css/blog-theme-index.css") %>">
+<!--Preloader Coding Here
+    ==============================================-->
+<div id="preloader">
+  <div class="preloader-spinner"></div>
+</div>
+
+
+<!-- header-top
+    ============================================ -->
+<section class="section header-top-area">
+  <div class="columns">
+    <div class="column is-2 is-mobile-2">
+      <figure class="logo-img">
+        <img src="<%= static_path(@conn, "/images/logo.png") %>">
+      </figure>
+    </div>
+    <div class="column is-10 is-mobile-12">
+      <div class="top-menu">
+        <ul>
+          <li><a href="#"><span class="icon">
+            <i class="fa fa-location-arrow"></i>
+            </span>By Styles</a>
+          </li>
+          <li><a href="#">
+            <span class="icon">
+              <i class="fa fa-magic"></i>
+            </span>By features</a>
+          </li>
+          <li><a href="#">
+            <span class="icon">
+              <i class="fa fa-book"></i>
+            </span>By Topics</a></li>
+          <li><a href="#">
+            <span class="icon">
+              <i class="fa fa-adjust"></i>
+            </span>By Columns</a>
+          </li>
+          <li><a href="#">
+            <span class="icon">
+              <i class="fa fa-bookmark"></i>
+            </span>By Sidebar</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- header-top
+ ============================================ -->
+
+
+<!-- header-bottom-area
+    ============================================ -->
+<section class="section header-bottom-area">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-9">
+        <div class="mainmenu">
+          <ul id="nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Dropdown</a> <i class="fa fa-angle-down"></i>
+              <ul class="sub">
+                <li><a href="#">Dropdown</a><i class="fa fa-angle-right" style="color:#ddd"></i>
+                  <ul class="sub-2">
+                    <li><a href="#">Multi Dropdown</a></li>
+                    <li><a href="#">Multi Dropdown</a></li>
+                    <li><a href="#">Multi Dropdown</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Dropdown</a></li>
+                <li><a href="#">Dropdown</a></li>
+                <li><a href="#">Dropdown</a></li>
+                <li><a href="#">Dropdown</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Video documentation</a></li>
+            <li><a href="#">documentation</a></li>
+            <li><a href="#">Download this template</a></li>
+          </ul>
+        </div>
+
+        <div class="menu-prepend"></div>
+
+      </div>
+      <div class="column is-3">
+        <div class="search">
+          <form class="searchbox">
+            <input type="search" placeholder="Search......" name="search" class="searchbox-input" onkeyup="buttonUp();" required>
+            <input type="submit" class="searchbox-submit" value="">
+            <span class="searchbox-icon"><i class="fa fa-search"></i></span>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+</section>
+
+
+<section class=" section middle-logo-area">
+  <div class="container">
+    <img src="<%= static_path(@conn, "/images/middle.png") %>" alt="" />
+  </div>
+</section>

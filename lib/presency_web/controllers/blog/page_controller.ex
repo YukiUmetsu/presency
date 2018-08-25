@@ -1,4 +1,4 @@
-defmodule PresencyWeb.PageController do
+defmodule PresencyWeb.Blog.PageController do
   use PresencyWeb, :controller
 
   def index(conn, _params) do

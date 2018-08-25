@@ -1,0 +1,59 @@
+ <!--// All css file//-->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
+ <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/animate-css/animate.min.css") %>">
+ <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/owl-carousel/assets/owl.carousel.min.css") %>">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+ <%= render "blog_header.html", assigns %>
+ <%= render "image_slider.html", assigns %>
+
+  <section class="section our-product-area">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-9">
+
+          <%= render "post_list.html", assigns %>
+
+          <div class="older-post">
+            <a href="#">OLder post <i class="fa fa-angle-right"></i></a>
+          </div>
+        </div>
+
+        <%= render "blog_side_area.html", assigns %>
+      </div>
+    </div>
+  </section>
+
+ <%= render "blog_footer.html", assigns %>
+ <script src="<%= static_path(@conn, "/vendor/owl-carousel/owl.carousel.min.js") %>"></script>
+
+<!-- Common Scripts -->
+<script>
+    $(document).on('ready', function () {
+        $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:0,
+            nav:true,
+            navText: [
+                "<button type='button' role='presentation' class='owl-prev'><span aria-label='Previous'>‹</span></button>",
+                "<button type='button' role='presentation' class='owl-next'><span aria-label='Next'>›</span></button>"],
+            auto:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:2
+                },
+                1000:{
+                    items:3
+                }
+            }
+        });
+    });
+</script>

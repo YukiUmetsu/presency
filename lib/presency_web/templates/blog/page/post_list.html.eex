@@ -1,0 +1,231 @@
+<article class="media media-margin">
+  <figure class="media-left">
+    <figure class="image ">
+      <img src="<%= static_path(@conn, "/images/pic-2.jpeg") %>">
+      <a href="#">Pin it</a>
+    </figure>
+  </figure>
+  <div class="media-content">
+
+    <div class="content fashion-content">
+      <a class="fashion">Fashion</a>
+      <h2><a href="#" class="fashion-heading">How to Fashionable and saev on purchease</a></h2>
+
+      <div class="theme-tags">
+
+        <ul>
+          <li>
+            <div class="theme-left">
+              <img src="<%= static_path(@conn, "/images/2.jpg") %>" alt="" />
+              <span><i>by</i> Way2 Themes</span>
+            </div>
+          </li>
+          <li>
+            <div class="theme-right">
+              <p><i class="fa fa-random"></i>
+                <i>by</i> Way2 Themes August 23, 2016 </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="fashion-is-text">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard…</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<article class="media media-margin">
+  <figure class="media-left">
+    <figure class="image ">
+      <img src="<%= static_path(@conn, "/images/pic-1.jpeg") %>">
+      <a href="#">Pin it</a>
+    </figure>
+  </figure>
+  <div class="media-content">
+
+    <div class="content fashion-content">
+      <a class="fashion">Fashion</a>
+      <h2><a href="#" class="fashion-heading">How to Fashionable and saev on purchease</a></h2>
+
+      <div class="theme-tags">
+        <ul>
+          <li>
+            <div class="theme-left">
+              <img src="<%= static_path(@conn, "/images/2.jpg") %>" alt="" />
+              <span><i>by</i> Way2 Themes</span>
+            </div>
+          </li>
+          <li>
+            <div class="theme-right">
+              <p><i class="fa fa-random"></i>
+                <i>by</i> Way2 Themes August 23, 2016 </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="fashion-is-text">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard…</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<article class="media media-margin">
+  <figure class="media-left">
+    <figure class="image ">
+      <img src="<%= static_path(@conn, "/images/2.jpg") %>">
+      <a href="#">Pin it</a>
+    </figure>
+  </figure>
+  <div class="media-content">
+
+    <div class="content fashion-content">
+      <a class="fashion">Fashion</a>
+      <h2><a href="#" class="fashion-heading">How to Fashionable and saev on purchease</a></h2>
+
+      <div class="theme-tags">
+
+        <ul>
+          <li>
+            <div class="theme-left">
+              <img src="<%= static_path(@conn, "/images/pic-3.jpeg") %>" alt="" /> <span><i>by</i> Way2 Themes</span>
+            </div>
+          </li>
+          <li>
+            <div class="theme-right">
+              <p><i class="fa fa-random"></i>
+                <i>by</i> Way2 Themes August 23, 2016 </p>
+            </div>
+          </li>
+        </ul>
+
+
+      </div>
+
+      <div class="fashion-is-text">
+
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard…</p>
+      </div>
+
+
+    </div>
+  </div>
+
+</article>
+
+<article class="media media-margin">
+  <figure class="media-left">
+    <figure class="image ">
+      <img src="<%= static_path(@conn, "/images/pic-4.jpeg") %>">
+      <a href="#">Pin it</a>
+    </figure>
+  </figure>
+  <div class="media-content">
+
+    <div class="content fashion-content">
+      <a class="fashion">Fashion</a>
+      <h2><a href="#" class="fashion-heading">How to Fashionable and saev on purchease</a></h2>
+
+      <div class="theme-tags">
+
+        <ul>
+          <li>
+            <div class="theme-left">
+              <img src="<%= static_path(@conn, "/images/pic-3.jpeg") %>" alt="" /> <span><i>by</i> Way2 Themes</span>
+            </div>
+          </li>
+          <li>
+            <div class="theme-right">
+              <p><i class="fa fa-random"></i>
+                <i>by</i> Way2 Themes August 23, 2016 </p>
+            </div>
+          </li>
+        </ul>
+
+
+      </div>
+
+      <div class="fashion-is-text">
+
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard…</p>
+      </div>
+
+
+    </div>
+  </div>
+
+</article>
+
+<article class="media media-margin">
+  <figure class="media-left">
+    <figure class="image ">
+      <img src="<%= static_path(@conn, "/images/pic-5.jpeg") %>">
+      <a href="#">Pin it</a>
+    </figure>
+  </figure>
+  <div class="media-content">
+
+    <div class="content fashion-content">
+      <a class="fashion">Fashion</a>
+      <h2><a href="#" class="fashion-heading">How to Fashionable and saev on purchease</a></h2>
+
+      <div class="theme-tags">
+
+        <ul>
+          <li>
+            <div class="theme-left">
+              <img src="<%= static_path(@conn, "/images/pic-3.jpeg") %>" alt="" /> <span><i>by</i> Way2 Themes</span>
+            </div>
+          </li>
+          <li>
+            <div class="theme-right">
+              <p><i class="fa fa-random"></i>
+                <i>by</i> Way2 Themes August 23, 2016 </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="fashion-is-text">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard…</p>
+      </div>
+    </div>
+  </div>
+
+</article>
+
+<article class="media media-margin">
+  <figure class="media-left">
+    <figure class="image ">
+      <img src="<%= static_path(@conn, "/images/pic-6.jpeg") %>">
+      <a href="#">Pin it</a>
+    </figure>
+  </figure>
+
+  <div class="media-content">
+    <div class="content fashion-content">
+      <a class="fashion">Fashion</a>
+      <h2><a href="#" class="fashion-heading">How to Fashionable and saev on purchease</a></h2>
+      <div class="theme-tags">
+        <ul>
+          <li>
+            <div class="theme-left">
+              <img src="<%= static_path(@conn, "/images/2.jpg") %>" alt="" /> <span><i>by</i> Way2 Themes</span>
+            </div>
+          </li>
+          <li>
+            <div class="theme-right">
+              <p><i class="fa fa-random"></i>
+                <i>by</i> Way2 Themes August 23, 2016 </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="fashion-is-text">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard…</p>
+      </div>
+    </div>
+  </div>
+</article>

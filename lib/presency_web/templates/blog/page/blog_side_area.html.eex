@@ -1,0 +1,125 @@
+<div class="column is-3">
+  <div class="profile-area">
+    <h3 class="profile-title">About Me </h3>
+    <img src="<%= static_path(@conn, "/images/profile.jpeg") %>" alt="" />
+    <h4>Lorem Ipsum</h4>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+  </div>
+
+
+  <div class="follow-area">
+    <h3 class="profile-title">Follow us</h3>
+
+    <div class="profile-link">
+
+
+      <ul>
+        <li><a href="#"><span class="icon ">
+                <i class="fa fa-facebook"></i>
+                </span>Facebook</a>
+        </li>
+        <li><a href="#"><span class="icon ">
+                <i class="fa fa-twitter"></i></span>Twitter</a>
+        </li>
+      </ul>
+
+
+      <ul>
+        <li><a href="#">
+                <span class="icon ">
+                  <i class="fa fa-pinterest"></i>
+                </span>
+          Pinterest</a>
+        </li>
+        <li><a href="#">
+          <span class="icon "><i class="fa fa-instagram"></i></span>
+          Instgram</a>
+        </li>
+      </ul>
+
+
+      <ul>
+        <li><a href="#">
+                <span class="icon ">
+                  <i class="fa fa-youtube"></i>
+                </span>
+          Youtube</a>
+        </li>
+        <li><a href="#">
+                <span class="icon ">
+                  <i class="fa fa-google-plus"></i>
+                </span>
+          Google+</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="popular-posts">
+    <h3 class="profile-title">Follow us</h3>
+    <div class="post-area">
+      <ul>
+        <li><img src="<%= static_path(@conn, "/images/post.jpeg") %>" alt="" /></li>
+        <li>
+          <h3>Lorem ipsum dolor.</h3>
+          <p><i class="fa fa-random"></i>August 23, 2016</p>
+        </li>
+      </ul>
+
+      <ul>
+        <li><img src="<%= static_path(@conn, "/images/post.jpeg") %>" alt="" /></li>
+        <li>
+          <h3>Lorem ipsum dolor.</h3>
+          <p><i class="fa fa-random"></i>August 23, 2016</p>
+        </li>
+      </ul>
+
+      <ul>
+        <li><img src="<%= static_path(@conn, "/images/post.jpeg") %>" alt="" /></li>
+        <li>
+          <h3>Lorem ipsum dolor.</h3>
+          <p><i class="fa fa-random"></i>August 23, 2016</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="facebook-area">
+    <h3 class="profile-title">Facebook</h3>
+    <img src="<%= static_path(@conn, "/images/facebook.png") %>" alt="" />
+  </div>
+
+
+  <div class="follow-by-email">
+    <h3 class="profile-title">Follow by Email </h3>
+    <p>Get all latest content delivered straight to your inbox.</p>
+
+    <form action="#">
+      <input type="text" placeholder="Enter Email" />
+      <input type="submit" value="Subscribe" />
+    </form>
+  </div>
+
+  <div class="catagories-area">
+    <h3 class="profile-title">Categories </h3>
+    <ul>
+      <li> <i class="fa fa-angle-right"></i>Busniess <a href="#"></a> <span>9</span></li>
+      <li> <i class="fa fa-angle-right"></i>Sports <a href="#"></a> <span>7</span></li>
+      <li> <i class="fa fa-angle-right"></i>Shirt <a href="#"></a> <span>3</span></li>
+      <li> <i class="fa fa-angle-right"></i>Busniess <a href="#"></a> <span>9</span></li>
+      <li> <i class="fa fa-angle-right"></i>Hat <a href="#"></a> <span>2</span></li>
+    </ul>
+  </div>
+
+  <div class="tags-area">
+    <h3 class="profile-title">Tags </h3>
+    <a href="#">Busniess</a> <a href="#">Nature</a>
+    <a href="#">Shirt</a> <a href="#">Job</a>
+    <a href="#">Busniess</a> <a href="#">People</a>
+    <a href="#">Busniess</a> <a href="#">Nature</a>
+    <a href="#">Shirt</a> <a href="#">Job</a>
+    <a href="#">Busniess</a> <a href="#">People</a>
+  </div>
+</div>

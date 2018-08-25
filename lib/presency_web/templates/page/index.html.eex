@@ -32,26 +32,26 @@
       <div class="top-menu">
         <ul>
           <li><a href="#"><span class="icon">
-            <i class="fas fa-location-arrow"></i>
+            <i class="fa fa-location-arrow"></i>
             </span>By Styles</a>
           </li>
           <li><a href="#">
             <span class="icon">
-              <i class="fas fa-magic"></i>
+              <i class="fa fa-magic"></i>
             </span>By features</a>
           </li>
           <li><a href="#">
             <span class="icon">
-              <i class="fas fa-book"></i>
+              <i class="fa fa-book"></i>
             </span>By Topics</a></li>
           <li><a href="#">
             <span class="icon">
-              <i class="fas fa-adjust"></i>
+              <i class="fa fa-adjust"></i>
             </span>By Columns</a>
           </li>
           <li><a href="#">
             <span class="icon">
-              <i class="fas fa-bookmark"></i>
+              <i class="fa fa-bookmark"></i>
             </span>By Sidebar</a></li>
         </ul>
       </div>
@@ -130,7 +130,7 @@
           <a href="">Fashion</a>
           <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
-                    <i class="fas fa-random"></i>
+                    <i class="fa fa-random"></i>
                     </span>August 05 2018</p>
         </div>
       </div>
@@ -143,7 +143,7 @@
           <a href="">Fashion</a>
           <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
-            <i class="fas fa-random"></i>
+            <i class="fa fa-random"></i>
           </span>August 05 2018</p>
         </div>
       </div>
@@ -156,7 +156,7 @@
           <a href="">Fashion</a>
           <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
-            <i class="fas fa-random"></i>
+            <i class="fa fa-random"></i>
           </span>August 05 2018</p>
         </div>
       </div>
@@ -168,7 +168,7 @@
           <a href="">Fashion</a>
           <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
-            <i class="fas fa-random"></i>
+            <i class="fa fa-random"></i>
           </span>August 05 2018</p>
         </div>
       </div>
@@ -182,7 +182,7 @@
           <a href="">Fashion</a>
           <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
-            <i class="fas fa-random"></i>
+            <i class="fa fa-random"></i>
           </span>August 05 2018</p>
         </div>
       </div>
@@ -195,7 +195,7 @@
           <a href="">Fashion</a>
           <p>Fashion grils wearing dark glashes</p>
           <p><span class="icon">
-            <i class="fas fa-random"></i>
+            <i class="fa fa-random"></i>
           </span>August 05 2018</p>
         </div>
       </div>
@@ -471,11 +471,11 @@
 
             <ul>
               <li><a href="#"><span class="icon ">
-                <i class="fab fa-facebook"></i>
+                <i class="fa fa-facebook"></i>
                 </span>Facebook</a>
               </li>
               <li><a href="#"><span class="icon ">
-                <i class="fab fa-twitter"></i></span>Twitter</a>
+                <i class="fa fa-twitter"></i></span>Twitter</a>
               </li>
             </ul>
 
@@ -483,12 +483,12 @@
             <ul>
               <li><a href="#">
                 <span class="icon ">
-                  <i class="fab fa-pinterest"></i>
+                  <i class="fa fa-pinterest"></i>
                 </span>
                 Pinterest</a>
               </li>
               <li><a href="#">
-                <span class="icon "><i class="fab fa-instagram"></i></span>
+                <span class="icon "><i class="fa fa-instagram"></i></span>
                 Instgram</a>
               </li>
             </ul>
@@ -497,12 +497,12 @@
             <ul>
               <li><a href="#">
                 <span class="icon ">
-                  <i class="fab fa-youtube"></i>
+                  <i class="fa fa-youtube"></i>
                 </span>
                 Youtube</a>
               </li>
               <li><a href="#">
-                <span class="icon "><i class="fab fa-vimeo"></i></span>
+                <span class="icon "><i class="fa fa-vimeo"></i></span>
                 Vimeo</a></li>
             </ul>
 
@@ -510,12 +510,12 @@
             <ul>
               <li><a href="#">
                 <span class="icon ">
-                  <i class="fab fa-google-plus"></i>
+                  <i class="fa fa-google-plus"></i>
                 </span>
                 Google+</a>
               </li>
               <li><a href="#">
-                <span class="icon "><i class="fab fa-reddit"></i></span>
+                <span class="icon "><i class="fa fa-reddit"></i></span>
                 Reddit</a></li>
             </ul>
           </div>
@@ -631,10 +631,10 @@
 <div class="section footer-menu">
   <div class="block">
     <ul>
-      <li><a href="#"><i class="fab fa-facebook"></i>Facebook</a></li>
-      <li><a href="#"><i class="fab fa-twitter"></i>Twitter</a></li>
-      <li><a href="#"><i class="fab fa-instagram"></i>instagram</a></li>
-      <li><a href="#"><i class="fab fa-pinterest"></i>pinterest</a></li>
+      <li><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
+      <li><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
+      <li><a href="#"><i class="fa fa-instagram"></i>instagram</a></li>
+      <li><a href="#"><i class="fa fa-pinterest"></i>pinterest</a></li>
     </ul>
   </div>
 </div>

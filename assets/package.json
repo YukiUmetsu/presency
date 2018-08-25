@@ -15,6 +15,7 @@
     "font-awesome": "^4.7.0",
     "image-picker": "^0.3.1",
     "jquery": "^1.12.4",
+    "jquery-floating-social-share": "^2.1.4",
     "jquery-migrate": "^3.0.1",
     "jquery-modal": "^0.9.1",
     "jquery.easing": "^1.4.1",

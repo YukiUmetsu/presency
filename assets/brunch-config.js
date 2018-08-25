@@ -12,6 +12,7 @@ exports.config = {
           "vendor/slicknav/jquery.slicknav.min.js": "node_modules/slicknav/dist/jquery.slicknav.min.js",
           "vendor/slick-carousel/slick.min.js":"node_modules/slick-carousel/slick/slick.min.js",
           "vendor/owl-carousel/owl.carousel.min.js":"node_modules/owl.carousel2/dist/owl.carousel.min.js",
+          "vendor/social-share/jquery.floating-social-share.min.js":"node_modules/jquery-floating-social-share/dist/jquery.floating-social-share.min.js"
       },
     },
     stylesheets: {
@@ -24,6 +25,7 @@ exports.config = {
           "vendor/owl-carousel/assets/owl.carousel.min.css":"node_modules/owl-carousel2/dist/assets/owl.carousel.min.css",
           "vendor/owl-carousel/assets/owl.theme.default.min.css":"node_modules/owl-carousel2/dist/assets/owl.theme.default.min.css",
           "vendor/slicknav/slicknav.min.css":"node_modules/slick-carousel/dist/slicknav.min.css",
+          "vendor/social-share/jquery.floating-social-share.min.css":"node_modules/jquery-floating-social-share/dist/jquery.floating-social-share.min.css"
       },
       order: {
           after: [ "css/app.scss"],
@@ -90,6 +92,9 @@ exports.config = {
         "vendor/owl-carousel": [
             "node_modules/slicknav/dist",
         ],
+        "vendor/social-share": [
+            "node_modules/jquery-floating-social-share/dist"
+        ]
     }
   },
 
@@ -103,7 +108,8 @@ exports.config = {
       "vendor/jquery.scrollUp/jquery.scrollUp.min.js": ["single-page/jquery.scrollUp.min.jp"],
       "vendor/slick-carousel/slick.min.js": ["node_modules/slick-carousel/slick/slick.min.js"],
       "vendor/slick-carousel/owl-carousel.min.js": ["node_modules/owl-carousel2/dist/owl-carousel.min.js"],
-      "vendor/slicknav/jquery.slicknav.min.js": ["node_modules/slicknav/dist/jquery.slicknav.min.js"]
+      "vendor/slicknav/jquery.slicknav.min.js": ["node_modules/slicknav/dist/jquery.slicknav.min.js"],
+      "vendor/social-share/jquery.floating-social-share.min.js": ["node_modules/jquery-floating-social-share/dist/jquery.floating-social-share.min.js"]
     }
   },
 

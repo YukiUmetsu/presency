@@ -973,6 +973,15 @@ pre {
 #scrollUp:focus{
   outline:0;
 }
+
+/**
+  Social Share
+ */
+#floatingSocialShare a:hover {
+  opacity: 1 !important;
+}
+
+
 /* Responsive Code */
 @media only screen and (max-width:1200px) {
 }

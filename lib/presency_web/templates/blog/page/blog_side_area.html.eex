@@ -57,12 +57,12 @@
 
 
   <div class="popular-posts">
-    <h3 class="profile-title">Follow us</h3>
+    <h3 class="profile-title">Popular Posts</h3>
     <div class="post-area">
       <ul>
         <li><img src="<%= static_path(@conn, "/images/post.jpeg") %>" alt="" /></li>
         <li>
-          <h3>Lorem ipsum dolor.</h3>
+          <p class="is-bold-text">Lorem ipsum dolor.</p>
           <p><i class="fa fa-random"></i>August 23, 2016</p>
         </li>
       </ul>
@@ -70,7 +70,7 @@
       <ul>
         <li><img src="<%= static_path(@conn, "/images/post.jpeg") %>" alt="" /></li>
         <li>
-          <h3>Lorem ipsum dolor.</h3>
+          <p class="is-bold-text">Lorem ipsum dolor.</p>
           <p><i class="fa fa-random"></i>August 23, 2016</p>
         </li>
       </ul>
@@ -78,7 +78,7 @@
       <ul>
         <li><img src="<%= static_path(@conn, "/images/post.jpeg") %>" alt="" /></li>
         <li>
-          <h3>Lorem ipsum dolor.</h3>
+          <p class="is-bold-text">Lorem ipsum dolor.</p>
           <p><i class="fa fa-random"></i>August 23, 2016</p>
         </li>
       </ul>

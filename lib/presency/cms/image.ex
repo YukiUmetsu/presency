@@ -23,7 +23,7 @@ defmodule Presency.CMS.Image do
   @doc false
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:filename, :path, :extension, :tag, :size, :qquuid, :caption, :admin_user_id, :user_id])
+    |> cast(attrs, [:filename, :path, :extension, :tag, :size, :qquuid, :caption, :admin_user_id, :user_id, :post])
     |> validate_required([:filename, :path, :extension, :tag, :size, :qquuid])
   end
 end

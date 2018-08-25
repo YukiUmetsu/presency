@@ -29,7 +29,7 @@ defmodule PresencyWeb.Router do
     get "/", Blog.PageController, :index
   end
 
-  scope "/p", PresencyWeb.Blog do
+  scope "/blog", PresencyWeb.Blog do
     pipe_through :browser
     get "/:post_url_id", PostController, :show
   end

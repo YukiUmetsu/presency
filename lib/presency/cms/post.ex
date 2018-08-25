@@ -9,10 +9,12 @@ defmodule Presency.CMS.Post do
     field :publicity, :string
     field :title, :string
     field :meta_description, :string
-    has_many :comments, Presency.CMS.Comment
-    has_many :comments_users, through: [:comments, :user]
+    field :url_id, :string
     belongs_to :post_status, Presency.CMS.PostStatus
     belongs_to :category, Presency.CMS.Category
+    has_one :image, Presency.CMS.Image
+    has_many :comments, Presency.CMS.Comment
+    has_many :comments_users, through: [:comments, :user]
     many_to_many :tags, Presency.CMS.Tag, join_through: Presency.CMS.PostsTags
     many_to_many :user_access_profiles, UserAccessProfile, join_through: UserAccessProfilesPermissions
     timestamps()
@@ -22,8 +24,8 @@ defmodule Presency.CMS.Post do
   def changeset(post, attrs) do
     post
     |> Presency.Repo.preload(:category)
-    |> cast(attrs, [:title, :content, :publicity, :meta_description])
-    |> validate_required([:title, :content, :publicity, :meta_description])
+    |> cast(attrs, [:title, :content, :publicity, :meta_description, :url_id, :image, :tags, :comments, :comments_users])
+    |> validate_required([:title, :content, :publicity, :meta_description, :url_id])
     |> cast_assoc(:category)
   end
 

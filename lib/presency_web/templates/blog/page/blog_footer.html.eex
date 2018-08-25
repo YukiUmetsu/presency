@@ -47,6 +47,7 @@
 <!--// jquery script //-->
 <script src="<%= static_path(@conn, "/vendor/slicknav/jquery.slicknav.min.js") %>"></script>
 <script src="<%= static_path(@conn, "/vendor/jquery.easing/jquery.easing.min.js") %>"></script>
+<script src="<%= static_path(@conn, "/vendor/social-share/jquery.floating-social-share.min.js") %>"></script>
 <script>
     $(window).on('load',function(){
         $('#preloader').fadeOut();
@@ -56,6 +57,17 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $(".footer-menu").floatingSocialShare({
+            buttons: ["facebook", "twitter", "linkedin", "pinterest"],
+            text: {
+                'facebook': 'Share on Facebook',
+                'twitter': 'Share on Twitter',
+                'google-plus': 'Share on Google Plus'
+            },
+            place: "content-left",
+            extra_offset: -30,
+        });
+
         var submitIcon = $('.searchbox-icon');
         var inputBox = $('.searchbox-input');
         var searchBox = $('.searchbox');

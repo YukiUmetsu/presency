@@ -1,54 +1,16 @@
-<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/slicknav/slicknav.min.css") %>">
+<link rel="stylesheet"
+      href="<%= static_path(@conn, "/vendor/slicknav/slicknav.min.css") %>"
+      media="none" onload="if(media!='all')media='all'">
+<link rel="stylesheet"
+      href="<%= static_path(@conn, "/vendor/social-share/jquery.floating-social-share.min.css") %>"
+      media="none" onload="if(media!='all')media='all'">
 <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog-theme-index.css") %>">
+<link rel="stylesheet" href="css.css" media="none" onload="if(media!='all')media='all'">
 <!--Preloader Coding Here
     ==============================================-->
 <div id="preloader">
   <div class="preloader-spinner"></div>
 </div>
-
-
-<!-- header-top
-    ============================================ -->
-<section class="section header-top-area">
-  <div class="columns">
-    <div class="column is-2 is-mobile-2">
-      <figure class="logo-img">
-        <img src="<%= static_path(@conn, "/images/logo.png") %>">
-      </figure>
-    </div>
-    <div class="column is-10 is-mobile-12">
-      <div class="top-menu">
-        <ul>
-          <li><a href="#"><span class="icon">
-            <i class="fa fa-location-arrow"></i>
-            </span>By Styles</a>
-          </li>
-          <li><a href="#">
-            <span class="icon">
-              <i class="fa fa-magic"></i>
-            </span>By features</a>
-          </li>
-          <li><a href="#">
-            <span class="icon">
-              <i class="fa fa-book"></i>
-            </span>By Topics</a></li>
-          <li><a href="#">
-            <span class="icon">
-              <i class="fa fa-adjust"></i>
-            </span>By Columns</a>
-          </li>
-          <li><a href="#">
-            <span class="icon">
-              <i class="fa fa-bookmark"></i>
-            </span>By Sidebar</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- header-top
- ============================================ -->
-
 
 <!-- header-bottom-area
     ============================================ -->

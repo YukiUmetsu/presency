@@ -4,6 +4,7 @@ defmodule PresencyWeb.AdminUserSocket do
   ## Channels
   # channel "room:*", PresencyWeb.RoomChannel
   channel "image_uploader", PresencyWeb.ImageUploaderChannel
+  channel "post", PresencyWeb.PostChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

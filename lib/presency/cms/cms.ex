@@ -46,6 +46,11 @@ defmodule Presency.CMS do
     |> Repo.preload(:category)
   end
 
+  def get_post_by_url_id(url_id) do
+    query = from p in Post, where: p.url_id == ^url_id
+    Repo.one(query)
+  end
+
   @doc """
   Creates a post.
 
@@ -271,7 +276,7 @@ defmodule Presency.CMS do
     Repo.paginate(query, page: page_number, page_size: page_size)
   end
 
-  def list_category_options do
+  def list_category_options() do
     case list_categories() do
       nil -> nil
       categories -> categories |> Enum.map(fn(category) -> [value: category.id, key: category.title] end)

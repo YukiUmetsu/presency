@@ -11,6 +11,24 @@
     <%= error_tag f, :title %>
   </div>
 
+  <%= label f, :url_id, "Post URL", class: "label u-margin-top-small" %>
+  <div class="field has-addons">
+    <p class="control">
+      <span class="button is-static is-left"><%= @conn.host <> "/blog/" %></span>
+    </p>
+    <p class="control has-icons-right" style="min-width: 85%;">
+      <%= text_input f, :url_id, class: "input" %>
+      <span class="icon is-small is-right" id="fail-icon">
+        <i class="fa fa-exclamation-triangle"></i>
+      </span>
+      <span class="icon is-small is-right" id="success-icon">
+        <i class="fa fa-check"></i>
+      </span>
+    </p>
+    <%= error_tag f, :url_id %>
+  </div>
+  <p class="help is-danger" id="url-already-exist" style="display: none"></p>
+
   <div class="field u-margin-top-small">
     <%= label f, :meta_description, class: "label" %>
     <div class="control">
@@ -54,3 +72,46 @@
     <%= submit "Submit", class: "button is-primary" %>
   </div>
 <% end %>
+
+<script src="<%= static_path(@conn, "/js/socket/admin-socket.js") %>"></script>
+<script>
+  $(document).on("ready", function () {
+      let failIcon = $("#fail-icon");
+      failIcon.hide();
+      let successIcon = $("#success-icon");
+      successIcon.hide();
+      let urlError = $("#url-already-exist");
+      urlError.hide();
+
+      let postURLChannel = window.socket.channel("post", {});
+      postURLChannel.join()
+          .receive("ok", resp => { console.log("Joined successfully", resp) })
+          .receive("error", resp => { console.log("Unable to join", resp) });
+
+      $("#post_url_id").change(function(){
+          let value = this.value;
+          checkURLExists(value, postURLChannel);
+      });
+
+      function checkURLExists(url, postURLChannel) {
+          postURLChannel.push("post:url_exist", { "url": url})
+              .receive("ok", resp => { urlNotExist(); })
+              .receive("error", resp => { urlAlreadyExist(resp.message); });
+      }
+
+      function urlAlreadyExist(message){
+          failIcon.show();
+          successIcon.hide();
+          $("#post_url_id").addClass("is-danger");
+          urlError.text(message);
+          urlError.show();
+      }
+
+      function urlNotExist() {
+          successIcon.show();
+          failIcon.hide();
+          $("#post_url_id").removeClass("is-danger");
+          urlError.hide();
+      }
+  });
+</script>

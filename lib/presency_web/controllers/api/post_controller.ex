@@ -1,6 +1,7 @@
-defmodule PresencyWeb.Admin.PostController do
+defmodule PresencyWeb.Api.PostController do
   use PresencyWeb, :controller
   import PhoenixGon.Controller
+
 
   alias Presency.CMS
   alias Presency.CMS.Post
@@ -17,7 +18,7 @@ defmodule PresencyWeb.Admin.PostController do
   def new(conn, _params) do
     categories = CMS.list_category_options()
     changeset = CMS.change_post(%Post{})
-    admin_user = conn.assigns.current_admin
+    admin_user = conn.assigns.current_user
     token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
     render(conn, "new.html", changeset: changeset, categories: categories, token: token)
   end
@@ -54,7 +55,7 @@ defmodule PresencyWeb.Admin.PostController do
     categories = CMS.list_category_options()
     post = CMS.get_post_with_assoc!(id)
     changeset = CMS.change_post(post)
-    admin_user = conn.assigns.current_admin
+    admin_user = conn.assigns.current_user
     token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
     render(conn, "edit.html", post: post, changeset: changeset, categories: categories, token: token)
   end

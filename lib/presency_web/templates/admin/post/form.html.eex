@@ -62,11 +62,23 @@
     <%= error_tag f, :publicity %>
   </div>
 
+  <div class="field u-margin-top-small u-margin-bottom-big">
+    <div class="is-pulled-left u-margin-right-small u-margin-bottom-small" style="width: 100%">
+      <a href="#image-modal" rel="modal:open" id="image-modal-open">
+        <div class="button is-primary">Choose Post Thumbnail Image</div>
+      </a>
+      <div class="show-logo" id="show-post-image"></div>
+      <%= hidden_input f, :image %>
+    </div>
+  </div>
+
   <!-- Create the editor container -->
+  <div class="field">
     <p><strong>Blog Content</strong></p>
     <div id="editor"></div>
 
-  <%= hidden_input f, :content, class: "form-control" %>
+    <%= hidden_input f, :content, class: "form-control" %>
+  </div>
 
   <div class="field u-margin-tb-small">
     <%= submit "Submit", class: "button is-primary" %>
@@ -74,6 +86,18 @@
 <% end %>
 
 <script src="<%= static_path(@conn, "/js/socket/admin-socket.js") %>"></script>
+<script src="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.js") %>"></script>
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.css") %>"  media="none" onload="if(media!='all')media='all'">
+
+<!-- image modal -->
+<script>
+    // array of [open element id, show image element id, hidden image src input id]
+    window.modalOpenElementIdArray = [["image-modal-open", "show-post-image", "post_image"]];
+</script>
+<div id="image-modal">
+  <%= render PresencyWeb.Components.ImagePickerView, "show.html", assigns %>
+</div>
+
 <script>
   $(document).on("ready", function () {
       let failIcon = $("#fail-icon");

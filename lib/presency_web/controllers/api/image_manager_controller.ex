@@ -8,9 +8,9 @@ defmodule PresencyWeb.Api.ImageManagerController do
   require IEx
 
   def index(conn, %{"page" => page, "page_size" => page_size, "token" => token}) do
-    case Phoenix.Token.verify(PresencyWeb.Endpoint, "image_api_login", token, max_age: 86400) do
-      {:ok, _admin_id} -> render_image(conn, page, page_size)
-      {_, _} -> render_error(conn)
+    case is_valid_token(token) do
+      true -> render_image(conn, page, page_size)
+      false -> render_error(conn)
     end
   end
 
@@ -31,9 +31,9 @@ defmodule PresencyWeb.Api.ImageManagerController do
   end
 
   def create(conn, image_info) do
-    case token_verify(image_info["token"]) do
-      {:ok, _} -> add_image(conn, image_info)
-      {_, _} -> render_error(conn)
+    case token_verify("image_api_login", image_info["token"]) do
+      true -> add_image(conn, image_info)
+      false -> render_error(conn)
     end
   end
 
@@ -119,10 +119,26 @@ defmodule PresencyWeb.Api.ImageManagerController do
     else
       _ -> attrs
     end
-
   end
 
-  def token_verify(token) do
-    Phoenix.Token.verify(PresencyWeb.Endpoint, "image_api_login", token, max_age: 86400)
+  def is_valid_token(token) do
+    is_valid = Enum.map(["image_api_login", "socket_login"], fn key ->
+      token_verify(key, token)
+    end)
+
+    case is_valid do
+      [false, false] -> false
+      nil -> false
+      [true, false] -> true
+      [false, true] -> true
+      _ -> false
+    end
+  end
+
+  def token_verify(key, token) do
+    case Phoenix.Token.verify(PresencyWeb.Endpoint, key, token, max_age: 86400) do
+      {:ok, _} -> true
+      {_, _} -> false
+    end
   end
 end

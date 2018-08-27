@@ -7,7 +7,11 @@ defmodule Presency.CMS do
   alias Presency.Repo
   alias Presency.CMS.Post
   alias Presency.CMS.MainSettings
+  alias Presency.CMS.Category
+  alias Presency.CMS.Tag
+  alias Presency.CMS.Image
   import Helpers.String, only: [trim_string_list: 1]
+  require IEx
 
   @doc """
   Returns the list of posts.
@@ -36,14 +40,19 @@ defmodule Presency.CMS do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
-
+  def get_post!(id) do
+    Repo.get!(Post, id)
+    |> Repo.preload(:tags)
+    |> Repo.preload(:category)
+    |> Repo.preload(:image)
+  end
 
   def get_post_with_assoc!(id) do
     query = from p in Post, where: p.id == ^id
     Repo.one(query)
     |> Repo.preload(:tags)
     |> Repo.preload(:category)
+    |> Repo.preload(:image)
   end
 
   def get_post_by_url_id(url_id) do
@@ -91,6 +100,15 @@ defmodule Presency.CMS do
     |> Repo.update()
   end
 
+  def update_post_with_multi_assoc(post, post_params, image, tags, category) do
+    post
+    |> build_many_many_post_assoc(:tags, tags)
+    |> Ecto.Changeset.cast(post_params, [])
+    |> Ecto.Changeset.put_assoc(:image, image)
+    |> Ecto.Changeset.put_assoc(:category, category)
+    |> Repo.update!
+  end
+
   @doc """
   Deletes a Post.
 
@@ -121,7 +139,6 @@ defmodule Presency.CMS do
   end
 
   def build_many_many_post_assoc(post, keyword, list) do
-    require IEx
     with false <- Blankable.blank?(post),
          false <- Blankable.blank?(keyword),
          false <- Blankable.blank?(list)
@@ -136,8 +153,7 @@ defmodule Presency.CMS do
     end
   end
 
-  def build_post_assoc(post_param \\ %{}, item) do
-    require IEx
+  def build_post_param_assoc(post_param \\ %{}, item) do
     with false <- Blankable.blank?(post_param),
           false <- Blankable.blank?(item)
     do
@@ -147,6 +163,10 @@ defmodule Presency.CMS do
     else
       _ -> Ecto.Changeset.change(%Post{}, post_param)
     end
+  end
+
+  def build_post_assoc(item, post_params) do
+    Ecto.build_assoc(item, :posts, post_params)
   end
 
   def create_post_param(params \\ %{}) do
@@ -253,9 +273,6 @@ defmodule Presency.CMS do
   def change_comment(%Comment{} = comment) do
     Comment.changeset(comment, %{})
   end
-
-
-  alias Presency.CMS.Category
 
   @doc """
   Returns the list of categories.
@@ -376,8 +393,6 @@ defmodule Presency.CMS do
     Category.changeset(category, %{})
   end
 
-
-  alias Presency.CMS.Tag
 
   @doc """
   Returns the list of tags.
@@ -500,6 +515,21 @@ defmodule Presency.CMS do
     end
   end
 
+  def load_tags_from_post_params(post_params) do
+    case post_params["tags"] || [] do
+      [] -> :tags
+      tags ->
+        tag_list = post_params["tags"] |> String.split(",") |> Enum.map(fn x -> String.trim(x) end)
+        tag_list |> create_tags_by_string_list
+
+        case Repo.all from t in Tag, where: t.title in ^tag_list do
+          nil -> []
+          [] -> []
+          tags -> tags
+        end
+    end
+  end
+
   def list_main_settings() do
     Repo.one(from x in MainSettings, order_by: [asc: x.id], limit: 1)
   end
@@ -527,11 +557,16 @@ defmodule Presency.CMS do
     MainSettings.changeset(settings, %{})
   end
 
-  alias Presency.CMS.Image
+
 
   def list_image() do
     query = from i in Image, order_by: [desc: i.updated_at]
     Repo.all(query)
+  end
+
+  def get_image(id) do
+    query = from i in Image, where: i.id == ^id
+    Repo.one(query)
   end
 
   def list_paginated_images(page_number \\ 1, page_size \\ 7) do

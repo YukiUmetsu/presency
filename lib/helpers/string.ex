@@ -19,4 +19,17 @@ defmodule Helpers.String do
     |> Enum.uniq
     |> Enum.filter(& "" != (&1))
   end
+
+  def split_trim(string\\"", separator\\",") do
+    case Blankable.blank?(string) do
+      true -> []
+      false ->
+        String.split(string, separator)
+        |> Enum.map(fn x -> String.trim(x) end)
+    end
+  end
+
+  def valid_url?(url) do
+    url =~ ~r/^[a-zA-Z0-9_-]+$/
+  end
 end

@@ -17,9 +17,17 @@ defmodule PresencyWeb.Admin.PostController do
   def new(conn, _params) do
     categories = CMS.list_category_options()
     changeset = CMS.change_post(%Post{})
+    page = CMS.list_paginated_images(1, 8)
     admin_user = conn.assigns.current_admin
     token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
-    render(conn, "new.html", changeset: changeset, categories: categories, token: token)
+
+    render(conn, "new.html",
+      changeset: changeset,
+      categories: categories,
+      token: token,
+      page: page,
+      images: page.entries
+    )
   end
 
   def create(conn, %{"post" => post_params}) do
@@ -28,7 +36,7 @@ defmodule PresencyWeb.Admin.PostController do
 
     post_create_result =
       post_params
-      |> CMS.build_post_assoc(category)
+      |> CMS.build_post_param_assoc(category)
       |> CMS.create_post_from_changeset
 
     case post_create_result do
@@ -54,26 +62,48 @@ defmodule PresencyWeb.Admin.PostController do
     categories = CMS.list_category_options()
     post = CMS.get_post_with_assoc!(id)
     changeset = CMS.change_post(post)
+    page = CMS.list_paginated_images(1, 8)
     admin_user = conn.assigns.current_admin
     token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
-    render(conn, "edit.html", post: post, changeset: changeset, categories: categories, token: token)
+    render(conn, "edit.html",
+      post: post,
+      changeset: changeset,
+      categories: categories,
+      token: token,
+      page: page,
+      images: page.entries
+    )
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
-    post = CMS.get_post!(id)
-    new_tags = create_tags(post_params["tags"])
+    post = CMS.get_post_with_assoc!(id)
+    tags = get_tags_list(post_params["tags"])
+    image = CMS.get_image(post_params["image"])
     category = CMS.get_category(post_params["category_id"])
 
-    case CMS.update_post(post, post_params) do
-      {:ok, post} ->
-        CMS.build_post_assoc(category, post)
-        CMS.build_many_many_post_assoc(post, :tags, new_tags)
+    post_params =
+      Map.delete(post_params, "tags")
+      |> Map.put("image", image.id)
 
+    case CMS.update_post_with_multi_assoc(post, post_params, image, tags, category) do
+      post ->
         conn
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: admin_post_path(conn, :show, post))
+
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", post: post, changeset: changeset)
+        categories = CMS.list_category_options()
+        page = CMS.list_paginated_images(1, 8)
+        admin_user = conn.assigns.current_admin
+        token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
+        render(conn, "edit.html",
+          post: post,
+          changeset: changeset,
+          categories: categories,
+          admin_user: admin_user,
+          page: page,
+          token: token
+        )
     end
   end
 
@@ -114,5 +144,10 @@ defmodule PresencyWeb.Admin.PostController do
   def next_index_exist?(list, index) do
     next_element = Enum.at(list, index + 1)
     !is_nil(next_element)
+  end
+
+  def get_tags_list(tags_string\\"") do
+    Helpers.String.split_trim(tags_string, ",")
+    |> Enum.map(fn x -> %{title: x} end)
   end
 end

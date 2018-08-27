@@ -41,10 +41,10 @@
 
   <div class="field u-margin-top-small">
     <div class="is-pulled-left u-margin-right-small">
-      <a href="#logo-modal" rel="modal:open" id="logo-modal-open">
+      <a href="#image-modal" rel="modal:open" id="image-modal-open">
         <div class="button is-primary">Choose logo</div>
       </a>
-      <div class="show-logo">
+      <div class="show-logo" id="show-logo">
         <%= if assigns[:main_settings] do %>
         <%= raw("<img src='#{@main_settings.logo}' >") %>
         <% end %>
@@ -52,10 +52,10 @@
       <%= hidden_input f, :logo %>
     </div>
     <div>
-      <a href="#logo-modal" rel="modal:open" id="about-me-modal-open">
+      <a href="#image-modal" rel="modal:open" id="about-me-modal-open">
         <div class="button is-primary">Choose About Me Photo</div>
       </a>
-      <div class="show-about-me-photo">
+      <div class="show-about-me-photo" id="show-about-me-photo">
         <%= if assigns[:main_settings] do %>
         <%= raw("<img src='#{@main_settings.about_me_photo}' >") %>
         <% end %>
@@ -206,9 +206,15 @@
 <script src="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.js") %>"></script>
 <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.css") %>">
 
-<!-- logo modal -->
-<div id="logo-modal">
+<!-- image modal -->
+<div id="image-modal">
 <%= if assigns[:images] do %>
+  <script>
+    window.modalOpenElementIdArray = [
+        ["image-modal-open", "show-logo", "main_settings_logo"],
+        ["about-me-modal-open", "show-about-me-photo", "main_settings_about_me_photo"]
+    ];
+  </script>
   <%= render PresencyWeb.Components.ImagePickerView, "show.html", assigns %>
 <% else %>
   <div class="h4">No images to select. Please upload a logo image in image gallery</div>

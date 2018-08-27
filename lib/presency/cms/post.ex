@@ -2,7 +2,8 @@ defmodule Presency.CMS.Post do
   use Ecto.Schema
   import Ecto.Changeset
   alias Presency.Permissions.UserAccessProfile
-  alias  Presency.Permissions.UserAccessProfilesPermissions
+  alias Presency.Permissions.UserAccessProfilesPermissions
+  require Helpers.String
 
   schema "posts" do
     field :content, :string
@@ -15,7 +16,7 @@ defmodule Presency.CMS.Post do
     has_one :image, Presency.CMS.Image
     has_many :comments, Presency.CMS.Comment
     has_many :comments_users, through: [:comments, :user]
-    many_to_many :tags, Presency.CMS.Tag, join_through: Presency.CMS.PostsTags
+    many_to_many :tags, Presency.CMS.Tag, join_through: Presency.CMS.PostsTags, on_replace: :delete
     many_to_many :user_access_profiles, UserAccessProfile, join_through: UserAccessProfilesPermissions
     timestamps()
   end
@@ -26,7 +27,17 @@ defmodule Presency.CMS.Post do
     |> Presency.Repo.preload([:category, :image, :post_status])
     |> cast(attrs, [:title, :content, :publicity, :meta_description, :url_id])
     |> validate_required([:title, :content, :publicity, :meta_description, :url_id])
+    |> validate_url(:url_id)
+    |> unique_constraint(:url_id)
     |> cast_assoc(:category)
   end
 
+  defp validate_url(changeset, field, options \\ []) do
+    validate_change(changeset, field, fn _, url ->
+      case Helpers.String.valid_url?(url) do
+        true -> []
+        false -> [{field, options[:message] || "Invalid URL"}]
+      end
+    end)
+  end
 end

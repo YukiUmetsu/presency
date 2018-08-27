@@ -29,7 +29,7 @@ defmodule PresencyWeb.Api.PostController do
 
     post_create_result =
       post_params
-      |> CMS.build_post_assoc(category)
+      |> CMS.build_post_param_assoc(category)
       |> CMS.create_post_from_changeset
 
     case post_create_result do
@@ -67,7 +67,7 @@ defmodule PresencyWeb.Api.PostController do
 
     case CMS.update_post(post, post_params) do
       {:ok, post} ->
-        CMS.build_post_assoc(category, post)
+        CMS.build_post_param_assoc(category, post)
         CMS.build_many_many_post_assoc(post, :tags, new_tags)
 
         conn

@@ -11,9 +11,7 @@ defmodule PresencyWeb.Admin.MainSettingsController do
     token = Phoenix.Token.sign(conn, "image_api_login", admin.id)
     conn = put_gon(conn, token: token)
 
-    conn
-    |> add_page_to_conn(page)
-    |> render("edit.html",
+    render(conn, "edit.html",
               images: page.entries,
               main_settings: main_settings,
               changeset: changeset,
@@ -32,19 +30,6 @@ defmodule PresencyWeb.Admin.MainSettingsController do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", main_settings: old_settings, changeset: changeset)
-    end
-  end
-
-
-  def add_page_to_conn(conn, page) do
-    case Blankable.blank?(page) do
-      false ->
-        conn
-#        |> Plug.assign(image_page_number: page.page_number)
-#        |> Plug.assign(image_page_size: page.page_size)
-#        |> Plug.assign(image_total_pages: page.total_pages)
-#        |> Plug.assign(image_total_entries: page.total_entries)
-      true -> conn
     end
   end
 end

@@ -4,8 +4,8 @@ defmodule Presency.CMS.PostsTags do
 
 
   schema "posts_tags" do
-    field :post_id, :id
-    field :tag_id, :id
+    belongs_to :post, Presency.CMS.Post
+    belongs_to :tag, Presency.CMS.Tag
 
     timestamps()
   end

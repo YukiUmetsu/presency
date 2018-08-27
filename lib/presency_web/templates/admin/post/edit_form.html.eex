@@ -8,15 +8,33 @@
   <div class="field u-margin-top-small">
     <%= label f, :title, class: "label" %>
     <%= text_input f, :title, class: "input" %>
-    <%= error_tag f, :title %>
+    <div class="help is-danger"><%= error_tag f, :title %></div>
   </div>
+
+  <%= label f, :url_id, "Post URL", class: "label u-margin-top-small" %>
+  <div class="field has-addons">
+    <p class="control">
+      <span class="button is-static is-left"><%= @conn.host <> "/blog/" %></span>
+    </p>
+    <p class="control has-icons-right" style="min-width: 85%;">
+      <%= text_input f, :url_id, class: "input" %>
+      <span class="icon is-small is-right" id="fail-icon">
+          <i class="fa fa-exclamation-triangle"></i>
+        </span>
+      <span class="icon is-small is-right" id="success-icon">
+          <i class="fa fa-check"></i>
+        </span>
+    </p>
+    <div class="help is-danger"><%= error_tag f, :url_id %></div>
+  </div>
+  <p class="help is-danger" id="url-already-exist" style="display: none"></p>
 
   <div class="field u-margin-top-small">
     <%= label f, :meta_description, class: "label" %>
     <div class="control">
       <%= textarea f, :meta_description, class: "textarea" %>
     </div>
-    <%= error_tag f, :meta_description %>
+    <div class="help is-danger"><%= error_tag f, :meta_description %></div>
   </div>
 
     <div class="field u-margin-top-small">
@@ -24,6 +42,7 @@
         <div class="control">
             <input class="input" id="post_tags" name="post[tags]" type="text" value="<%= show_tags(@post.tags) %>" >
         </div>
+      <div class="help is-danger"><%= error_tag f, :tags %></div>
     </div>
 
   <div class="field u-margin-top-small">
@@ -33,7 +52,7 @@
               <%= select f, :category_id, @categories, prompt: "choose a category", class: "form-control" %>
           </div>
       </div>
-    <%= error_tag f, :category_id %>
+    <div class="help is-danger"><%= error_tag f, :category_id %></div>
   </div>
 
   <div class="field u-margin-top-small">
@@ -41,7 +60,22 @@
       <div class="control">
           <%= text_input f, :publicity, class: "input" %>
       </div>
-    <%= error_tag f, :publicity %>
+    <div class="help is-danger"><%= error_tag f, :publicity %></div>
+  </div>
+
+  <div class="field u-margin-top-small u-margin-bottom-big">
+    <div class="is-pulled-left u-margin-right-small u-margin-bottom-small" style="width: 100%">
+      <a href="#image-modal" rel="modal:open" id="image-modal-open">
+        <div class="button is-primary">Choose Post Thumbnail Image</div>
+      </a>
+      <div class="show-logo" id="show-post-image">
+        <%= if @post.image != nil do %>
+        <%= show_image(@post.image) %>
+        <% end %>
+      </div>
+      <input id="post_image" name="post[image]" type="hidden" value="<%= @post.image.id %>">
+      <div class="is-danger"><%= error_tag f, :image %></div>
+    </div>
   </div>
 
   <!-- Create the editor container -->
@@ -54,3 +88,60 @@
     <%= submit "Submit", class: "button is-primary" %>
   </div>
 <% end %>
+
+
+<script src="<%= static_path(@conn, "/js/socket/admin-socket.js") %>"></script>
+<script src="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.js") %>"></script>
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.css") %>"  media="none" onload="if(media!='all')media='all'">
+
+<!-- image modal -->
+<script>
+    // array of [open element id, show image element id, hidden image src input id]
+    window.modalOpenElementIdArray = [["image-modal-open", "show-post-image", "post_image"]];
+    window.hiddenInputAdd = true;
+</script>
+<div id="image-modal">
+  <%= render PresencyWeb.Components.ImagePickerView, "show.html", assigns %>
+</div>
+
+<script>
+    $(document).on("ready", function () {
+        let failIcon = $("#fail-icon");
+        failIcon.hide();
+        let successIcon = $("#success-icon");
+        successIcon.hide();
+        let urlError = $("#url-already-exist");
+        urlError.hide();
+
+        let postURLChannel = window.socket.channel("post", {});
+        postURLChannel.join()
+            .receive("ok", resp => { console.log("Joined successfully", resp) })
+            .receive("error", resp => { console.log("Unable to join", resp) });
+
+        $("#post_url_id").change(function(){
+            let value = this.value;
+            checkURLExists(value, postURLChannel);
+        });
+
+        function checkURLExists(url, postURLChannel) {
+            postURLChannel.push("post:url_exist", { "url": url})
+                .receive("ok", resp => { urlNotExist(); })
+                .receive("error", resp => { urlAlreadyExist(resp.message); });
+        }
+
+        function urlAlreadyExist(message){
+            failIcon.show();
+            successIcon.hide();
+            $("#post_url_id").addClass("is-danger");
+            urlError.text(message);
+            urlError.show();
+        }
+
+        function urlNotExist() {
+            successIcon.show();
+            failIcon.hide();
+            $("#post_url_id").removeClass("is-danger");
+            urlError.hide();
+        }
+    });
+</script>

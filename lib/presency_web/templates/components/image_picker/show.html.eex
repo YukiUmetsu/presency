@@ -1,10 +1,3 @@
-<script>
-    window.imagePageNumber = <%= @page.page_number %>;
-    window.imagePageSize = <%= @page.page_size %>;
-    window.imageTotalPages = <%= @page.total_pages %>;
-    window.imageTotalEntries = <%= @page.total_entries %>;
-</script>
-
 <div class="image-picker-div">
   <div class="columns">
     <div id="image-page-left" class="column u-children-vertical-center"></div>
@@ -26,13 +19,26 @@
 
 <!-- Image Picker -->
 <script src="<%= static_path(@conn, "/vendor/image-picker/image-picker.js") %>"></script>
-<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/image-picker/image-picker.css") %>">
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/image-picker/image-picker.css") %>"  media="none" onload="if(media!='all')media='all'">
 <script>
 $("#image-selector").imagepicker();
 </script>
 <script>
     $(document).ready(function() {
-        var entityType = '';
+
+        let hiddenInputAddId = (typeof window.hiddenInputAdd === "undefined") ? false : window.hiddenInputAdd;
+        let entityType = '';
+        let showHTMLElementId = '';
+        let hiddenImageInputId = '';
+        let modalOpenElementIdArray = window.modalOpenElementIdArray;
+        modalOpenElementIdArray.forEach(([openModalId, showHTMLId, hiddenInputId]) => {
+            $("#"+openModalId).click(() => {
+                entityType = openModalId;
+                showHTMLElementId = showHTMLId;
+                hiddenImageInputId = hiddenInputId;
+            });
+        });
+
         function drawPagination(){
             if (window.imagePageNumber !== 1) {
                 $("#image-page-left").html("<span id='get-previous-image' class='button is-primary'>&laquo;</span>");
@@ -49,27 +55,25 @@ $("#image-selector").imagepicker();
 
         $("#get-next-image").click(getNextImages);
         $("#get-previous-image").click(getPreviousImages);
-        $("#logo-modal-open").click(logoModalClicked);
-        $("#about-me-modal-open").click(aboutMePhotoModalClicked);
 
         function getNextImages() {
-            var nextURL = "/api/image_manager?page=" + (window.imagePageNumber + 1) +
+                let nextURL = "/api/image_manager?page=" + (window.imagePageNumber + 1) +
                 "&page_size=" + window.imagePageSize +
-                "&token=" + window.Gon.assets().token;
+                "&token=" + window.userToken;
             ajaxImageRequest(nextURL);
         }
 
         function getPreviousImages() {
-            var previousURL = "/api/image_manager?page=" + (window.imagePageNumber - 1) +
+            let previousURL = "/api/image_manager?page=" + (window.imagePageNumber - 1) +
                 "&page_size=" + window.imagePageSize +
-                "&token=" + window.Gon.assets().token;
+                "&token=" + window.userToken;
             ajaxImageRequest(previousURL);
         }
 
         function ajaxImageRequest(URL) {
             $.ajax({
                 url: URL,
-                data: {token: window.token}
+                data: {token: window.userToken}
             }).done(function (data) {
                 window.imagePageNumber = data.page_number;
                 window.imagePageSize = data.page_size;
@@ -81,42 +85,36 @@ $("#image-selector").imagepicker();
         }
 
         function setHTML(images){
-            var optionsHTML = '';
-            for (var i = 0; i < images.length; i++) {
-                var img = images[i];
+            let optionsHTML = '';
+            for (let i = 0; i < images.length; i++) {
+                let img = images[i];
                 optionsHTML +=
                     "<option data-img-src='" + img.path +
                     "' data-img-class='image-in-selector' " +
                     "data-img-alt='image " + img.id + "'" +
+                    "data-img-id='"+img.id+"'" +
                     " value='" + img.id + "'>Image " + img.id + "</option>";
             }
-            $("#image-selector").html(optionsHTML);
-            $("#image-selector").imagepicker();
+            let imageSelector = $("#image-selector");
+            imageSelector.html(optionsHTML);
+            imageSelector.imagepicker();
             drawPagination();
             $("#get-next-image").click(getNextImages);
             $("#get-previous-image").click(getPreviousImages);
         }
 
-        function logoModalClicked() {
-            entityType = 'logo';
-        }
 
-        function aboutMePhotoModalClicked() {
-            entityType = 'about-me-photo';
-        }
-
-        $('#logo-modal').on($.modal.AFTER_CLOSE, function (event, modal) {
-            var modalStartObj = modal.$elm[0];
-            console.log(modalStartObj);
-            var div = $(".image-in-selector.selected")[0];
-            var imagePath = div.firstElementChild.src;
-            var imageHTML = "<img src='"+ imagePath+"' height='100px' width='200px'>";
-            if(entityType === 'logo'){
-                $(".show-logo").html(imageHTML);
-                $("#main_settings_logo").val(imagePath);
-            } else if (entityType === 'about-me-photo'){
-                $(".show-about-me-photo").html(imageHTML);
-                $("#main_settings_about_me_photo").val(imagePath);
+        $('#image-modal').on($.modal.AFTER_CLOSE, function (event, modal) {
+            let div = $(".image-in-selector.selected")[0];
+            let imagePath = div.firstElementChild.src;
+            let imageHTML = "<img src='"+ imagePath+"' height='100px' width='200px'>";
+            let showHTMLSelector = "#"+showHTMLElementId;
+            $(`${showHTMLSelector}`).html(imageHTML);
+            if(hiddenInputAddId){
+                let imageIdStr = div.firstElementChild.alt.replace(/image /g, "").trim();
+                $(`#${hiddenImageInputId}`).val(parseInt(imageIdStr));
+            } else {
+                $(`#${hiddenImageInputId}`).val(imagePath);
             }
             entityType = '';
         });

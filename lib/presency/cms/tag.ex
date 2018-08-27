@@ -17,4 +17,5 @@ defmodule Presency.CMS.Tag do
     |> validate_required([:title])
     |> unique_constraint(:title)
   end
+
 end

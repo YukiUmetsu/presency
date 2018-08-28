@@ -31,6 +31,7 @@
 
   <div class="field u-margin-top-small">
     <%= label f, :meta_description, class: "label" %>
+    <div id="character-count"><p class="help is-bold-text">0 character</p></div>
     <div class="control">
       <%= textarea f, :meta_description, class: "textarea" %>
     </div>
@@ -138,4 +139,22 @@
           urlError.hide();
       }
   });
+</script>
+<script>
+  // character count
+  $("#post_meta_description").on("input", function () {
+      let text = this.value;
+      let count = text.split("").length;
+      showCounter(count);
+  });
+
+  function showCounter(count) {
+      if(count < 2){
+          $("#character-count").html("<p class='help is-bold-text'>"+count+" character</p>");
+      } else if(count > 175){
+          $("#character-count").html("<p class='help is-danger is-bold-text'>"+count+" characters</p>");
+      } else {
+          $("#character-count").html("<p class='help is-bold-text'>"+count+" characters</p>");
+      }
+  }
 </script>

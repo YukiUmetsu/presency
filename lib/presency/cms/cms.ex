@@ -193,6 +193,11 @@ defmodule Presency.CMS do
     Repo.all(Comment)
   end
 
+  def list_paginated_comments(page_number, page_size) do
+    query = from c in Comment, order_by: [desc: c.updated_at], preload: [:user, :post]
+    Repo.paginate(query, page: page_number, page_size: page_size)
+  end
+
   @doc """
   Gets a single comment.
 
@@ -518,7 +523,7 @@ defmodule Presency.CMS do
   def load_tags_from_post_params(post_params) do
     case post_params["tags"] || [] do
       [] -> :tags
-      tags ->
+      _tags ->
         tag_list = post_params["tags"] |> String.split(",") |> Enum.map(fn x -> String.trim(x) end)
         tag_list |> create_tags_by_string_list
 

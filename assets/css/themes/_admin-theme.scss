@@ -21,6 +21,7 @@
 .admin-container {
   position: absolute;
   width: 100%;
+  min-height: 100%;
 
   .column:first-child {
     padding-right: 2rem;
@@ -40,4 +41,8 @@
 
 #save-avatar {
   margin-left: 1rem;
+}
+
+#character-count {
+  margin-bottom: .5rem;
 }

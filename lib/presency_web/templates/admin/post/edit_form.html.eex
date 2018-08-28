@@ -31,6 +31,7 @@
 
   <div class="field u-margin-top-small">
     <%= label f, :meta_description, class: "label" %>
+    <div id="character-count"></div>
     <div class="control">
       <%= textarea f, :meta_description, class: "textarea" %>
     </div>
@@ -106,6 +107,9 @@
 
 <script>
     $(document).on("ready", function () {
+        let firstCount = $("#post_meta_description").val().split("").length;
+        $("#character-count").html("<p class='help is-bold-text'>"+firstCount+" character</p>");
+
         let failIcon = $("#fail-icon");
         failIcon.hide();
         let successIcon = $("#success-icon");
@@ -144,4 +148,21 @@
             urlError.hide();
         }
     });
+</script>
+<script>
+    let metaDescTextarea = $("#post_meta_description");
+    metaDescTextarea.on("input", function () {
+        let count = metaDescTextarea.val().split("").length;
+        showCounter(count);
+    });
+
+    function showCounter(count) {
+        if(count < 2){
+            $("#character-count").html("<p class='help is-bold-text'>"+count+" character.</p>");
+        } else if(count > 175){
+            $("#character-count").html("<p class='help is-danger is-bold-text'>"+count+" characters. Too long!</p>");
+        } else {
+            $("#character-count").html("<p class='help is-bold-text'>"+count+" characters</p>");
+        }
+    }
 </script>

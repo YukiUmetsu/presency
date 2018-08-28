@@ -5,7 +5,6 @@
       href="<%= static_path(@conn, "/vendor/social-share/jquery.floating-social-share.min.css") %>"
       media="none" onload="if(media!='all')media='all'">
 <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog-theme-index.css") %>">
-<link rel="stylesheet" href="css.css" media="none" onload="if(media!='all')media='all'">
 <!--Preloader Coding Here
     ==============================================-->
 <div id="preloader">

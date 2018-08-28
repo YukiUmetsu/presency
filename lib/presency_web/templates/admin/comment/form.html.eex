@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= label f, :by_admin, class: "label" %>
-    <%= number_input f, :by_admin, class: "form-control" %>
+    <%= checkbox f, :by_admin, class: "form-control", checked_value: 1, unchecked_value: 0 %>
     <%= error_tag f, :by_admin %>
   </div>
 

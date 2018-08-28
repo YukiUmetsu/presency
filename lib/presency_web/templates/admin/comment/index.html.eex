@@ -5,20 +5,29 @@
     <tr>
       <th>Content</th>
       <th>By admin</th>
-
+      <th>Updated At</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for comment <- @comments do %>
     <tr>
-      <td><%= comment.content %></td>
-      <td><%= comment.by_admin %></td>
+      <td class="is-small-text"><%= comment.content %></td>
+      <td><%= get_by_admin(comment.by_admin) %></td>
+      <td  class="is-small-text"><%= show_datetime(comment.updated_at) %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: admin_comment_path(@conn, :show, comment), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: admin_comment_path(@conn, :edit, comment), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: admin_comment_path(@conn, :delete, comment), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link raw("<i class='fa fa-edit'></i>"),
+          to: admin_comment_path(@conn, :edit, comment),
+          class: "button is-light tooltip",
+          "data-tooltip": "Edit" %>
+        </span>
+        <span><%= link raw("<i class='fa fa-trash'></i>"),
+          to: admin_comment_path(@conn, :delete, comment),
+          method: :delete,
+          data: [confirm: "Are you sure?"],
+          class: "button is-danger tooltip",
+          "data-tooltip": "Delete" %></span>
       </td>
     </tr>
 <% end %>
@@ -26,8 +35,5 @@
 </table>
 
 <span><%= link "New Comment", to: admin_comment_path(@conn, :new) %></span>
-<style>
-  .admin-container {
-    height: 100%;
-  }
-</style>
+
+<%= pagination_links @page, next: "Next", previous: "Prev" %>

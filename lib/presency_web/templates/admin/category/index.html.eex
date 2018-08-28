@@ -48,8 +48,3 @@
   </tbody>
 </table>
 <%= pagination_links @page, next: "Next", previous: "Prev" %>
-<style>
-  .admin-container {
-    height: 100%;
-  }
-</style>

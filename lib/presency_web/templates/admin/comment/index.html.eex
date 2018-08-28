@@ -34,6 +34,6 @@
   </tbody>
 </table>
 
-<span><%= link "New Comment", to: admin_comment_path(@conn, :new) %></span>
+<span><%= link "New Comment", to: admin_comment_path(@conn, :new), class: "button is-primary"%></span>
 
 <%= pagination_links @page, next: "Next", previous: "Prev" %>

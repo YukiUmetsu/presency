@@ -81,7 +81,7 @@
 
   <!-- Create the editor container -->
     <p><strong>Blog Content</strong></p>
-    <div id="editor-edit"></div>
+    <div id="editor"></div>
 
   <%= hidden_input f, :content, class: "form-control" %>
 

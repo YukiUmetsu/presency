@@ -1,0 +1,252 @@
+<!-- Include the Quill library -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<style>
+  #toolbar-container .ql-font span[data-label="Sans Serif"]::before {
+    font-family: "sans-serif";
+  }
+  #toolbar-container .ql-font span[data-label="Inconsolata"]::before {
+    font-family: "inconsolata";
+  }
+  #toolbar-container .ql-font span[data-label="Roboto"]::before {
+    font-family: "roboto";
+  }
+  #toolbar-container .ql-font span[data-label="Arial"]::before {
+    font-family: "arial";
+  }
+  #toolbar-container .ql-font span[data-label="Helvetica"]::before {
+    font-family: "Helvetica";
+  }
+  #toolbar-container .ql-font span[data-label="Impact"]::before {
+    font-family: "Impact";
+  }
+  #toolbar-container .ql-font span[data-label="Titillium Web"]::before {
+    font-family: "Titillium Web", sans-serif;
+  }
+  .ql-font-inconsolata {
+    font-family: "Inconsolata";
+  }
+  .ql-font-roboto {
+    font-family: "Roboto";
+  }
+  .ql-font-Georgia {
+    font-family: "Georgia";
+  }
+  .ql-font-arial {
+    font-family: "Arial";
+  }
+  .ql-font-impact {
+    font-family: "Impact";
+  }
+  .ql-font-helvetica {
+    font-family: "Helvetica, Arial,sans-serif";
+  }
+  .ql-font-titillium-web {
+    content: 'Titillium Web';
+    font-family: 'Titillium Web', sans-serif;
+  }
+  .border-blue {
+    border-left: 5px solid #01B561;
+    color: #888;
+  }
+</style>
+<script>
+    $(document).on("ready", ()=>{
+       let editorToolbar = `
+           <div id='toolbar'>
+           <select class='ql-size'>
+           <option value='small'></option>
+           <option value='normal'></option>
+           <option value='large'></option>
+           <option value='huge'></option>
+           </select>
+           <select class='ql-header'>
+           <option value='1'></option>
+           <option value='2'></option>
+           <option value='3'></option>
+           <option value='4'></option>
+           <option value='5'></option>
+           </select>
+           <select class='ql-font'>
+           <option value='serif'></option>
+           <option value='sans serif'></option>
+           <option value='monospace'></option>
+           <option class='ql-picker-item' data-value='arial,helvetica,sans-serif'>arial</option>
+           <option class='ql-picker-item' data-value='georgia,serif'>Georgia</option>
+           <option class='ql-picker-item' data-value='impact,charcoal,sans-serif'>impact</option>
+           <option class='ql-picker-item' data-value='helvetica,sans-serif'>helvetica</option>
+           <option class='ql-picker-item' data-value='roboto'>roboto</option>
+           <option class='ql-picker-item' data-value='Titillium Web' value='titillium-web'>Titillium Web</option>
+           </select>
+           <button class='ql-bold'></button>
+           <button class='ql-italic'></button>
+           <button class='ql-underline'></button>
+           <button class='ql-strike'></button>
+           <select class='ql-color'>
+           <option selected='selected'></option>
+           <option value='#e60000'></option>
+           <option value='#ff9900'></option>
+           <option value='#ffff00'></option>
+           <option value='#008a00'></option>
+           <option value='#0066cc'></option>
+           <option value='#9933ff'></option>
+           <option value='#ffffff'></option>
+           <option value='#facccc'></option>
+           <option value='#ffebcc'></option>
+           <option value='#ffffcc'></option>
+           <option value='#cce8cc'></option>
+           <option value='#cce0f5'></option>
+           <option value='#ebd6ff'></option>
+           <option value='#bbbbbb'></option>
+           <option value='#f06666'></option>
+           <option value='#ffc266'></option>
+           <option value='#ffff66'></option>
+           <option value='#66b966'></option>
+           <option value='#66a3e0'></option>
+           <option value='#c285ff'></option>
+           <option value='#888888'></option>
+           <option value='#a10000'></option>
+           <option value='#b26b00'></option>
+           <option value='#b2b200'></option>
+           <option value='#006100'></option>
+           <option value='#0047b2'></option>
+           <option value='#6b24b2'></option>
+           <option value='#444444'></option>
+           <option value='#5c0000'></option>
+           <option value='#663d00'></option>
+           <option value='#666600'></option>
+           <option value='#003700'></option>
+           <option value='#002966'></option>
+           <option value='#3d1466'></option>
+           </select>
+           <select class='ql-background'>
+           <option selected='selected'></option>
+           <option value='#e60000'></option>
+           <option value='#ff9900'></option>
+           <option value='#ffff00'></option>
+           <option value='#008a00'></option>
+           <option value='#0066cc'></option>
+           <option value='#9933ff'></option>
+           <option value='#ffffff'></option>
+           <option value='#facccc'></option>
+           <option value='#ffebcc'></option>
+           <option value='#ffffcc'></option>
+           <option value='#cce8cc'></option>
+           <option value='#cce0f5'></option>
+           <option value='#ebd6ff'></option>
+           <option value='#bbbbbb'></option>
+           <option value='#f06666'></option>
+           <option value='#ffc266'></option>
+           <option value='#ffff66'></option>
+           <option value='#66b966'></option>
+           <option value='#66a3e0'></option>
+           <option value='#c285ff'></option>
+           <option value='#888888'></option>
+           <option value='#a10000'></option>
+           <option value='#b26b00'></option>
+           <option value='#b2b200'></option>
+           <option value='#006100'></option>
+           <option value='#0047b2'></option>
+           <option value='#6b24b2'></option>
+           <option value='#444444'></option>
+           <option value='#5c0000'></option>
+           <option value='#663d00'></option>
+           <option value='#666600'></option>
+           <option value='#003700'></option>
+           <option value='#002966'></option>
+           <option value='#3d1466'></option>
+           </select>
+           <select class='ql-align'>
+           <option selected='selected'></option>
+           <option value='center'></option>
+           <option value='right'></option>
+           <option value='justify'></option>
+           </select>
+           <button class='ql-link'></button>
+           <button class='ql-script' value='sub'></button>
+           <button class='ql-script' value='super'></button>
+           <button class='ql-code-block'></button>
+           <button class='ql-blockquote'></button>
+           <button class='ql-list' value='ordered'></button>
+           <button class='ql-list' value='bullet'></button>
+           <button class='ql-indent' value='-1'></button>
+           <button class='ql-indent' value='+1'></button>
+           <button class='ql-direction' value='rtl'></button>
+           <button class='ql-clean'></button>
+           <button class='ql-image'></button>
+           <button class='ql-video'></button>
+           <button class='ql-formula'></button>
+           <!-- But you can also add your own -->
+           <button id='custom-quote' type='button' style='width: 40px'>
+           <i class='fa fa-quote-left' style='padding-right: 3px'></i>
+           <i class='fa fa-quote-right'></i>
+           </button>
+           </div>`;
+
+       $(editorToolbar).insertBefore('#editor');
+
+           let Font = Quill.import('formats/font');
+           // We do not add Sans Serif since it is the default
+           Font.whitelist = [
+           'monospace',
+           'inconsolata',
+           'roboto',
+           'impact',
+           'arial',
+           'Times New Roman',
+           'Times',
+           'Helvetica',
+           'Georgia',
+           'helvetica',
+           'titillium-web',
+           ];
+           Quill.register(Font, true);
+
+           let Embed = Quill.import('blots/embed');
+           class QuillCustomQuote extends Embed {
+           static create(value) {
+           let node = super.create(value);
+           node.innerHTML = `<div class="notification border-blue"><i class="fa fa-quote-left"></i>  ${value}  <i class="fa fa-quote-right"></i></div>`;
+        return node;
+        }
+        }
+        QuillCustomQuote.blotName = 'custom-quote';
+        QuillCustomQuote.className = 'quill-custom-quote';
+        QuillCustomQuote.tagName = 'div';
+
+        Quill.register({
+        'formats/custom-quote': QuillCustomQuote
+        });
+
+        let editor = new Quill('#editor', {
+        modules: {
+        // toolbar: toolbarOptions
+        toolbar: "#toolbar"
+        },
+        theme: 'snow'
+        });
+
+        document.getElementById('custom-quote').addEventListener('click', () => {
+        let range = editor.getSelection();
+        if (range) {
+        let content = prompt("type content of the quote", "content");
+        editor.insertEmbed(range.index, 'custom-quote', content);
+        }
+        });
+
+        // update the post content preview when text changes
+        let postPreview = document.getElementById('post-preview');
+        let postContent = document.getElementById('post_content');
+        editor.on('text-change', function() {
+        let html = editor.root.innerHTML;
+        let delta = editor.getContents();
+        postPreview.innerHTML = html;
+        postContent.value = JSON.stringify(delta);
+        });
+
+        <%= if @conn.request_path =~ "edit" do %>
+            editor.setContents(<%= raw(@post.content) %>);
+        <% end %>
+    });
+</script>

@@ -102,11 +102,36 @@ defmodule Presency.CMS do
 
   def update_post_with_multi_assoc(post, post_params, image, tags, category) do
     post
-    |> build_many_many_post_assoc(:tags, tags)
-    |> Ecto.Changeset.cast(post_params, [])
-    |> Ecto.Changeset.put_assoc(:image, image)
-    |> Ecto.Changeset.put_assoc(:category, category)
+    |> add_tag_assoc_to_post(tags)
+    |> Post.changeset(post_params)
+    |> add_image_assoc_to_post(image)
+    |> add_category_assoc_to_post(category)
     |> Repo.update!
+  end
+
+  def add_tag_assoc_to_post(post, tags) do
+    case tags do
+      nil -> post
+      [] -> post
+      _ -> post |> build_many_many_post_assoc(:tags, tags)
+    end
+  end
+
+  def add_image_assoc_to_post(post, image) do
+    case image do
+      nil -> post
+      [] -> post
+      _ -> post |> Ecto.Changeset.put_assoc(:image, image)
+    end
+  end
+
+  def add_category_assoc_to_post(post, category) do
+    case category do
+      nil -> post
+      [] -> post
+      _ ->
+        post |> Ecto.Changeset.put_assoc(:category, category)
+    end
   end
 
   @doc """
@@ -515,6 +540,21 @@ defmodule Presency.CMS do
     end
   end
 
+  def get_new_tags_from_list(nil), do: nil
+
+  def get_new_tags_from_list([]), do: nil
+
+  def get_new_tags_from_list(tags) when is_list(tags) do
+    Enum.map(tags, fn(tag) ->
+      existing_tag = get_tag_by_title(tag.title)
+      case existing_tag do
+        nil -> tag
+        _ -> nil
+      end
+    end)
+    |> Enum.filter(fn(x) -> x != nil end)
+  end
+
   def load_tags_from_post_params(post_params) do
     case post_params["tags"] || [] do
       [] -> :tags
@@ -564,6 +604,8 @@ defmodule Presency.CMS do
     Repo.all(query)
   end
 
+  def get_image(""), do: nil
+  def get_image(nil), do: nil
   def get_image(id) do
     query = from i in Image, where: i.id == ^id
     Repo.one(query)

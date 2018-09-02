@@ -8,5 +8,6 @@ defmodule Presency.Repo.Migrations.CreateTags do
       timestamps()
     end
 
+    create index(:tags, [:title], unique: true)
   end
 end

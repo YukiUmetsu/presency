@@ -84,12 +84,10 @@ defmodule PresencyWeb.Admin.PostController do
     tags = get_tags_list(post_params["tags"])
     image = CMS.get_image(post_params["image"])
     category = CMS.get_category(post_params["category_id"])
+    new_tags = CMS.get_new_tags_from_list(tags)
+    post_params = Map.delete(post_params, "tags") |> add_image_id_to_params(image)
 
-    post_params =
-      Map.delete(post_params, "tags")
-      |> Map.put("image", image.id)
-
-    case CMS.update_post_with_multi_assoc(post, post_params, image, tags, category) do
+    case CMS.update_post_with_multi_assoc(post, post_params, image, new_tags, category) do
       {:error, %Ecto.Changeset{} = changeset} ->
         categories = CMS.list_category_options()
         page = CMS.list_paginated_images(1, 8)
@@ -153,5 +151,12 @@ defmodule PresencyWeb.Admin.PostController do
   def get_tags_list(tags_string\\"") do
     Helpers.String.split_trim(tags_string, ",")
     |> Enum.map(fn x -> %{title: x} end)
+  end
+
+  def add_image_id_to_params(params, image) do
+    case image do
+      nil -> params
+      _ -> Map.put(params, "image", image.id)
+    end
   end
 end

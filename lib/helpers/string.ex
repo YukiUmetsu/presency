@@ -1,5 +1,6 @@
 defmodule Helpers.String do
   @moduledoc false
+  require IEx
 
   def separate_words(value, separator) do
     cond do

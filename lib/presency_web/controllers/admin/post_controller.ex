@@ -33,6 +33,7 @@ defmodule PresencyWeb.Admin.PostController do
   def create(conn, %{"post" => post_params}) do
     new_tags = create_tags(post_params["tags"])
     category = CMS.get_category(post_params["category_id"])
+    categories = CMS.list_category_options()
 
     post_create_result =
       post_params
@@ -44,10 +45,13 @@ defmodule PresencyWeb.Admin.PostController do
         post = CMS.build_many_many_post_assoc(post, :tags, new_tags)
         conn
         |> put_flash(:info, "Post created successfully.")
-        |> redirect(to: admin_post_path(conn, :show, post))
+        |> redirect(to: admin_post_path(conn, :edit, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html",
+          changeset: changeset,
+          categories: categories
+        )
     end
   end
 
@@ -86,11 +90,6 @@ defmodule PresencyWeb.Admin.PostController do
       |> Map.put("image", image.id)
 
     case CMS.update_post_with_multi_assoc(post, post_params, image, tags, category) do
-      post ->
-        conn
-        |> put_flash(:info, "Post updated successfully.")
-        |> redirect(to: admin_post_path(conn, :show, post))
-
       {:error, %Ecto.Changeset{} = changeset} ->
         categories = CMS.list_category_options()
         page = CMS.list_paginated_images(1, 8)
@@ -104,6 +103,11 @@ defmodule PresencyWeb.Admin.PostController do
           page: page,
           token: token
         )
+
+      post ->
+        conn
+        |> put_flash(:info, "Post updated successfully.")
+        |> redirect(to: admin_post_path(conn, :show, post))
     end
   end
 

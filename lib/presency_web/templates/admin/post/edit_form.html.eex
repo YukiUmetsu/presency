@@ -74,7 +74,7 @@
         <%= show_image(@post.image) %>
         <% end %>
       </div>
-      <input id="post_image" name="post[image]" type="hidden" value="<%= @post.image.id %>">
+      <input id="post_image" name="post[image]" type="hidden" value="<%= show_post_image_id(@post) %>">
       <div class="is-danger"><%= error_tag f, :image %></div>
     </div>
   </div>

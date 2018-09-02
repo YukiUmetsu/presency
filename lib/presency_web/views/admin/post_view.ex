@@ -34,4 +34,11 @@ defmodule PresencyWeb.Admin.PostView do
     src = image |> get_path
     "<img src='#{src}' width='200px'>" |> raw()
   end
+
+  def show_post_image_id(post) do
+    case post.image do
+      nil -> ""
+      image -> image.id
+    end
+  end
 end

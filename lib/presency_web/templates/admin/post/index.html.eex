@@ -3,7 +3,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Post ID</th>
+      <th>ID</th>
       <th>Title</th>
       <th>Category</th>
       <th>Publicity</th>

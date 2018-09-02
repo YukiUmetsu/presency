@@ -170,12 +170,7 @@ defmodule Presency.CMS do
   end
 
   def create_post_param(params \\ %{}) do
-    %{
-      "title" => params["title"],
-      "content" => params["content"],
-      "meta_description" => params["meta_description"],
-      "publicity" => params["publicity"],
-    }
+    Map.drop(params, ["tags", "image", "category_id"])
   end
 
   alias Presency.CMS.Comment

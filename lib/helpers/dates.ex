@@ -6,9 +6,22 @@ defmodule Helpers.Dates do
   end
 
   def to_date_time_str(date, show_seconds \\ false) do
+    year = date.year |> to_two_digit
+    month = date.month |> to_two_digit
+    day = date.day |> to_two_digit
+    hour = date.hour |> to_two_digit
+    minute = date.minute |> to_two_digit
+    second = date.second |> to_two_digit
+
     case show_seconds do
-      false -> "#{date.month}/#{date.day}/#{date.year} #{date.hour}:#{date.minute}"
-      true -> "#{date.month}/#{date.day}/#{date.year} #{date.hour}:#{date.minute}:#{date.second}"
+      false -> "#{month}/#{day}/#{year} #{hour}:#{minute}"
+      true -> "#{month}/#{day}/#{year} #{hour}:#{minute}:#{second}"
     end
+  end
+
+  def to_two_digit(number) when is_integer(number) do
+    number
+    |> Integer.to_string
+    |> String.pad_leading(2, "0")
   end
 end

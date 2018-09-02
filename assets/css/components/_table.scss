@@ -2,6 +2,14 @@
   vertical-align: middle;
   max-width: 300px;
 }
-.table td span {
-  height: 100%;
+
+.table td {
+  font-size: .9rem;
+
+  & span {
+    height: 100%;
+  }
+  &:last-child {
+    min-width: 160px;
+  }
 }

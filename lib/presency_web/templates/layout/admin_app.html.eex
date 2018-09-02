@@ -7,12 +7,13 @@
   <meta name="description" content="presency admin">
   <title>Presency Media</title>
   <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/bulma/bulma-extensions.min.css") %>"  media="none" onload="if(media!='all')media='all'">
   <%= render_gon_script(@conn) %>
   <%= if assigns[:token] do %>
   <script>window.userToken = "<%= @token %>";</script>
   <% end %>
 </head>
-<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script src="<%= static_path(@conn, "/js/app.js") %>" async></script>
 <body>
   <%= render "admin_app_nav.html", conn: @conn %>
       <div class="admin-container columns u-margin-bottom-0 u-border-box">

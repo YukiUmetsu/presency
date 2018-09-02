@@ -19,7 +19,7 @@ exports.config = {
       joinTo: {
           "css/app.css": "css/app.scss",
           "css/blog-theme-index.css": "single-page/blog-theme/blog-theme-index.css",
-          "vendor/bulma/bulma.extensions.css": "css/vendor/bulma-extensions.min.css",
+          "vendor/bulma/bulma-extensions.min.css": "vendor/css/bulma-extensions.min.css",
           "vendor/font/font-awesome.min.css": "vendor/css/font-awesome.min.css",
           "vendor/slick-carousel/slick.css":"node_modules/slick-carousel/slick/slick.css",
           "vendor/owl-carousel/assets/owl.carousel.min.css":"node_modules/owl-carousel2/dist/assets/owl.carousel.min.css",
@@ -28,7 +28,7 @@ exports.config = {
           "vendor/social-share/jquery.floating-social-share.min.css":"node_modules/jquery-floating-social-share/dist/jquery.floating-social-share.min.css"
       },
       order: {
-          after: [ "css/app.scss"],
+          after: ["css/app.scss"],
           before: ["vendor/css"]
       }
     },

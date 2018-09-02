@@ -43,10 +43,11 @@ defmodule PresencyWeb.Admin.CommentController do
     comment = CMS.get_comment!(id)
 
     case CMS.update_comment(comment, comment_params) do
-      {:ok, comment} ->
+      {:ok, _comment} ->
         conn
         |> put_flash(:info, "Comment updated successfully.")
         |> redirect(to: admin_comment_path(conn, :index))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", comment: comment, changeset: changeset)
     end

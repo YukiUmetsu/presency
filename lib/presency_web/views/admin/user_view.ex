@@ -1,6 +1,7 @@
 defmodule PresencyWeb.Admin.UserView do
   use PresencyWeb, :view
   alias Helpers.Images
+  import Scrivener.HTML
 
   def user_exist(conn) do
     case Map.has_key?(conn.assigns, :user) do

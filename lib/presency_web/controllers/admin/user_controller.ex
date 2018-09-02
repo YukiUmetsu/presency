@@ -5,11 +5,15 @@ defmodule PresencyWeb.Admin.UserController do
   alias Presency.Accounts.User
   require IEx
 
-  def index(conn, _params) do
-    users = Accounts.list_users()
-
-    conn
-    |> render("index.html", users: users)
+  def index(conn, params) do
+    page = Accounts.list_paginated_users(params["page"], 5)
+    render conn, "index.html",
+           page: page,
+           users: page.entries,
+           page_number: page.page_number,
+           page_size: page.page_size,
+           total_pages: page.total_pages,
+           total_entries: page.total_entries
   end
 
   def new(conn, _params) do

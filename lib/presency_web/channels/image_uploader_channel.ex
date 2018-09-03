@@ -1,9 +1,11 @@
 defmodule PresencyWeb.ImageUploaderChannel do
   use PresencyWeb, :channel
   require Helpers.Images
+  require Helpers.Files
   alias Presency.Administration
   alias Presency.Accounts
   require UUID
+  require IEx
 
   def join("image_uploader", _payload, socket) do
     if authorized?(socket) do
@@ -34,6 +36,13 @@ defmodule PresencyWeb.ImageUploaderChannel do
         end
       else
         _ -> reply_error(socket)
+    end
+  end
+
+  def handle_in("image_uploader:temp", %{"image"=>image, "content_type"=>content_type}, socket) do
+    case image_valid?(image, content_type) do
+      true -> save_temp_image(socket, image, content_type)
+      _ -> reply_error(socket)
     end
   end
 
@@ -121,4 +130,42 @@ defmodule PresencyWeb.ImageUploaderChannel do
     end
   end
 
+  defp save_temp_image(socket, image, content_type) do
+    case write_temp_image(image, content_type) do
+      :error -> reply_error(socket)
+      temp_path ->
+        reply = %{ message: temp_path }
+        {:reply, {:ok, reply}, socket}
+    end
+  end
+
+  defp write_temp_image(image, content_type) do
+    extension = Helpers.Images.get_extension_from_content_type(content_type)
+    temp_dir = Helpers.Files.get_temp_dir()
+    uuid = UUID.uuid4(:hex)
+    temp_filename = "#{uuid}.#{extension}"
+    temp_path = "#{temp_dir}/#{temp_filename}"
+    data = case Base.decode64(image) do
+      {:ok, data} -> data
+      _ -> nil
+    end
+    case data do
+      nil -> :error
+      _ ->
+        path = Helpers.Files.create_file(temp_dir, temp_path, data)
+        Helpers.Images.strip_origilal_image(temp_dir, temp_filename)
+        path
+    end
+  end
+
+  defp image_valid?(image, content_type) do
+    with false <- Blankable.blank?(image),
+         false <- Blankable.blank?(content_type),
+         true <- is_bitstring(image)
+      do
+      true
+    else
+      _ -> false
+    end
+  end
 end

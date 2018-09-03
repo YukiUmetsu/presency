@@ -16,27 +16,25 @@ defmodule PresencyWeb.Admin.AdminUserController do
   end
 
   def new(conn, _params) do
+    admin_user = conn.assigns.current_admin
     changeset = Administration.change_admin_user(%AdminUser{})
-    render(conn, "new.html", changeset: changeset)
+    token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
+    render(conn, "new.html", changeset: changeset, token: token)
   end
 
   def create(conn, %{"admin_user" => user_params}) do
-    avatar_info = get_avatar_info_from_params(user_params)
     uuid = UUID.uuid4(:hex)
-    user_params =
-      user_params
-      |> Map.drop(["avatar_img"])
-      |> Map.put("uuid", "#{uuid}")
+    avatar_img = move_tmp_avatar_file(user_params, uuid)
+    user_params = user_params
+                  |> Map.drop(["avatar_img"])
+                  |> Map.put("uuid", "#{uuid}")
+                  |> Map.put("avatar_img", avatar_img)
 
-    path_info = %PathInfo{
-      ok_path: :show,
-      ok_message: "User created successfully.",
-      error_path: "new.html"
-    }
     case Administration.create_admin_user(user_params) do
       {:ok, user} ->
-        avatar_info = Helpers.Images.save_avatar(avatar_info, "admin", uuid)
-        update_user_with_avatar(conn, user, avatar_info, user_params, path_info)
+        conn
+        |> put_flash(:info, "User created successfully.")
+        |> redirect(to: admin_admin_user_path(conn, :edit, user))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -52,7 +50,6 @@ defmodule PresencyWeb.Admin.AdminUserController do
     admin_user = Administration.get_admin_user!(id)
     token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
     changeset = Administration.change_admin_user(admin_user)
-    conn = assign(conn, :admin_user, admin_user)
     render(conn, "edit.html", admin_user: admin_user, changeset: changeset, token: token)
   end
 
@@ -110,6 +107,18 @@ defmodule PresencyWeb.Admin.AdminUserController do
     user_params
     |> Helpers.Images.get_avatar_info_from_params
     |> Helpers.Images.get_avatar_info_from_base64_str
+  end
+
+  defp move_tmp_avatar_file(user_params, uuid) do
+    case user_params["temp_avatar_img"] do
+      nil -> ""
+      "" -> ""
+      tmp_img_path ->
+        new_dir = Helpers.Images.get_avatar_dir("admin", uuid)
+        filename = Path.basename(tmp_img_path)
+        new_path = "#{new_dir}/#{filename}"
+        avatar_img = Helpers.Files.move_file(tmp_img_path, new_dir, new_path)
+    end
   end
 
 end

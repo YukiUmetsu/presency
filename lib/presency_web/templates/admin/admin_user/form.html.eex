@@ -48,14 +48,13 @@
     </div>
   </div>
 
-  <%= if user_exist(@conn) do %>
     <div class="field">
         <label class="label">Avatar Image</label>
     </div>
     <div class="file u-margin-bottom-small">
         <label class="file-label">
-            <!--<input class="file-input" id="avatar_img_file_input" name="original-image" type="file">-->
             <input class="file-input" id="avatar_img_file_input" name="admin_user[avatar_img]" type="file">
+            <input type="hidden" id="temp_avatar_img" name="admin_user[temp_avatar_img]">
             <span class="file-cta">
                     <span class="file-icon"><i class="fa fa-upload"></i></span>
                     <span class="file-label">Choose a file…</span>
@@ -72,72 +71,109 @@
     </div>
 
     <div class="image-crop-container">
-        <%= show_user_avatar_image(@conn) %>
+        <%= if assigns[:admin_user], do: show_user_avatar_image(@conn, @admin_user) %>
+        <%= if !assigns[:admin_user], do: show_user_avatar_image(@conn, nil) %>
         <img id="image-container__image" src="#" alt="your avatar" />
     </div>
-    <% end %>
     <button type="submit" class="button">Submit</button>
 <% end %>
 
-<%= if user_exist(@conn) do %>
 <script src="<%= static_path(@conn, "/js/socket/admin-socket.js") %>"></script>
+<script src="<%= static_path(@conn, "/vendor/notify/notify.min.js") %>"></script>
 <script>
-    $(document).ready(function () {
+    let saveCount = 0;
+    $(document).on("ready", function () {
+        let action = '<%= if !assigns[:admin_user] do "new" else "update" end%>';
         let imageUploaderChannel = window.socket.channel("image_uploader", {});
         imageUploaderChannel.join()
             .receive("ok", resp => { console.log("Joined successfully", resp) })
             .receive("error", resp => { console.log("Unable to join", resp) });
-    });
 
-    var firstAvatarImageSrc = '';
-    $("#avatar-image").ready(function () {
-        firstAvatarImageSrc = $("#avatar-image").attr("src");
-    });
 
-    $('#avatar_img_file_input').on( 'change', function(){
-        $('#image-container__image').css('visibility', 'visible');
-        if (this.files && this.files[0]) {
-            if ( this.files[0].type.match(/^image\//) ) {
-                var reader = new FileReader();
-                reader.onload = function(evt) {
-                    $('#image-container__image').attr('src', evt.target.result)
-                };
-                reader.readAsDataURL(this.files[0]);
-                setTimeout(initCropper, 500);
+        let firstAvatarImageSrc = '';
+        $("#avatar-image").ready(function () {
+            firstAvatarImageSrc = $("#avatar-image").attr("src");
+        });
+
+        $('#avatar_img_file_input').on( 'change', function(){
+            $('#image-container__image').css('visibility', 'visible');
+            if (this.files && this.files[0]) {
+                if ( this.files[0].type.match(/^image\//) ) {
+                    let reader = new FileReader();
+                    reader.onload = function(evt) {
+                        $('#image-container__image').attr('src', evt.target.result)
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                    setTimeout(initCropper, 500);
+                }
+            }
+        });
+
+        $.notify.addStyle('custom-notify', {
+            position: "right",
+            html: "<div><span data-notify-text/></div>",
+            classes: {primary: {}, danger: {}}
+        });
+
+        function initCropper(){
+            let image = document.getElementById('image-container__image');
+            let cropper = new Cropper(image, {
+                aspectRatio: 1,
+            });
+
+            // On crop button clicked
+            $('#crop_button').on('click', function(){
+                let imgurl =  cropper.getCroppedCanvas().toDataURL();
+                $("#avatar-image").attr('src',imgurl);
+                $("#admin_user_avatar_img").text(imgurl);
+            })
+        }
+
+        if(action !== 'new'){
+            $("#save-avatar").click(saveAvatar);
+        } else {
+            $("#save-avatar").click(saveTempAvatar);
+        }
+
+        function saveAvatar() {
+            let image = $("#avatar-image").attr("src");
+            if(firstAvatarImageSrc !== image && saveCount < 1){
+                let contentType = image.split(",", 2)[0]
+                    .replace("data:", "")
+                    .replace(";base64", "");
+                let base64 = image.split(",", 2)[1];
+                imageUploaderChannel
+                    .push("image_uploader:new", { "image": base64, "content_type": contentType})
+                    .receive("ok", function(reply) {
+                        $("#save-avatar").notify("Successfully Saved", {style: "custom-notify", className: "primary", position: "right"});
+                        saveCount++;
+                    })
+                    .receive("error", (reply) => {
+                        console.log(reply.message);
+                        $("#save-avatar").notify("Save Error", {style: "custom-notify", className: "danger", position: "right"});
+                    });
+            }
+        }
+
+        function saveTempAvatar(){
+            let image = $("#avatar-image").attr("src");
+            if(firstAvatarImageSrc !== image && saveCount < 1){
+                let contentType = image.split(",", 2)[0]
+                    .replace("data:", "")
+                    .replace(";base64", "");
+                let base64 = image.split(",", 2)[1];
+                imageUploaderChannel
+                    .push("image_uploader:temp", { "image": base64, "content_type": contentType})
+                    .receive("ok", (reply) => {
+                        $("#temp_avatar_img").val(reply.message);
+                        $("#save-avatar").notify("Successfully Saved", {style: "custom-notify", className: "primary", position: "right"});
+                        saveCount++;
+                    })
+                    .receive("error", (reply) => {
+                        console.log(reply.message);
+                        $("#save-avatar").notify("Save Error", {style: "custom-notify", className: "danger", position: "right"});
+                    });
             }
         }
     });
-
-    function initCropper(){
-        var image = document.getElementById('image-container__image');
-        var cropper = new Cropper(image, {
-            aspectRatio: 1 / 1,
-        });
-
-        // On crop button clicked
-        document.getElementById('crop_button').addEventListener('click', function(){
-            var imgurl =  cropper.getCroppedCanvas().toDataURL();
-            $("#avatar-image").attr('src',imgurl);
-            $("#admin_user_avatar_img").text(imgurl);
-        })
-    }
-
-    $("#save-avatar").click(saveAvatar);
-
-    function saveAvatar() {
-        var image = $("#avatar-image").attr("src");
-        if(firstAvatarImageSrc != image){
-            var contentType = image.split(",", 2)[0]
-                .replace("data:", "")
-                .replace(";base64", "");
-            var base64 = image.split(",", 2)[1];
-            imageUploaderChannel
-                .push("image_uploader:new", { "image": base64, "content_type": contentType})
-                .receive("ok", function(reply) {
-                    console.log(reply.message);
-                })
-                .receive("error", (reply) => console.log(reply.message));
-        }
-    }
 </script>
-<% end %>

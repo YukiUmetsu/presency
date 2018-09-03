@@ -79,7 +79,7 @@ defmodule PresencyWeb.Api.ImageManagerController do
                 |> add_image_info(caption, tag)
 
         CMS.create_image(attrs)
-        path_info = Images.split_dir_filename(result_path)
+        path_info = Files.split_dir_filename(result_path)
         Images.strip_origilal_image(path_info.dir, path_info.filename)
         %{success: true}
       {:error, reason} -> %{error: reason}

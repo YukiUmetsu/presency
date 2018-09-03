@@ -94,7 +94,10 @@ exports.config = {
         ],
         "vendor/social-share": [
             "node_modules/jquery-floating-social-share/dist"
-        ]
+        ],
+        "vendor/notify": [
+            "vendor/js/notify.min.js"
+        ],
     }
   },
 

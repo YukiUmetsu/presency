@@ -6,3 +6,38 @@
   padding: .9rem;
   margin: 1rem;
 }
+
+.notifyjs-custom-notify-primary {
+  background-color: #23d160;
+  color: #fff;
+  border-radius: 4px;
+  padding: .5rem 1rem .5rem .5rem;
+  display: inline-block;
+  white-space: nowrap;
+
+  & :before {
+    font-family: FontAwesome;
+    content: "\f058";
+    font-weight: 900;
+    font-size: 1rem;
+    margin-right: .5rem;
+  }
+}
+
+.notifyjs-custom-notify-danger {
+  background-color: #ff3860;
+  color: #fff;
+  border-radius: 4px;
+  padding: .5rem 1rem .5rem .5rem;
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: bold;
+
+  & :before {
+    font-family: FontAwesome;
+    content: "\f06a";
+    font-weight: 900;
+    font-size: 1rem;
+    margin-right: .5rem;
+  }
+}

@@ -172,14 +172,8 @@ defmodule Helpers.Images do
     String.replace(filename, ~r/(.)\?.*/, "\\1")
   end
 
-  def split_dir_filename(path \\ "") do
-    str_list = String.split(path, "/")
-    filename = Enum.at(str_list, -1)
-    dir = String.trim_trailing(path, filename) |> String.trim_trailing("/")
-    %{dir: dir, filename: filename}
-  end
-
   def get_path(image) do
     String.trim_leading(image.path, "priv/static")
   end
+
 end

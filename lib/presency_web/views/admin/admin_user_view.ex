@@ -13,20 +13,22 @@ defmodule PresencyWeb.Admin.AdminUserView do
     end
   end
 
-  def user_has_avatar(conn) do
-    case Blankable.blank?(conn.assigns.admin_user.avatar_img) do
-      true -> false
-      _ -> true
+  def user_has_avatar(admin_user) do
+    with false <- Blankable.blank?(admin_user),
+      false <- Blankable.blank?(admin_user.avatar_img) do
+        true
+      else
+        _ -> false
     end
   end
 
-  def show_user_avatar_image(conn) do
-    case user_has_avatar(conn) do
+  def show_user_avatar_image(conn, admin_user) do
+    case user_has_avatar(admin_user) do
       false ->
         img_src = static_path(conn, "/images/default-avatar.png")
         raw("<img id='avatar-image' src='#{img_src}' alt='your avatar'>")
        _ ->
-         Images.show_admin_avatar(conn.assigns.admin_user, ["image", "img-round"])
+         Images.show_admin_avatar(admin_user, ["image", "img-round"])
          |> raw()
     end
   end

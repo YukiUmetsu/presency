@@ -31,6 +31,21 @@ defmodule Helpers.Files do
     end
   end
 
+  def create_file(dir, path, data) do
+    case File.exists?(dir) do
+      false -> File.mkdir_p(dir)
+      _ -> ""
+    end
+
+    case File.open(path, [:write]) do
+      {:ok, file} ->
+        IO.binwrite(file, data)
+        File.close(file)
+        path
+      {:error, _} -> :error
+    end
+  end
+
   def copy_file(srcPath, distDir, distPath, index \\ 0, max_try \\ 5) do
     create_dir(distDir)
     case {index <= max_try, File.exists?(distPath)} do
@@ -47,6 +62,15 @@ defmodule Helpers.Files do
     end
   end
 
+  def move_file(srcPath, distDir, distPath) do
+    case Helpers.Files.copy_file(srcPath, distDir, distPath) do
+      {:ok, path} ->
+        File.rm_rf(srcPath)
+        path
+      {:error, _} -> :error
+    end
+  end
+
   def add_index_to_path(path, index \\ 1) do
     str_array = String.split(path, ".")
     ext = Enum.at(str_array, -1)
@@ -54,4 +78,17 @@ defmodule Helpers.Files do
     "#{path_front}-#{index}.#{ext}"
   end
 
+  def get_temp_dir(type \\ "images") do
+    year = DateTime.utc_now.year
+    month = DateTime.utc_now.month
+    day = DateTime.utc_now.day
+    "priv/static/uploads/temp/#{type}/#{year}/#{month}/#{day}"
+  end
+
+  def split_dir_filename(path \\ "") do
+    filename = Path.basename(path)
+    ext = Path.extname(path)
+    dir = Path.dirname(path)
+    %{dir: dir, filename: filename, ext: ext}
+  end
 end

@@ -227,7 +227,7 @@
         postContent.value = JSON.stringify(delta);
         });
 
-        <%= if @post.content != nil do %>
+        <%= if assigns[:post] && @post.content != nil do %>
             editor.setContents(<%= raw(@post.content) %>);
         <% end %>
     });

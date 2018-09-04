@@ -3,7 +3,6 @@ defmodule PresencyWeb.Admin.AdminUserController do
 
   alias Presency.Administration
   alias Presency.Administration.AdminUser
-  alias Presency.Structs.PathInfo
   require UUID
   require Helpers.Images
   require IEx
@@ -62,7 +61,7 @@ defmodule PresencyWeb.Admin.AdminUserController do
     user_params = Map.drop(user_params, ["temp_avatar_img", "avatar_img"])
 
     case Administration.update_admin_user(admin_user, user_params) do
-      {:ok, user} ->
+      {:ok, admin_user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
         |> redirect(to: admin_admin_user_path(conn, :edit, admin_user))
@@ -89,7 +88,7 @@ defmodule PresencyWeb.Admin.AdminUserController do
         new_dir = "priv/static" <> Helpers.Images.get_avatar_dir("admin", uuid)
         extension = Path.extname(tmp_img_path)
         new_path = "#{new_dir}original#{extension}"
-        avatar_img = Helpers.Files.move_file(tmp_img_path, new_dir, new_path)
+        Helpers.Files.move_file(tmp_img_path, new_dir, new_path)
     end
   end
 

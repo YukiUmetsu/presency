@@ -106,7 +106,7 @@ defmodule Presency.CMS do
     |> Post.changeset(post_params)
     |> add_image_assoc_to_post(image)
     |> add_category_assoc_to_post(category)
-    |> Repo.update!
+    |> Repo.update
   end
 
   def add_tag_assoc_to_post(post, tags) do

@@ -217,14 +217,6 @@
         theme: 'snow'
         });
 
-//        document.getElementById('dquote').addEventListener('click', () => {
-//        let range = editor.getSelection();
-//        if (range) {
-//        let content = prompt("type content of the quote", "content");
-//        editor.insertEmbed(range.index, 'custom-quote', content);
-//        }
-//        });
-
         // update the post content preview when text changes
         let postPreview = document.getElementById('post-preview');
         let postContent = document.getElementById('post_content');
@@ -235,7 +227,7 @@
         postContent.value = JSON.stringify(delta);
         });
 
-        <%= if @conn.request_path =~ "edit" do %>
+        <%= if @post.content != nil do %>
             editor.setContents(<%= raw(@post.content) %>);
         <% end %>
     });

@@ -25,7 +25,7 @@ $("#image-selector").imagepicker();
 </script>
 <script>
     $(document).ready(function() {
-
+        window.imagePageNumber = 1;
         let hiddenInputAddId = (typeof window.hiddenInputAdd === "undefined") ? false : window.hiddenInputAdd;
         let entityType = '';
         let showHTMLElementId = '';

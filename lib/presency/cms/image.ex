@@ -23,7 +23,10 @@ defmodule Presency.CMS.Image do
   @doc false
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:filename, :path, :extension, :tag, :size, :qquuid, :caption, :admin_user_id, :user_id, :post])
+    |> cast(attrs, [:filename, :path, :extension, :tag, :size, :qquuid, :caption, :admin_user_id, :user_id, :post_id])
     |> validate_required([:filename, :path, :extension, :tag, :size, :qquuid])
+    |> foreign_key_constraint(:post_id)
+    |> foreign_key_constraint(:admin_user_id)
+    |> foreign_key_constraint(:user_id)
   end
 end

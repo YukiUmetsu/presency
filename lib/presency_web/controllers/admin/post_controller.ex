@@ -62,10 +62,13 @@ defmodule PresencyWeb.Admin.PostController do
     render(conn, "show.html", post: post, categories: categories)
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, %{"id" => id}, changeset \\ nil) do
     categories = CMS.list_category_options()
     post = CMS.get_post_with_assoc!(id)
-    changeset = CMS.change_post(post)
+    changeset = case changeset do
+      nil -> CMS.change_post(post)
+      changeset -> changeset
+    end
     page = CMS.list_paginated_images(1, 8)
     admin_user = conn.assigns.current_admin
     token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
@@ -89,12 +92,24 @@ defmodule PresencyWeb.Admin.PostController do
     post_params = Map.delete(post_params, "tags") |> add_image_id_to_params(image)
 
     case CMS.update_post_with_multi_assoc(post, post_params, image, new_tags, category) do
-      {:error, %Ecto.Changeset{} = _changeset} ->
+      {:error, changeset} ->
+        categories = CMS.list_category_options()
+        page = CMS.list_paginated_images(1, 8)
+        admin_user = conn.assigns.current_admin
+        token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)
+
         conn
         |> put_flash(:danger, "Ops Something Went Wrong.")
-        |> redirect(to: admin_post_path(conn, :edit, post))
+        |> render("edit.html",
+             post: post,
+             changeset: changeset,
+             categories: categories,
+             token: token,
+             page: page,
+             images: page.entries
+           )
 
-      post ->
+      {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: admin_post_path(conn, :edit, post))

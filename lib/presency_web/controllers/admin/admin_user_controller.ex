@@ -8,11 +8,15 @@ defmodule PresencyWeb.Admin.AdminUserController do
   require Helpers.Images
   require IEx
 
-  def index(conn, _params) do
-    admin_users = Administration.list_admin_users_order_by_id()
-
-    conn
-    |> render("index.html", admin_users: admin_users)
+  def index(conn, params) do
+    page = Administration.list_paginated_admin_users(params["page"], 5)
+    render conn, "index.html",
+           page: page,
+           admin_users: page.entries,
+           page_number: page.page_number,
+           page_size: page.page_size,
+           total_pages: page.total_pages,
+           total_entries: page.total_entries
   end
 
   def new(conn, _params) do
@@ -54,20 +58,18 @@ defmodule PresencyWeb.Admin.AdminUserController do
   end
 
   def update(conn, %{"id" => id, "admin_user" => user_params}) do
-    avatar_info = get_avatar_info_from_params(user_params)
     admin_user = Administration.get_admin_user!(id)
-    avatar_info = case avatar_info do
-      "" -> nil
-      nil -> nil
-      _ -> Helpers.Images.save_avatar(avatar_info, "admin", admin_user.uuid)
-    end
+    user_params = Map.drop(user_params, ["temp_avatar_img", "avatar_img"])
 
-    path_info = %PathInfo{
-      ok_path: :show,
-      ok_message: "User updated successfully.",
-      error_path: "edit.html"
-    }
-    update_user_with_avatar(conn, admin_user, avatar_info, user_params, path_info)
+    case Administration.update_admin_user(admin_user, user_params) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "User updated successfully.")
+        |> redirect(to: admin_admin_user_path(conn, :edit, admin_user))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", admin_user: admin_user, changeset: changeset)
+    end
   end
 
   def delete(conn, %{"id" => id}) do
@@ -79,44 +81,14 @@ defmodule PresencyWeb.Admin.AdminUserController do
     |> redirect(to: admin_admin_user_path(conn, :index))
   end
 
-  defp update_admin_user(conn, user, user_params, %PathInfo{} = path_info) do
-    case Administration.update_admin_user(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, path_info.ok_message)
-        |> redirect(to: admin_admin_user_path(conn, path_info.ok_path, user))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, path_info.error_path, user: user, changeset: changeset)
-    end
-  end
-
-  defp update_user_with_avatar(conn, user, avatar_info, user_params, path_info) do
-    case avatar_info do
-      nil ->
-        update_admin_user(conn, user, user_params, path_info)
-        conn
-        |> put_flash(:info, path_info.ok_message)
-        |> redirect(to: admin_admin_user_path(conn, path_info.ok_path, user))
-      _ ->
-        user_params = Map.put(user_params, "avatar_img", avatar_info.path)
-        update_admin_user(conn, user, user_params, path_info)
-    end
-  end
-
-  defp get_avatar_info_from_params(user_params) do
-    user_params
-    |> Helpers.Images.get_avatar_info_from_params
-    |> Helpers.Images.get_avatar_info_from_base64_str
-  end
-
   defp move_tmp_avatar_file(user_params, uuid) do
     case user_params["temp_avatar_img"] do
       nil -> ""
       "" -> ""
       tmp_img_path ->
-        new_dir = Helpers.Images.get_avatar_dir("admin", uuid)
-        filename = Path.basename(tmp_img_path)
-        new_path = "#{new_dir}/#{filename}"
+        new_dir = "priv/static" <> Helpers.Images.get_avatar_dir("admin", uuid)
+        extension = Path.extname(tmp_img_path)
+        new_path = "#{new_dir}original#{extension}"
         avatar_img = Helpers.Files.move_file(tmp_img_path, new_dir, new_path)
     end
   end

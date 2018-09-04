@@ -26,6 +26,11 @@ defmodule Presency.Administration do
     Repo.all(query)
   end
 
+  def list_paginated_admin_users(page_number, page_size) do
+    query = from u in AdminUser, order_by: [asc: u.id]
+    Repo.paginate(query, page: page_number, page_size: page_size)
+  end
+
   @doc """
   Gets a single admin_user.
 

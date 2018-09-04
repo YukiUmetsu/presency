@@ -1,6 +1,7 @@
 defmodule PresencyWeb.Admin.AdminUserView do
   use PresencyWeb, :view
   alias Helpers.Images
+  import Scrivener.HTML
 
   def show_avatar_thumb(admin_user) do
     raw(Images.show_admin_avatar(admin_user, ["image", "is-48x48"]))

@@ -82,6 +82,7 @@
 <script src="<%= static_path(@conn, "/vendor/notify/notify.min.js") %>"></script>
 <script>
     let saveCount = 0;
+    let cropper = null;
     $(document).on("ready", function () {
         let action = '<%= if !assigns[:admin_user] do "new" else "update" end%>';
         let imageUploaderChannel = window.socket.channel("image_uploader", {});
@@ -95,7 +96,7 @@
             firstAvatarImageSrc = $("#avatar-image").attr("src");
         });
 
-        $('#avatar_img_file_input').on( 'change', function(){
+        $('#avatar_img_file_input').on('change', function(){
             $('#image-container__image').css('visibility', 'visible');
             if (this.files && this.files[0]) {
                 if ( this.files[0].type.match(/^image\//) ) {
@@ -117,13 +118,20 @@
 
         function initCropper(){
             let image = document.getElementById('image-container__image');
-            let cropper = new Cropper(image, {
-                aspectRatio: 1,
-            });
+            if(cropper === null){
+                cropper = new Cropper(image, {
+                    aspectRatio: 1,
+                });
+            } else {
+                newImageURL = $('#image-container__image').attr('src');
+                console.log(newImageURL);
+                cropper.clear();
+                cropper.replace(newImageURL);
+            }
 
             // On crop button clicked
             $('#crop_button').on('click', function(){
-                let imgurl =  cropper.getCroppedCanvas().toDataURL();
+                let imgurl =  cropper.getCroppedCanvas({width: 300, height: 300}).toDataURL();
                 $("#avatar-image").attr('src',imgurl);
                 $("#admin_user_avatar_img").text(imgurl);
             })

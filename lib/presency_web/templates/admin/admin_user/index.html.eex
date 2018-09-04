@@ -41,11 +41,5 @@
 <% end %>
   </tbody>
 </table>
-
+<%= pagination_links @page, next: "Next", previous: "Prev" %>
 <span><%= link "New User", to: admin_admin_user_path(@conn, :new), class: "button is-primary" %></span>
-
-<style>
-    .admin-container {
-        height: 100%;
-    }
-</style>

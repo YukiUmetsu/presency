@@ -26,6 +26,11 @@ defmodule Presency.CMS do
     Repo.all(Post)
   end
 
+  def list_paginated_posts(page_number, page_size) do
+    query = from p in Post, order_by: [desc: p.updated_at], preload: [:category, :image, :tags]
+    Repo.paginate(query, page: page_number, page_size: page_size)
+  end
+
   @doc """
   Gets a single post.
 

@@ -7,11 +7,18 @@ defmodule PresencyWeb.Admin.PostController do
   import Helpers.String, only: [separate_words: 2]
   require IEx
 
-  def index(conn, _params) do
+  def index(conn, params) do
     categories = CMS.list_categories()
-    posts = CMS.list_posts()
-    conn = add_posts_to_gon(conn, posts)
-    render(conn, "index.html", posts: posts, categories: categories)
+    page = CMS.list_paginated_posts(params["page"], 7)
+
+    render conn, "index.html",
+           page: page,
+           posts: page.entries,
+           page_number: page.page_number,
+           page_size: page.page_size,
+           total_pages: page.total_pages,
+           total_entries: page.total_entries,
+           categories: categories
   end
 
   def new(conn, _params) do

@@ -3,6 +3,7 @@ defmodule PresencyWeb.Admin.PostView do
   import Helpers.Dates, only: [to_date_time_str: 1]
   import Helpers.Posts, only: [show_category_title: 2, show_title_in_one_line: 1]
   import Helpers.Quill, only: [delta_to_html: 1, posts_content_to_html_array: 0]
+  import Scrivener.HTML
   require IEx
 
   def post_content_to_html() do

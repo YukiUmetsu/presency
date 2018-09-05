@@ -4,6 +4,7 @@ defmodule Presency.CMS.Post do
   alias Presency.Permissions.UserAccessProfile
   alias Presency.Permissions.UserAccessProfilesPermissions
   require Helpers.String
+  require IEx
 
   schema "posts" do
     field :content, :string
@@ -30,14 +31,22 @@ defmodule Presency.CMS.Post do
     |> validate_url(:url_id)
     |> unique_constraint(:url_id)
     |> cast_assoc(:category)
+    |> validate_not_empty(:title)
   end
 
   defp validate_url(changeset, field, options \\ []) do
     validate_change(changeset, field, fn _, url ->
       case Helpers.String.valid_url?(url) do
         true -> []
-        false -> [{field, options[:message] || "Invalid URL"}]
+        false -> [field: options[:message] || "Invalid URL"]
       end
     end)
+  end
+
+  defp validate_not_empty(changeset, field, options \\ []) do
+    case Blankable.blank?(field) do
+      true -> add_error(changeset, field, options[:message] || "This field can't be empty")
+      false -> changeset
+    end
   end
 end

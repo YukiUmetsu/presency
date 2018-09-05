@@ -186,7 +186,7 @@ defmodule Presency.CMS do
       Ecto.build_assoc(item, :posts, post_param)
       |> Post.changeset(post_param)
     else
-      _ -> Ecto.Changeset.change(%Post{}, post_param)
+      _ -> Post.changeset(%Post{}, post_param)
     end
   end
 

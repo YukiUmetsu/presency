@@ -31,6 +31,9 @@ defmodule Helpers.String do
   end
 
   def valid_url?(url) do
-    url =~ ~r/^[a-zA-Z0-9_-]+$/
+    case Blankable.blank?(url) do
+      true -> false
+      _ ->  url =~ ~r/^[a-zA-Z0-9_-]+$/
+    end
   end
 end

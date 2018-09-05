@@ -108,6 +108,7 @@ defmodule PresencyWeb.PostChannel do
       {:ok, _post} -> true
       {:error, _} -> false
       nil -> false
+      _post -> true
     end
   end
 

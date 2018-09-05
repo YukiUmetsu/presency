@@ -145,6 +145,7 @@
             successIcon.show();
             failIcon.hide();
             $("#post_url_id").removeClass("is-danger");
+            $("#post_url_id").addClass("is-success");
             urlError.hide();
         }
     });

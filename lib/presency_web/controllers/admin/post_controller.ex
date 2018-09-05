@@ -33,11 +33,13 @@ defmodule PresencyWeb.Admin.PostController do
   def create(conn, %{"post" => post_params}) do
     new_tags = create_tags(post_params["tags"])
     category = CMS.get_category(post_params["category_id"])
+    image = CMS.get_image(post_params["image"])
     categories = CMS.list_category_options()
 
     post_create_result =
       post_params
       |> CMS.build_post_param_assoc(category)
+      |> CMS.add_image_assoc_to_post(image)
       |> CMS.create_post_from_changeset
 
     case post_create_result do
@@ -62,13 +64,10 @@ defmodule PresencyWeb.Admin.PostController do
     render(conn, "show.html", post: post, categories: categories)
   end
 
-  def edit(conn, %{"id" => id}, changeset \\ nil) do
+  def edit(conn, %{"id" => id}) do
     categories = CMS.list_category_options()
     post = CMS.get_post_with_assoc!(id)
-    changeset = case changeset do
-      nil -> CMS.change_post(post)
-      changeset -> changeset
-    end
+    changeset = CMS.change_post(post)
     page = CMS.list_paginated_images(1, 8)
     admin_user = conn.assigns.current_admin
     token = Phoenix.Token.sign(conn, "socket_login", admin_user.id)

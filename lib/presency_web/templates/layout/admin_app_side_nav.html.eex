@@ -14,5 +14,6 @@
     <p class="menu-label">Settings</p>
     <ul class="menu-list">
         <li><%= link "Site Settings", to: admin_main_settings_path(@conn, :edit) %></li>
+        <li><%= link "Menu Settings", to: admin_menu_path(@conn, :index) %></li>
     </ul>
 </div>

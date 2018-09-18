@@ -10,7 +10,7 @@ defmodule PresencyWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :presency, gzip: true,
-    only: ~w(css fonts images js uploads vendor socket favicon.ico robots.txt)
+    only: ~w(css fonts images js uploads vendor socket switchable-input favicon.ico robots.txt)
 
   plug Plug.Static,
     at: "/uploads", from: Path.expand("./uploads"), gzip: false

@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="<%= static_path(@conn, "/css/blog-header-navigation.css") %>">
+
+<div class="columns">
+    <div class="column is-12">
+        <div class="mainmenu">
+            <ul id="nav">
+                <%= show_menu_items(@menu.menu_items) %>
+            </ul>
+        </div>
+        <div class="menu-prepend"></div>
+    </div>
+</div>
+<div class="columns">
+    <div class="column">
+        <div class="tabs">
+            <%= for {menu_item, index} <- Enum.with_index(@menu.menu_items) do %>
+            <input id="tab<%= index %>" type="radio" name="tabs">
+            <label for="tab<%= index %>"><%= menu_item.title %></label>
+            <% end %>
+            <%= for {menu_item, index} <- Enum.with_index(@menu.menu_items) do %>
+            <section id="tab-content<%= index %>">
+                <div class="field">
+                    <div class="switchable-box">
+                        <p class="label">Main Menu</p>
+                        <label for="menu_item<%= index %>" class="switchable-label"><%= menu_item.title %></label>
+                        <input id="menu_item<%= index %>" class="switchable-input input" type="text">
+                    </div>
+                </div>
+            </section>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(()=> {
+       $("[id^=menu_item]").on("change", function () {
+          let value = $(this).val();
+          let id = $(this).attr('id');
+          let idNumber = id.replace("menu_item", "");
+          if(value.length !== 0){
+              let labelFor = "tab"+idNumber;
+              $(`label[for=${labelFor}]`).text(value);
+          }
+       });
+    });
+</script>
+<script src="<%= static_path(@conn, "/js/switchable-input/switchable-input.js") %>"></script>

@@ -1,0 +1,139 @@
+/* ============================================ header-bottom-area ============================================== */
+.header-bottom-area{
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.header-bottom-area .column{
+  padding: 0;
+}
+.mainmenu{
+}
+.mainmenu ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mainmenu ul li{
+  float: left;
+  position: relative;
+}
+.mainmenu ul li a{
+  color: #aaaaaa;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 46px;
+  display: inline-block;
+  text-decoration: none;
+  margin: 0;
+  padding: 0 15px;
+  -webkit-transition: color .17s;
+  transition: color .17s;
+}
+.mainmenu ul li a:hover{
+  color: orange;
+}
+.mainmenu .fa-angle-down{
+  color: #aaaaaa;
+}
+/* ============================================ dropdown ============================================== */
+.mainmenu ul li .sub{
+  position: absolute;
+  top: 107%;
+  left: 0;
+  z-index: 999;
+  background: #fff;
+  width: 200px;
+  border: 1px solid #ddd;
+  -webkit-transition: all ease-in 0.30s;
+  transition:all ease-in 0.30s;
+  display: none;
+}
+.mainmenu ul li:hover .sub{
+  display: block;
+}
+.mainmenu ul li .sub li{
+  float: none;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+.mainmenu ul li .sub li:last-child{
+  float: none;
+  border-bottom: 1px solid transparent;
+}
+.mainmenu ul li .sub li a{
+}
+/* ============================================ multi-sub ============================================== */
+.mainmenu ul li .sub .sub-2{
+  position: absolute;
+  width: 100%;
+  left: 100%;
+  top: -1px;
+  border: 1px solid #ddd;
+  display: none;
+  -webkit-transition: all ease-in 0.30s;
+  transition:all ease-in 0.30s;
+}
+.mainmenu ul li >.sub > li > .fa-angle-down{
+  color: red;
+}
+.mainmenu ul li .sub li:hover .sub-2{
+  display: block;
+  background-color: white;
+}
+.mainmenu ul li .sub .sub-2 li:last-child{
+}
+.mainmenu ul li .sub .sub-2 li a{
+}
+
+/* Responsive Code */
+@media only screen and (max-width:1200px) {
+}
+@media only screen and (max-width:1199px) {
+}
+@media only screen and (max-width:991px) {
+}
+@media only screen and (max-width:767px) {
+  .header-top-area{
+    overflow: hidden;
+    border-bottom: 0;
+    border-top: 0;
+  }
+  .logo-img {
+    width: 160px !important;
+    margin-left: 10px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-top: 20px;
+  }
+  .top-menu {
+    float: none;
+    margin-top: 0;
+  }
+  .top-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+  .top-menu ul li {
+    float: none;
+    margin-right: 0;
+    display: inline-block;
+  }
+  .slicknav_menu{
+    display: block;
+    margin: 15px 0;
+  }
+  .mainmenu{
+    display: none;
+  }
+  .header-bottom-area{
+    overflow: hidden;
+  }
+}
+@media only screen and (max-width:650px) {
+}
+@media only screen and (max-width:567px) {
+}

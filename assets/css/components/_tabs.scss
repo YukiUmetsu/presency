@@ -1,0 +1,49 @@
+.tabs {
+  display: block !important;
+  & div {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+
+  & > label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & input[type="radio"] {
+    display: none;
+  }
+
+  & input[type="radio"]:checked + label {
+    color: #555;
+    border: 1px solid #ddd;
+    border-top: 2px solid orange;
+    border-bottom: 1px solid #fff;
+  }
+
+  & section {
+    padding: 20px 0 0;
+    border-top: 1px solid #ddd;
+  }
+}
+
+@for $i from 0 through 20 {
+  #tab-content#{$i} {
+    display: none;
+  }
+}
+
+@for $i from 0 through 20 {
+  #tab#{$i}:checked ~ #tab-content#{$i} {
+    display: block;
+  }
+}

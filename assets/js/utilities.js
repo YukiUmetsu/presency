@@ -14,3 +14,10 @@ function uuid() {
     }
     return chars.join("");
 }
+
+$(document).ready(() => {
+   $(".tabs li").on("click", function(){
+       $(".tabs li").removeClass("is-active");
+       $(this).addClass("is-active");
+   })
+});

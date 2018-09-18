@@ -6,6 +6,7 @@ exports.config = {
           "js/app.js":/^(js|node_modules|vendor)/,
           "js/pagination/pagination.js": "single-page/pagination/pagination.js",
           "js/pagination/pagination-images.js": "single-page/pagination/pagination-images.js",
+          "js/switchable-input/switchable-input.js": "single-page/switchable-input/switchable-input.js",
           "js/socket/admin-socket.js": "single-page/socket/admin-socket.js",
           "js/socket/user-socket.js": "single-page/socket/user-socket.js",
           "vendor/jquery.scrollUp/jquery.scrollUp.min.js": "single-page/jquery.scrollUp.min.js",
@@ -19,6 +20,7 @@ exports.config = {
       joinTo: {
           "css/app.css": "css/app.scss",
           "css/blog-theme-index.css": "single-page/blog-theme/blog-theme-index.css",
+          "css/blog-header-navigation.css": "single-page/blog-theme/blog-header-navigation.css",
           "vendor/bulma/bulma-extensions.min.css": "vendor/css/bulma-extensions.min.css",
           "vendor/font/font-awesome.min.css": "vendor/css/font-awesome.min.css",
           "vendor/slick-carousel/slick.css":"node_modules/slick-carousel/slick/slick.css",
@@ -97,7 +99,7 @@ exports.config = {
         ],
         "vendor/notify": [
             "vendor/js/notify.min.js"
-        ],
+        ]
     }
   },
 
@@ -106,6 +108,7 @@ exports.config = {
       "js/app.js": ["js/app"],
       "js/pagination/pagination.js": ["single-page/pagination/pagination"],
       "js/pagination/pagination-images.js": ["single-page/pagination/pagination-images"],
+      "js/switchable-input/switchable-input.js": ["single-page/switchable-input/switchable-input"],
       "js/socket/admin-socket.js": ["single-page/socket/admin-socket"],
       "js/socket/user-socket.js": ["single-page/socket/user-socket"],
       "vendor/jquery.scrollUp/jquery.scrollUp.min.js": ["single-page/jquery.scrollUp.min.jp"],

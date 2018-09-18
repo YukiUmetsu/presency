@@ -10,6 +10,7 @@ defmodule Presency.CMS do
   alias Presency.CMS.Category
   alias Presency.CMS.Tag
   alias Presency.CMS.Image
+  alias Presency.CMS.Menu
   import Helpers.String, only: [trim_string_list: 1]
   require IEx
 
@@ -625,6 +626,18 @@ defmodule Presency.CMS do
     %Image{}
     |> Image.changeset(attrs)
     |> Repo.insert()
+  end
+
+
+  def get_active_menu() do
+    query = from m in Menu, where: m.status == ^1
+    Repo.one(query)
+  end
+
+  def create_menu(attrs \\ %{}) do
+      %Menu{}
+      |> Menu.changeset(attrs)
+      |> Repo.insert()
   end
 
 end

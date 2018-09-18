@@ -52,6 +52,7 @@ defmodule PresencyWeb.Router do
     resources "/posts", PostController
     resources "/comments", CommentController
     resources "/categories", CategoryController, except: [:show]
+    get "/menu", MenuController, :index
 
     get "/main_settings", MainSettingsController, :edit
     patch "/main_settings/:id", MainSettingsController, :update

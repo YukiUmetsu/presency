@@ -11,19 +11,18 @@ $(document).ready(() => {
 
 let showInput = (clickedElement) => {
     clickedElement.hide();
-    clickedElement.siblings(".switchable-input")
-        .val(clickedElement.text())
-        .show();
+    let inputId = clickedElement.attr("for");
+    $(`#${inputId}`).val(clickedElement.text()).show();
 };
 let hideInput = (clickedElement) => {
     clickedElement.hide();
     let inputValue = clickedElement.val();
+    let labelFor = clickedElement.attr("id");
+    let labelElement = $(`label[for='${labelFor}']`);
     if(inputValue.length === 0){
-        clickedElement.siblings(".switchable-label").show();
+        labelElement.show();
     } else {
-        clickedElement.siblings(".switchable-label")
-            .text(clickedElement.val())
-            .show();
+        labelElement.text(clickedElement.val()).show();
     }
 };
 

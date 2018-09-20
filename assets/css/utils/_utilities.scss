@@ -21,6 +21,10 @@
   margin-top: 1.5rem !important;
 }
 
+.u-padding-top-smallest {
+  padding-top: .1rem;
+}
+
 .u-margin-tb-big {
   margin-top: 8rem !important;
   margin-bottom: 8rem !important;
@@ -69,6 +73,9 @@
 }
 .u-padding-bottom-3px {
   padding-bottom: 3px;
+}
+.u-padding-bottom-smallest {
+  padding-bottom: .1rem;
 }
 
 .u-padding-lr-0 {
@@ -123,4 +130,8 @@
 
 .u-inline-block {
   display: inline-block !important;
+}
+
+.u-box-sizing-ini {
+  box-sizing: initial;
 }

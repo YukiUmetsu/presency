@@ -6,7 +6,7 @@ $(document).ready(() => {
     
     $(".switchable-input").on("blur", function () {
         hideInput($(this));
-    })
+    });
 });
 
 let showInput = (clickedElement) => {

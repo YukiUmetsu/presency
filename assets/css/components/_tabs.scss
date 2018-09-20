@@ -1,5 +1,6 @@
 .tabs {
   display: block !important;
+  overflow: auto;
   & div {
     padding-left: .5rem;
     padding-right: .5rem;

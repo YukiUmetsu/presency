@@ -21,9 +21,9 @@
                 <% end %>
                     <label for="tab<%= index %>"><%= menu_item.title %></label>
             <% end %>
-            <p class="buttons u-inline-block u-margin-bottom-0 u-padding-lr-tiny" style="transform: translateY(-8px);">
-                <a id="add_main_menu" class="button is-primary u-margin-lr-tiny u-inline-block u-margin-bottom-0">
-                    <span class="icon is-big"><i class="fa fa-plus font-size-2rem u-padding-bottom-3px"></i></span>
+            <p class="buttons u-inline-block u-margin-bottom-0 u-padding-lr-tiny">
+                <a id="add_main_menu" class="button is-primary u-margin-lr-tiny u-margin-bottom-0">
+                    <span class="icon"><i class="fa fa-plus u-box-sizing-ini u-padding-top-smallest"></i></span>
                 </a>
             </p>
             <%= for {menu_item, index} <- Enum.with_index(@menu.menu_items) do %>
@@ -40,18 +40,49 @@
         </div>
     </div>
 </div>
-
+<style type="text/css">
+    .tabs {
+        font-size: .9rem;
+    }
+    .tabs label[for^=tab] {
+        padding: 5px 10px;
+    }
+    .tabs a {
+        padding: .8rem;
+    }
+</style>
 <script>
+    let showInput = (clickedElement) => {
+        clickedElement.hide();
+        let inputId = clickedElement.attr("for");
+        $(`#${inputId}`).val(clickedElement.text()).show();
+        console.log(`#${inputId}`);
+    };
+    let hideInput = (clickedElement) => {
+        clickedElement.hide();
+        let inputValue = clickedElement.val();
+        let labelFor = clickedElement.attr("id");
+        let labelElement = $(`label[for='${labelFor}']`);
+        if(inputValue.length === 0){
+            labelElement.show();
+        } else {
+            labelElement.text(clickedElement.val()).show();
+        }
+    };
+    let addTabUpdateEvent = (element) => {
+        element.on("change", function () {
+            let value = $(this).val();
+            let id = $(this).attr('id');
+            let idNumber = id.replace("menu_item", "");
+            if (value.length !== 0) {
+                let labelFor = "tab" + idNumber;
+                $(`label[for=${labelFor}]`).text(value);
+            }
+        });
+    };
+
     $(document).ready(()=> {
-       $("[id^=menu_item]").on("change", function () {
-          let value = $(this).val();
-          let id = $(this).attr('id');
-          let idNumber = id.replace("menu_item", "");
-          if(value.length !== 0){
-              let labelFor = "tab"+idNumber;
-              $(`label[for=${labelFor}]`).text(value);
-          }
-       });
+       addTabUpdateEvent($("[id^=menu_item]"));
 
        $("#add_main_menu").on("click", function () {
           let tabId = $(".tabs > label").last().attr("for");
@@ -71,6 +102,10 @@
                 </div>
             </section>`;
           $(sectionHtml).insertAfter($(`#tab-content${tabNumber}`));
+          $(`label[for='menu_item${nextTabNumber}']`).on("click", function(){ showInput($(this)); });
+          let newInput = $(`#menu_item${nextTabNumber}`);
+          newInput.on("blur", function () { hideInput($(this)); });
+          addTabUpdateEvent(newInput);
        });
     });
 </script>

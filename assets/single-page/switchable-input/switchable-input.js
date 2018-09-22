@@ -1,6 +1,6 @@
 $(document).ready(() => {
-    $(".switchable-input").hide();
-    $(".switchable-box > .switchable-label").on("click", function(){
+    $(".switchable-box .switchable-input").hide();
+    $(".switchable-box .switchable-label").on("click", function(){
         showInput($(this));
     });
     

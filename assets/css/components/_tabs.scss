@@ -47,3 +47,7 @@
     display: block;
   }
 }
+
+section[id^="tab-content"] {
+  min-height: 30vh;
+}

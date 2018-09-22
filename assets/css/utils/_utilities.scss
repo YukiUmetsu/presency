@@ -132,6 +132,26 @@
   display: inline-block !important;
 }
 
+.u-inline-flex {
+  display: inline-flex !important;
+}
+
 .u-box-sizing-ini {
-  box-sizing: initial;
+  box-sizing: initial !important;
+}
+
+.u-vertical-center {
+  vertical-align: middle !important;
+}
+
+.border-radius-3 {
+  border-radius: 3px !important;
+}
+
+.border-radius-5 {
+  border-radius: 5px !important;
+}
+
+.u-width-100 {
+  width: 100%;
 }

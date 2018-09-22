@@ -32,7 +32,7 @@
 
   .container {
     border-radius: 3px;
-    max-width: 80%;
+    max-width: 94%;
     margin: 3% 3% 3% 3%;
     border: thin rgba($color-black, .5);
     border-top: .3rem solid rgba($color-forestgreen, .8);
@@ -48,4 +48,54 @@
 
 #character-count {
   margin-bottom: .5rem;
+}
+
+.switchable-box .switchable-input {
+  display: none;
+}
+
+/* Menu Page */
+.main-menu-box {
+  padding: .5rem;
+  border-radius: 8px;
+  border: 2px solid $thin-orange;
+
+  & .level-item {
+    padding-right: .3rem;
+  }
+}
+section[id^="tab-content"] .content p:not(:last-child){
+  margin-bottom: 0 !important;
+}
+
+.second-menu-box {
+  padding: .5rem;
+  border-radius: 8px;
+  border: 2px solid $thin-green;
+
+  & .level-item {
+    padding-right: .3rem;
+  }
+}
+
+.third-menu-box {
+  padding: .5rem;
+  border-radius: 8px;
+  border: 2px solid $thin-blue;
+
+  & .level-item {
+    padding-right: .3rem;
+  }
+}
+
+.main-menu-box input[id^=menu_item] {
+  min-width: 20rem;
+}
+
+.second-menu-box input[id^=second_menu_item] {
+  min-width: 20rem;
+}
+
+.third-menu-box input[id^=third_menu_item] {
+  min-width: 20rem;
 }

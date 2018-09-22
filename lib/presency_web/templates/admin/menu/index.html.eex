@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog-header-navigation.css") %>">
-
 <div class="columns">
     <div class="column is-12">
         <div class="mainmenu">
@@ -27,12 +26,91 @@
                 </a>
             </p>
             <%= for {menu_item, index} <- Enum.with_index(@menu.menu_items) do %>
-            <section id="tab-content<%= index %>">
-                <div class="field">
-                    <div class="switchable-box">
-                        <p class="label">Main Menu</p>
-                        <label for="menu_item<%= index %>" class="switchable-label"><%= menu_item.title %></label>
-                        <input id="menu_item<%= index %>" class="switchable-input input" type="text">
+            <section id="tab-content<%= index %>" class="media">
+                <div class="media-content">
+                    <div class="switchable-box u-width-100 content field is-grouped has-addons u-inline-block">
+                        <p class="label buttons">Main Menu</p>
+                        <div class="level main-menu-box">
+                            <div class="div u-width-100 level-left">
+                                <label for="menu_item<%= index %>" class="switchable-label u-vertical-center level-item"><%= menu_item.title %></label>
+                                <p class="control is-inline-block level-item">
+                                    <input id="menu_item<%= index %>" class="switchable-input input border-radius-3" type="text">
+                                </p>
+                                <p class="control is-inline-block level-item">
+                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                        <span class="icon"><i class="fa fa-link"></i></span>
+                                    </a>
+                                </p>
+                                <p class="control is-inline-block level-item">
+                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Second Menu">
+                                        <span class="icon"><i class="fa fa-plus"></i></span>
+                                    </a>
+                                </p>
+                                <p class="control is-inline-block level-item">
+                                    <a class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                        <span class="icon"><i class="fa fa-trash"></i></span>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left"></div>
+                        <div class="media-content">
+                            <div class="switchable-box content u-width-100 field is-grouped has-addons u-inline-block">
+                                <p class="label buttons">Second Menu</p>
+                                <div class="level second-menu-box">
+                                    <div class="div u-width-100 level-left">
+                                        <label for="second_menu_item0" class="switchable-label u-vertical-center level-item">second menu</label>
+                                        <p class="control is-inline-block level-item">
+                                            <input id="second_menu_item0" class="switchable-input input border-radius-3" type="text">
+                                        </p>
+                                        <p class="control is-inline-block level-item">
+                                            <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                                <span class="icon"><i class="fa fa-link"></i></span>
+                                            </a>
+                                        </p>
+                                        <p class="control is-inline-block level-item">
+                                            <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Third Menu">
+                                                <span class="icon"><i class="fa fa-plus"></i></span>
+                                            </a>
+                                        </p>
+                                        <p class="control is-inline-block level-item">
+                                            <a class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                                <span class="icon"><i class="fa fa-trash"></i></span>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left"></div>
+                                <div class="media-content">
+                                    <div class="switchable-box content u-width-100 field is-grouped has-addons u-inline-block">
+                                        <p class="label buttons">Third Menu</p>
+                                        <div class="level third-menu-box">
+                                            <div class="div u-width-100 level-left">
+                                                <label for="third_menu_item0" class="switchable-label u-vertical-center level-item">third menu</label>
+                                                <p class="control is-inline-block level-item">
+                                                    <input id="third_menu_item0" class="switchable-input input border-radius-3" type="text">
+                                                </p>
+                                                <p class="control is-inline-block level-item">
+                                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                                        <span class="icon"><i class="fa fa-link"></i></span>
+                                                    </a>
+                                                </p>
+                                                <p class="control is-inline-block level-item">
+                                                    <a class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                                        <span class="icon"><i class="fa fa-trash"></i></span>
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -41,9 +119,6 @@
     </div>
 </div>
 <style type="text/css">
-    .tabs {
-        font-size: .9rem;
-    }
     .tabs label[for^=tab] {
         padding: 5px 10px;
     }
@@ -93,11 +168,16 @@
           $(tabHtml).insertAfter($(".tabs > label").last());
           let sectionHtml =
               `<section id="tab-content${nextTabNumber}">
-                <div class="field">
+                <div class="field is-grouped has-addons">
                     <div class="switchable-box">
-                        <p class="label">Main Menu</p>
-                        <label for="menu_item${nextTabNumber}" class="switchable-label">New Menu</label>
-                        <input id="menu_item${nextTabNumber}" class="switchable-input input" type="text">
+                        <p class="label buttons">Main Menu</p>
+                        <label for="menu_item${nextTabNumber}" class="switchable-label u-vertical-center">New Menu</label>
+                        <p class="control is-inline-block">
+                            <input id="menu_item${nextTabNumber}" class="switchable-input input border-radius-3" type="text">
+                        </p>
+                        <p class="control is-inline-block">
+                            <a class="button u-inline-flex border-radius-5"><span class="icon"><i class="fa fa-link"></i></span></a>
+                        </p>
                     </div>
                 </div>
             </section>`;

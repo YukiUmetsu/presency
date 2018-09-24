@@ -47,7 +47,7 @@
                                     </a>
                                 </p>
                                 <p class="control is-inline-block level-item">
-                                    <a class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                    <a id="delete-tab<%= index %>" class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
                                         <span class="icon"><i class="fa fa-trash"></i></span>
                                     </a>
                                 </p>
@@ -57,7 +57,7 @@
                     <!-- 2nd menu item-->
                     <%= if is_list(menu_item.children) do %>
                     <%= for {second_menu_item, second_index} <- Enum.with_index(menu_item.children) do  %>
-                    <div class="media">
+                    <div id="second-menu-media<%= second_index %>" class="media">
                         <div class="media-left"></div>
                         <div class="media-content">
                             <div class="switchable-box content u-width-100 field is-grouped has-addons u-inline-block">
@@ -79,7 +79,7 @@
                                             </a>
                                         </p>
                                         <p class="control is-inline-block level-item">
-                                            <a class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                            <a id="delete-second-menu-media<%= second_index %>" class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
                                                 <span class="icon"><i class="fa fa-trash"></i></span>
                                             </a>
                                         </p>
@@ -89,7 +89,7 @@
                             <!-- 3rd menu --->
                             <%= if is_list(second_menu_item["children"]) do %>
                             <%= for {third_menu_item, third_index} <- Enum.with_index(second_menu_item["children"]) do  %>
-                            <div class="media">
+                            <div id="third-menu-media<%= third_index %>" class="media">
                                 <div class="media-left"></div>
                                 <div class="media-content">
                                     <div class="switchable-box content u-width-100 field is-grouped has-addons u-inline-block">
@@ -106,7 +106,7 @@
                                                     </a>
                                                 </p>
                                                 <p class="control is-inline-block level-item">
-                                                    <a class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                                    <a id="delete-third-menu-media<%= third_index %>"  class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
                                                         <span class="icon"><i class="fa fa-trash"></i></span>
                                                     </a>
                                                 </p>
@@ -164,16 +164,28 @@
         });
     };
 
-    let addNewTab = (element) => {
-        element.on("click", function () {
-            let tabId = $(".tabs > label").last().attr("for");
-            let tabNumber = parseInt(tabId.replace("tab", ""));
-            let nextTabNumber = tabNumber+1;
-            let tabHtml =
-                `<input id='tab${nextTabNumber}' type='radio' name='tabs'><label for='tab${nextTabNumber}'>New Menu</label>`;
-            $(tabHtml).insertAfter($(".tabs > label").last());
-            let sectionHtml =
-                `<section id="tab-content${nextTabNumber}" class="media">
+    let deleteMainMenu = (element) => {
+      let id = element.attr("id");
+      let tabId = id.replace("delete-", "");
+      $(`#${tabId}`).remove(); // remove tab input
+      $(`label[for^=${tabId}]`).remove(); // remove tab label
+      let index = tabId.replace("tab", "");
+      $("#tab-content"+index).remove(); // remove tab content
+      $(`input[id^=tab]`).first().prop("checked", true );  // move to first tab
+    };
+
+    let addDeleteMainMenuEvent = (element) => {
+      element.on("click", function () {
+        deleteMainMenu(element);
+      });
+    };
+
+    let getNewTabHtml = (nextTabNumber)=>{
+        return `<input id='tab${nextTabNumber}' type='radio' name='tabs'><label for='tab${nextTabNumber}'>New Menu</label>`;
+    };
+
+    let getNewSectionHtml = (nextTabNumber)=>{
+        return `<section id="tab-content${nextTabNumber}" class="media">
                 <div class="media-content">
                     <div class="switchable-box u-width-100 content field is-grouped has-addons u-inline-block">
                         <p class="label buttons">Main Menu</p>
@@ -194,7 +206,7 @@
                                     </a>
                                 </p>
                                 <p class="control is-inline-block level-item">
-                                    <a class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                    <a id="delete-tab${nextTabNumber}" class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
                                         <span class="icon"><i class="fa fa-trash"></i></span>
                                     </a>
                                 </p>
@@ -203,17 +215,46 @@
                     </div>
                 </div>
             </section>`;
-            $(sectionHtml).insertAfter($(`#tab-content${tabNumber}`));
+    };
+
+    let addNewTab = (element) => {
+        element.on("click", function () {
+            let nextTabNumber = 0;
+            let tabCount = $(".tabs > label").length;
+            let tabId = 0;
+            let tabNumber = 0;
+            if(tabCount !== 0){
+                tabId = $(".tabs > label").last().attr("for");
+                tabNumber = parseInt(tabId.replace("tab", ""));
+                nextTabNumber = tabNumber+1;
+            }
+            let tabHtml = getNewTabHtml(nextTabNumber);
+            let sectionHtml = getNewSectionHtml(nextTabNumber);
+            if(tabCount === 0){
+                let newTabButton = $("#add_main_menu").parent();
+                $(tabHtml).insertBefore(newTabButton);
+                $(sectionHtml).insertAfter(newTabButton);
+            } else {
+                $(tabHtml).insertAfter($(".tabs > label").last());
+                $(sectionHtml).insertAfter($(`#tab-content${tabNumber}`));
+            }
+
             $(`label[for='menu_item${nextTabNumber}']`).on("click", function(){ showInput($(this)); });
             let newInput = $(`#menu_item${nextTabNumber}`);
             newInput.on("blur", function () { hideInput($(this)); });
             addTabUpdateEvent(newInput);
+            addDeleteMainMenuEvent($(`a[id^=delete-tab${nextTabNumber}]`));
         });
     };
+
+
 
     $(document).ready(()=> {
        addTabUpdateEvent($("[id^=menu_item]"));
        addNewTab($("#add_main_menu"));
+        $("a[id^=delete-tab]").each(function(){
+            addDeleteMainMenuEvent($(this));
+        });
     });
 </script>
 <script src="<%= static_path(@conn, "/js/switchable-input/switchable-input.js") %>"></script>

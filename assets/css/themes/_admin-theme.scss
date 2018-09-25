@@ -99,3 +99,8 @@ section[id^="tab-content"] .content p:not(:last-child){
 .third-menu-box input[id^=third_menu_item] {
   min-width: 20rem;
 }
+
+.switchable-box label {
+  min-width: 50px;
+  min-height: 30px;
+}

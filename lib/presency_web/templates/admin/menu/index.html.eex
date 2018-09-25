@@ -28,7 +28,7 @@
             <%= for {menu_item, index} <- Enum.with_index(@menu.menu_items) do %>
             <section id="tab-content<%= index %>" class="media">
                 <div class="media-content">
-                    <div class="switchable-box u-width-100 content field is-grouped has-addons u-inline-block">
+                    <div class="main-menu-wrapper switchable-box u-width-100 content field is-grouped has-addons u-inline-block">
                         <p class="label buttons">Main Menu</p>
                         <div class="level main-menu-box">
                             <div class="div u-width-100 level-left">
@@ -42,7 +42,7 @@
                                     </a>
                                 </p>
                                 <p class="control is-inline-block level-item">
-                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Second Menu">
+                                    <a id="add-second-menu-item<%= index %>" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Second Menu">
                                         <span class="icon"><i class="fa fa-plus"></i></span>
                                     </a>
                                 </p>
@@ -74,7 +74,7 @@
                                             </a>
                                         </p>
                                         <p class="control is-inline-block level-item">
-                                            <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Third Menu">
+                                            <a id="add-third-menu-item<%= second_index %>" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Third Menu">
                                                 <span class="icon"><i class="fa fa-plus"></i></span>
                                             </a>
                                         </p>
@@ -136,12 +136,15 @@
     }
 </style>
 <script>
-    let showInput = (clickedElement) => {
+    let showInput = (event) => {
+        let clickedElement = $(event.currentTarget);
         clickedElement.hide();
         let inputId = clickedElement.attr("for");
         $(`#${inputId}`).val(clickedElement.text()).show();
     };
-    let hideInput = (clickedElement) => {
+
+    let hideInput = (event) => {
+        let clickedElement = $(event.currentTarget);
         clickedElement.hide();
         let inputValue = clickedElement.val();
         let labelFor = clickedElement.attr("id");
@@ -152,19 +155,20 @@
             labelElement.text(clickedElement.val()).show();
         }
     };
-    let addTabUpdateEvent = (element) => {
-        element.on("change", function () {
-            let value = $(this).val();
-            let id = $(this).attr('id');
-            let idNumber = id.replace("menu_item", "");
-            if (value.length !== 0) {
-                let labelFor = "tab" + idNumber;
-                $(`label[for=${labelFor}]`).text(value);
-            }
-        });
+
+    let updateTab = (event) => {
+        let targetElement = $(event.target);
+        let value = targetElement.val();
+        let id = $(event.target).attr("id");
+        let idNumber = id.replace("menu_item", "");
+        if (value.length !== 0 && value.trim().length !== 0) {
+            let labelFor = "tab" + idNumber;
+            $(`label[for=${labelFor}]`).text(value.trim());
+        }
     };
 
-    let deleteMainMenu = (element) => {
+    let deleteMainMenu = (event) => {
+      let element = $(event.data);
       let id = element.attr("id");
       let tabId = id.replace("delete-", "");
       $(`#${tabId}`).remove(); // remove tab input
@@ -174,10 +178,55 @@
       $(`input[id^=tab]`).first().prop("checked", true );  // move to first tab
     };
 
-    let addDeleteMainMenuEvent = (element) => {
-      element.on("click", function () {
-        deleteMainMenu(element);
-      });
+    let deleteMenu = (event) => {
+        let element = $(event.currentTarget);
+        let id = element.attr("id");
+        let menuId = id.replace("delete-", "");
+        $(`#${menuId}`).remove(); // remove menu item
+    };
+
+    let addEvent = (eventType, selector, func) => {
+        $(document).on(eventType, selector, selector, func);
+    };
+
+    let addNewSecondMenuItem = (event) => {
+        let element = $(event.currentTarget);
+        let closestMediaContentBox = element.closest(".media-content");
+        let secondMenuWrappers = element.closest(".main-menu-wrapper").siblings();
+        let lastSecondMenuItemIndex = 0;
+        let nextIndex = 0;
+        let lastSecondMenuItemId = '';
+        if(secondMenuWrappers.length !== 0){
+            lastSecondMenuItemId = secondMenuWrappers.last().attr("id");
+            lastSecondMenuItemIndex = parseInt(lastSecondMenuItemId.replace("second-menu-media", ""));
+            nextIndex = lastSecondMenuItemIndex+1;
+        }
+        let html = getNewSeocndMenuItemHtml(nextIndex);
+        closestMediaContentBox.append(html);
+        // add event listeners
+        addEvent("click", `label[for='second_menu_item${nextIndex}']`, showInput);
+        addEvent("blur", `#second_menu_item${nextIndex}`, hideInput);
+        addEvent("click", `#delete-second-menu${nextIndex}`, deleteMenu);
+    };
+
+    let addNewThirdMenuItem = (event) => {
+        let element = $(event.currentTarget);
+        let closestMediaContentBox = element.closest(".media-content");
+        let thirdMenuMedia = closestMediaContentBox.find("[id^=third-menu-media]");
+        let lastThirdMenuItemIndex = 0;
+        let nextIndex = 0;
+        let lastThirdMenuItemId = '';
+        if(thirdMenuMedia.length !== 0){
+            lastThirdMenuItemId = thirdMenuMedia.last().attr("id");
+            lastThirdMenuItemIndex = parseInt(lastThirdMenuItemId.replace("third-menu-media", ""));
+            nextIndex = lastThirdMenuItemIndex+1;
+        }
+        let html = getNewThirdMenuItemHtml(nextIndex);
+        closestMediaContentBox.append(html);
+        // add event listener
+        addEvent("click", `label[for='third_menu_item${nextIndex}']`, showInput);
+        addEvent("blur", `#third_menu_item${nextIndex}`, hideInput);
+        addEvent("click", `#delete-third-menu${nextIndex}`, deleteMenu);
     };
 
     let getNewTabHtml = (nextTabNumber)=>{
@@ -187,7 +236,7 @@
     let getNewSectionHtml = (nextTabNumber)=>{
         return `<section id="tab-content${nextTabNumber}" class="media">
                 <div class="media-content">
-                    <div class="switchable-box u-width-100 content field is-grouped has-addons u-inline-block">
+                    <div class="main-menu-wrapper switchable-box u-width-100 content field is-grouped has-addons u-inline-block">
                         <p class="label buttons">Main Menu</p>
                         <div class="level main-menu-box">
                             <div class="div u-width-100 level-left">
@@ -201,7 +250,7 @@
                                     </a>
                                 </p>
                                 <p class="control is-inline-block level-item">
-                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Second Menu">
+                                    <a id="add-second-menu-item${nextTabNumber}" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Second Menu">
                                         <span class="icon"><i class="fa fa-plus"></i></span>
                                     </a>
                                 </p>
@@ -215,6 +264,69 @@
                     </div>
                 </div>
             </section>`;
+    };
+
+    let getNewSeocndMenuItemHtml = (nextIndex) => {
+        return `<div id='second-menu-media${nextIndex}' class="media">
+                    <div class="media-left"></div>
+                    <div class="media-content">
+                        <div class="switchable-box content u-width-100 field is-grouped has-addons u-inline-block">
+                            <p class="label buttons"></p>
+                            <div class="level second-menu-box">
+                                <div class="div u-width-100 level-left">
+                                    <label for="second_menu_item${nextIndex}" class="switchable-label u-vertical-center level-item">Second Menu</label>
+                                    <p class="control is-inline-block level-item">
+                                        <input id="second_menu_item${nextIndex}" class="switchable-input input border-radius-3" type="text">
+                                    </p>
+                                    <p class="control is-inline-block level-item">
+                                        <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                            <span class="icon"><i class="fa fa-link"></i></span>
+                                        </a>
+                                    </p>
+                                    <p class="control is-inline-block level-item">
+                                        <a id="add-third-menu-item${nextIndex}" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Third Menu">
+                                            <span class="icon"><i class="fa fa-plus"></i></span>
+                                        </a>
+                                    </p>
+                                    <p class="control is-inline-block level-item">
+                                        <a id="delete-second-menu-media${nextIndex}" class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                            <span class="icon"><i class="fa fa-trash"></i></span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+    };
+
+    let getNewThirdMenuItemHtml = (nextIndex) => {
+        return `<div id="third-menu-media${nextIndex}" class="media">
+                    <div class="media-left"></div>
+                    <div class="media-content">
+                        <div class="switchable-box content u-width-100 field is-grouped has-addons u-inline-block">
+                            <p class="label buttons"></p>
+                            <div class="level third-menu-box">
+                                <div class="div u-width-100 level-left">
+                                    <label for="third_menu_item${nextIndex}" class="switchable-label u-vertical-center level-item">Third Menu</label>
+                                    <p class="control is-inline-block level-item">
+                                        <input id="third_menu_item${nextIndex}" class="switchable-input input border-radius-3" type="text">
+                                    </p>
+                                    <p class="control is-inline-block level-item">
+                                        <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                            <span class="icon"><i class="fa fa-link"></i></span>
+                                        </a>
+                                    </p>
+                                    <p class="control is-inline-block level-item">
+                                        <a id="delete-third-menu-media${nextIndex}"  class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
+                                            <span class="icon"><i class="fa fa-trash"></i></span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
     };
 
     let addNewTab = (element) => {
@@ -239,22 +351,27 @@
                 $(sectionHtml).insertAfter($(`#tab-content${tabNumber}`));
             }
 
-            $(`label[for='menu_item${nextTabNumber}']`).on("click", function(){ showInput($(this)); });
-            let newInput = $(`#menu_item${nextTabNumber}`);
-            newInput.on("blur", function () { hideInput($(this)); });
-            addTabUpdateEvent(newInput);
-            addDeleteMainMenuEvent($(`a[id^=delete-tab${nextTabNumber}]`));
+            let nextLabelSelector = `label[for='menu_item${nextTabNumber}']`;
+            addEvent("click", nextLabelSelector, showInput);
+            let newInputSelector = `#menu_item${nextTabNumber}`;
+            addEvent("blur", newInputSelector, hideInput);
+            addEvent("blur", newInputSelector, updateTab);
+            let deleteTabLinkSelector = `[id^=delete-tab${nextTabNumber}]`;
+            addEvent("click", deleteTabLinkSelector, deleteMainMenu);
         });
     };
 
-
-
     $(document).ready(()=> {
-       addTabUpdateEvent($("[id^=menu_item]"));
+       addEvent("click", "[id^=delete-second-menu]", deleteMenu);
+       addEvent("click", "[id^=delete-third-menu]", deleteMenu);
+       addEvent("change", "[id^=menu_item]", updateTab);
        addNewTab($("#add_main_menu"));
-        $("a[id^=delete-tab]").each(function(){
-            addDeleteMainMenuEvent($(this));
+        $("[id^=delete-tab]").each(function(){
+            let id = $(this).attr("id");
+            addEvent("click", `#${id}`, deleteMainMenu);
         });
+        addEvent("click", "[id^=add-second-menu-item]", addNewSecondMenuItem);
+        addEvent("click", "[id^=add-third-menu-item]", addNewThirdMenuItem);
     });
 </script>
 <script src="<%= static_path(@conn, "/js/switchable-input/switchable-input.js") %>"></script>

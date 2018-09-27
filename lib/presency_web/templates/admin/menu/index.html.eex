@@ -25,6 +25,7 @@
                     <span class="icon"><i class="fa fa-plus u-box-sizing-ini u-padding-top-smallest"></i></span>
                 </a>
             </p>
+            <!-- Tab html -->
             <%= for {menu_item, index} <- Enum.with_index(@menu.menu_items) do %>
             <section id="tab-content<%= index %>" class="media">
                 <div class="media-content">
@@ -37,9 +38,13 @@
                                     <input id="menu_item<%= index %>" class="switchable-input input border-radius-3" type="text">
                                 </p>
                                 <p class="control is-inline-block level-item">
-                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                    <a href="#link-modal" rel="modal:open"
+                                       id="link-menu-item<%= index %>"
+                                       class="button u-inline-flex border-radius-5 is-light tooltip"
+                                       data-tooltip="Add Link">
                                         <span class="icon"><i class="fa fa-link"></i></span>
                                     </a>
+                                    <input id="link-input-menu-item<%= index %>" type="hidden">
                                 </p>
                                 <p class="control is-inline-block level-item">
                                     <a id="add-second-menu-item<%= index %>" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Second Menu">
@@ -69,9 +74,13 @@
                                             <input id="second_menu_item<%= second_index %>" class="switchable-input input border-radius-3" type="text">
                                         </p>
                                         <p class="control is-inline-block level-item">
-                                            <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                            <a href="#link-modal" rel="modal:open"
+                                               id="link-second-menu-item<%= second_index %>"
+                                               class="button u-inline-flex border-radius-5 is-light tooltip"
+                                               data-tooltip="Add Link">
                                                 <span class="icon"><i class="fa fa-link"></i></span>
                                             </a>
+                                            <input id="link-input-second-menu-item<%= second_index %>" type="hidden">
                                         </p>
                                         <p class="control is-inline-block level-item">
                                             <a id="add-third-menu-item<%= second_index %>" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Third Menu">
@@ -101,9 +110,13 @@
                                                     <input id="third_menu_item<%= third_index %>" class="switchable-input input border-radius-3" type="text">
                                                 </p>
                                                 <p class="control is-inline-block level-item">
-                                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                                    <a href="#link-modal" rel="modal:open"
+                                                       id="link-third-menu-item<%= third_index %>"
+                                                       class="button u-inline-flex border-radius-5 is-light tooltip"
+                                                       data-tooltip="Add Link">
                                                         <span class="icon"><i class="fa fa-link"></i></span>
                                                     </a>
+                                                    <input id="link-input-third-menu-item-link<%= second_index %>" type="hidden">
                                                 </p>
                                                 <p class="control is-inline-block level-item">
                                                     <a id="delete-third-menu-media<%= third_index %>"  class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
@@ -127,12 +140,28 @@
         </div>
     </div>
 </div>
+<div id="link-modal" class="display-none">
+    <div class="field">
+        <label class="label">Menu Link</label>
+        <div class="control">
+            <input id="link-modal-input" class="input" type="text" placeholder="" value="">
+        </div>
+        <div class="columns u-margin-top-tiny">
+            <div class="column has-text-centered">
+                <a id="link-modal-input-save" href="#" rel="modal:close" class="button is-primary">Save</a>
+            </div>
+        </div>
+    </div>
+</div>
 <style type="text/css">
     .tabs label[for^=tab] {
         padding: 5px 10px;
     }
     .tabs a {
         padding: .8rem;
+    }
+    #link-modal {
+        overflow: unset;
     }
 </style>
 <script>
@@ -245,9 +274,14 @@
                                     <input id="menu_item${nextTabNumber}" class="switchable-input input border-radius-3" type="text">
                                 </p>
                                 <p class="control is-inline-block level-item">
-                                    <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                    <a href="#link-modal"
+                                    id="link-menu-item${nextTabNumber}"
+                                    rel="modal:open"
+                                    class="button u-inline-flex border-radius-5 is-light tooltip"
+                                    data-tooltip="Add Link">
                                         <span class="icon"><i class="fa fa-link"></i></span>
                                     </a>
+                                    <input id="link-input-menu-item${nextTabNumber}" type="hidden">
                                 </p>
                                 <p class="control is-inline-block level-item">
                                     <a id="add-second-menu-item${nextTabNumber}" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Second Menu">
@@ -279,9 +313,15 @@
                                         <input id="second_menu_item${nextIndex}" class="switchable-input input border-radius-3" type="text">
                                     </p>
                                     <p class="control is-inline-block level-item">
-                                        <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                        <a
+                                        href="#link-modal"
+                                        rel="modal:open"
+                                        id="link-second-menu-item${nextIndex}"
+                                        class="button u-inline-flex border-radius-5 is-light tooltip"
+                                        data-tooltip="Add Link">
                                             <span class="icon"><i class="fa fa-link"></i></span>
                                         </a>
+                                        <input id="link-input-second-menu-item${nextIndex}" type="hidden">
                                     </p>
                                     <p class="control is-inline-block level-item">
                                         <a id="add-third-menu-item${nextIndex}" class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Third Menu">
@@ -313,9 +353,15 @@
                                         <input id="third_menu_item${nextIndex}" class="switchable-input input border-radius-3" type="text">
                                     </p>
                                     <p class="control is-inline-block level-item">
-                                        <a class="button u-inline-flex border-radius-5 is-light tooltip" data-tooltip="Add Link">
+                                        <a
+                                        href="#link-modal"
+                                        rel="modal:open"
+                                        id="link-third-menu-item${nextIndex}"
+                                        class="button u-inline-flex border-radius-5 is-light tooltip"
+                                        data-tooltip="Add Link">
                                             <span class="icon"><i class="fa fa-link"></i></span>
                                         </a>
+                                        <input id="link-input-third-menu-item${nextIndex}" type="hidden">
                                     </p>
                                     <p class="control is-inline-block level-item">
                                         <a id="delete-third-menu-media${nextIndex}"  class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
@@ -361,6 +407,19 @@
         });
     };
 
+    let saveClickedModalOpen = (event) => {
+        let element = $(event.currentTarget);
+        let elementId = element.attr("id");
+        window.linkInputId = "link-input-" + elementId.replace("link-", "");
+    };
+
+    let saveLink = (event) => {
+        let element = $("#link-modal-input");
+        let linkValue = element.val();
+        let input = $(`#${window.linkInputId}`);
+        input.val(linkValue);
+    };
+
     $(document).ready(()=> {
        addEvent("click", "[id^=delete-second-menu]", deleteMenu);
        addEvent("click", "[id^=delete-third-menu]", deleteMenu);
@@ -372,6 +431,10 @@
         });
         addEvent("click", "[id^=add-second-menu-item]", addNewSecondMenuItem);
         addEvent("click", "[id^=add-third-menu-item]", addNewThirdMenuItem);
+        addEvent("click", "a[href='#link-modal']", saveClickedModalOpen);
+        addEvent("click", "#link-modal-input-save", saveLink);
     });
 </script>
 <script src="<%= static_path(@conn, "/js/switchable-input/switchable-input.js") %>"></script>
+<script src="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.js") %>"></script>
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.css") %>">

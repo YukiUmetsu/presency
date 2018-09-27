@@ -21,3 +21,7 @@ $(document).ready(() => {
        $(this).addClass("is-active");
    })
 });
+
+let addEvent = (eventType, selector, func) => {
+    $(document).on(eventType, selector, selector, func);
+};

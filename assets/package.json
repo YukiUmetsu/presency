@@ -19,7 +19,7 @@
     "jquery-migrate": "^3.0.1",
     "jquery-modal": "^0.9.1",
     "jquery.easing": "^1.4.1",
-    "npm": "^6.2.0",
+    "npm": "^6.4.1",
     "owl.carousel2": "^2.2.1",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",

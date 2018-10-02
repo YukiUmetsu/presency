@@ -11,6 +11,9 @@
 </div>
 <div class="columns">
     <div class="column">
+        <div class="has-text-centered u-margin-bottom-small">
+            <a href="#" id="save-menu" class="button is-primary">Save Menu</a>
+        </div>
         <div class="tabs">
             <%= for {menu_item, index} <- Enum.with_index(@menu.menu_items) do %>
                 <%= if index === 0 do %>
@@ -116,7 +119,7 @@
                                                        data-tooltip="Add Link">
                                                         <span class="icon"><i class="fa fa-link"></i></span>
                                                     </a>
-                                                    <input id="link-input-third-menu-item-link<%= second_index %>" type="hidden">
+                                                    <input id="link-input-third-menu-item<%= second_index %>" type="hidden">
                                                 </p>
                                                 <p class="control is-inline-block level-item">
                                                     <a id="delete-third-menu-media<%= third_index %>"  class="button u-inline-flex border-radius-5 is-danger tooltip" data-tooltip="Delete Menu">
@@ -418,6 +421,121 @@
         let linkValue = element.val();
         let input = $(`#${window.linkInputId}`);
         input.val(linkValue);
+        element.val("");
+    };
+
+    let saveMenu = (event) => {
+        // get menu structure, title, link info
+        let menuObjects = [];
+        let tabLabels = $(".tabs > label");
+        if(!isNull(tabLabels)){
+            $.each(tabLabels, function (index, label) {
+                let tabId = $(label).attr("for");
+                tabNumber = parseInt(tabId.replace("tab", ""));
+                let mainMenuTitle = $(`label[for='menu_item${tabNumber}']`).text();
+                let mainMenuLink = $(`#link-input-menu-item${tabNumber}`).val();
+
+                // get second menu items
+                let section = $(`#tab-content${tabNumber}`);
+                let secondMenuObjects = getSecondMenuObjects(section);
+                menuObjects.push({"title": mainMenuTitle, "link": mainMenuLink, "children": secondMenuObjects});
+            });
+        }
+        updateSampleMenu(menuObjects);
+    };
+
+    let updateSampleMenu = (menuObjects) => {
+        if(isEmpty(menuObjects)){
+            return;
+        }
+        let html = '';
+        let nav = $("#nav");
+        nav.html("");
+        menuObjects.forEach(function (menuItem) {
+            if(isEmpty(menuItem.children)){
+                html += `<li><a href="${menuItem.link}">${menuItem.title}</a></li>`;
+            } else {
+                let childrenHtml = getSampleSecondMenu(menuItem.children);
+                html += `<li><a href="${menuItem.link}">${menuItem.title}</a><i class="fa fa-angle-down"></i>${childrenHtml}</li>`;
+            }
+        });
+        nav.html(html);
+    };
+
+    let getSampleSecondMenu = (secondMenuItems) => {
+        if(isEmpty(secondMenuItems)){
+            return '';
+        }
+        let html = "<ul class='sub'>";
+        secondMenuItems.forEach(function (secondMenuItem) {
+            if(isEmpty(secondMenuItem.children)){
+                html += `<li><a href='${secondMenuItem.link}'>${secondMenuItem.title}</a></li>`;
+            } else {
+                let childrenHtml = getSampleThirdMenu(secondMenuItem.children);
+                html += `<li><a href='${secondMenuItem.link}'>${secondMenuItem.title}</a><i class="fa fa-angle-right" style="color:#ddd"></i>${childrenHtml}</li>`;
+            }
+        });
+        html += "</ul>";
+        return html;
+    };
+
+    let getSampleThirdMenu = (thirdMenuItems) => {
+        let html = "<ul class='sub-2'>";
+        if(isEmpty(thirdMenuItems)){
+            return '';
+        }
+        thirdMenuItems.forEach(function (thirdMenuItem) {
+            html += `<li><a href='${thirdMenuItem.link}'>${thirdMenuItem.title}</a></li>`;
+        });
+        html += "</ul>";
+        return html;
+    };
+
+    let getSecondMenuObjects = (section) => {
+        let objects = [];
+        let secondMenuDivs = section.find("[id^='second-menu-media']");
+        if(!isEmpty(secondMenuDivs)){
+            $.each(secondMenuDivs, function (index, secondMenuDiv) {
+                let secondMenu = $(secondMenuDiv);
+                let secondMenuNumber = parseInt(secondMenu.attr("id").match(/\d+/),10);
+                let secondMenuTitle = $(secondMenuDiv).find(`label[for='second_menu_item${secondMenuNumber}']`).text();
+                let secondMenuLink = $(secondMenuDiv).find(`#link-input-second-menu-item${secondMenuNumber}`).val();
+                let thirdMenuObjects = getThirdMenuObjects($(secondMenuDiv));
+                objects.push({"title": secondMenuTitle, "link": secondMenuLink, "children": thirdMenuObjects});
+            })
+        }
+        return objects;
+    };
+
+    let getThirdMenuObjects = (secondMenuDiv) => {
+        let objects = [];
+        let thirdMenuDivs = secondMenuDiv.find("[id^='third-menu-media']");
+        if(!isNull(thirdMenuDivs)){
+            $.each(thirdMenuDivs, function (index, thirdMenuDiv) {
+                let thirdMenuTitle = $(thirdMenuDiv).find(`label[for^='third_menu_item']`).text();
+                let thirdMenuLink = $(thirdMenuDiv).find(`input[id^='link-input-third-menu-item']`).val();
+                objects.push({"title": thirdMenuTitle, "link": thirdMenuLink});
+            })
+        }
+        return objects;
+    };
+
+    let isNull = (obj) => {
+        return typeof obj === 'undefined' || obj === null;
+    };
+
+    let isEmpty = (obj) => {
+        if(isNull(obj)){
+            return true;
+        }
+        if(obj instanceof Array && obj.length === 0){
+            return true;
+        }
+        if(obj instanceof String && obj === ''){
+            return true;
+        }
+        if (obj === 0){ return true};
+        return false;
     };
 
     $(document).ready(()=> {
@@ -433,8 +551,11 @@
         addEvent("click", "[id^=add-third-menu-item]", addNewThirdMenuItem);
         addEvent("click", "a[href='#link-modal']", saveClickedModalOpen);
         addEvent("click", "#link-modal-input-save", saveLink);
+        addEvent("click", "#save-menu", saveMenu);
     });
 </script>
 <script src="<%= static_path(@conn, "/js/switchable-input/switchable-input.js") %>"></script>
+<script src="<%= static_path(@conn, "/js/notification/notification.js") %>"></script>
 <script src="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.js") %>"></script>
 <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/jquery-modal/jquery.modal.min.css") %>">
+<link rel="stylesheet" href="<%= static_path(@conn, "/vendor/animate-css/animate.min.css") %>">
